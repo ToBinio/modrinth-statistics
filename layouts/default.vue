@@ -3,21 +3,23 @@
 </script>
 
 <template>
-  <nav>
+  <div id="nav">
     <NuxtLink id="header" href="/">
       Modrinth Statistics
     </NuxtLink>
     <div>
-      <NuxtLink href="/numberPerLauncher">
-        Downloads per Launcher
+      <NuxtLink href="/downloads">
+        Downloads
       </NuxtLink>
     </div>
-  </nav>
-  <slot/>
+  </div>
+  <div id="main">
+    <slot/>
+  </div>
 </template>
 
 <style scoped>
-nav {
+#nav {
   padding: 10px;
   margin: 10px;
 
@@ -42,5 +44,9 @@ nav {
       color: var(--primary-100);
     }
   }
+}
+
+#main {
+  flex: 1;
 }
 </style>
