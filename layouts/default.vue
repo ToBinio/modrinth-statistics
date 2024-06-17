@@ -1,5 +1,7 @@
 <script setup lang="ts">
-
+async function onUpdateData() {
+  await $fetch("/api/update")
+}
 </script>
 
 <template>
@@ -7,9 +9,18 @@
     <NuxtLink id="header" href="/">
       Modrinth Statistics
     </NuxtLink>
+    <button @click="onUpdateData">
+      update Data
+    </button>
     <div>
       <NuxtLink href="/downloads">
-        Downloads
+        All Downloads
+      </NuxtLink>
+      <NuxtLink href="/minorVersionDownloads">
+        minor Downloads
+      </NuxtLink>
+      <NuxtLink href="/majorVersionDownloads">
+        major Downloads
       </NuxtLink>
     </div>
   </div>
@@ -32,6 +43,10 @@
 
   #header {
     font-size: xx-large;
+  }
+
+  button {
+    color: black;
   }
 
   a {

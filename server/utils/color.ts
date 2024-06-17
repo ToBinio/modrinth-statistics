@@ -8,9 +8,11 @@ export function getColorForLauncher(name: string): string {
             return "#959eef"
         case 'neoforge':
             return "#f99e6b"
+        case 'liteloader':
+            return "#7ab0ee"
         default: {
             console.log(`unknown Launcher trying to access color - ${name}`);
-            return "#ffffff"
+            return "#6b7280"
         }
     }
 }

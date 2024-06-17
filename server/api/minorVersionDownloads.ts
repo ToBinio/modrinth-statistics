@@ -11,7 +11,7 @@ type result = {
 
 export default defineEventHandler(async (event): Promise<result> => {
     const storage = useStorage();
-    let downloads = await storage.getItem<Downloads>("allDownloads")
+    let downloads = await storage.getItem<Downloads>("minorVersionDownloads")
 
     if (!downloads) {
         // todo - error message

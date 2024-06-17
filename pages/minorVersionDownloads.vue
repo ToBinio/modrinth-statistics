@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {Bar} from 'vue-chartjs'
 
-const {data} = await useFetch("/api/downloads");
+const {data} = await useFetch("/api/minorVersionDownloads");
 let downloadData = computed(() => {
   if (data.value) {
     return data.value
