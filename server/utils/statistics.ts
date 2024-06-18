@@ -196,5 +196,7 @@ function StatsFromData(versions: GameVersion[], data: StatsData): Stats {
         })
     }
 
+    loaderData.sort((a, b) => a.name.localeCompare(b.name))
+
     return {versions: versionArray, data: loaderData}
 }
