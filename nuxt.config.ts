@@ -23,6 +23,12 @@ export default defineNuxtConfig({
                 driver: 'fs',
                 base: './.data/statistics'
             }
+        },
+        experimental: {
+            tasks: true
+        },
+        scheduledTasks: {
+            '0 0 * * *': ['analyze']
         }
     },
     modules: ["nuxt-icon"]
