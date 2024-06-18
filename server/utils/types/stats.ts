@@ -2,6 +2,8 @@ export type Stats = {
     versions: string[]
     data: {
         name: string
-        values: { downloads: number, count: number }[]
+        values: StatsValue[]
     }[]
 }
+
+export type StatsValue = { downloads: number, count: number }

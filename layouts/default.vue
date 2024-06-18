@@ -24,9 +24,9 @@ const countUrls = [
     <NuxtLink id="header" href="/">
       Modrinth Statistics
     </NuxtLink>
-    <div>
-      <DropDownLink :urls="downloadUrls" title="Downloads"/>
-      <DropDownLink :urls="countUrls" title="Counts"/>
+    <div id="links">
+      <DropDownLink :urls="downloadUrls" title="Mod Downloads"/>
+      <DropDownLink :urls="countUrls" title="Mod Counts"/>
     </div>
     <button @click="onUpdateData">
       update Data
@@ -52,6 +52,11 @@ const countUrls = [
   #header {
     font-weight: bold;
     font-size: xx-large;
+  }
+
+  #links {
+    display: flex;
+    gap: 25px;
   }
 
   button {
