@@ -122,7 +122,9 @@ const modpackCountUrls = [
       }
 
       &.router-link-active {
-        color: var(--primary-100);
+        color: transparent;
+        background: linear-gradient(10deg, var(--primary-100) 30%, var(--primary-600) 100%);
+        background-clip: text;
       }
     }
   }
