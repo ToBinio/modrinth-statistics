@@ -51,6 +51,9 @@ const modpackCountUrls = [
         update Data
       </button>
     </DevOnly>
+    <NuxtLink to="https://github.com/ToBinio/modrinth-statistics" target="_blank">
+      <Icon name="mdi:github" size="40"/>
+    </NuxtLink>
   </div>
   <div id="main">
     <slot/>
@@ -66,7 +69,7 @@ const modpackCountUrls = [
 
   display: flex;
 
-  gap: max(10%, 75px);
+  justify-content: space-between;
   align-items: center;
 
   overflow: scroll;
