@@ -35,12 +35,32 @@ const chartOptions = ref({
   maintainAspectRatio: false,
   scales: {
     x: {
-      stacked: true
+      stacked: true,
+      grid: {
+        color: "#1b1a1e"
+      },
+      ticks: {
+        color: "#8a8a8c"
+      }
     },
     y: {
-      stacked: true
+      stacked: true,
+      grid: {
+        color: "#1b1a1e"
+      },
+
+      ticks: {
+        color: "#8a8a8c"
+      }
     }
   },
+  plugins: {
+    legend: {
+      labels: {
+        color: "#8a8a8c"
+      }
+    }
+  }
 })
 </script>
 
