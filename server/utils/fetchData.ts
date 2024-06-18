@@ -49,7 +49,7 @@ export async function getVersions(versionIds: string[]): Promise<Version[]> {
     })
 }
 
-type Version = {
+export type Version = {
     loaders: string[]
     game_versions: string[]
     downloads: number
