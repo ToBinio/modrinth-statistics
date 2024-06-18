@@ -5,7 +5,8 @@ type statistics = {
   "files": number,
   "authors": number
 };
-const {data} = useFetch<statistics>("https://api.modrinth.com/v2/statistics");
+
+const {data} = useModrinthFetch<statistics>("/statistics");
 </script>
 
 <template>

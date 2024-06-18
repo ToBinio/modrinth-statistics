@@ -1,23 +1,55 @@
 <script setup lang="ts">
+async function onUpdateData() {
+  await $fetch("/api/update")
+}
 
+const urls = [
+  {title: "Major Versions", url: "/downloads/major"},
+  {title: "Minor Versions", url: "/downloads/minor"},
+  {title: "All Versions", url: "/downloads/all"},
+]
+
+let currentUrl = ref(urls[0].url)
+
+const route = useRoute();
+
+for (let url of urls) {
+  if (url.url == route.path) {
+    currentUrl.value = url.url
+  }
+}
+
+watch(currentUrl, (url) => {
+  navigateTo(url)
+})
 </script>
 
 <template>
-  <nav>
+  <div id="nav">
     <NuxtLink id="header" href="/">
       Modrinth Statistics
     </NuxtLink>
     <div>
-      <NuxtLink href="/numberPerLauncher">
-        Downloads per Launcher
-      </NuxtLink>
+      <div id="downloads">
+        <NuxtLink class="header" :to="currentUrl">Downloads</NuxtLink>
+        <select v-model="currentUrl">
+          <option v-for="download in urls" :key="download.url" :value="download.url">
+            {{ download.title }}
+          </option>
+        </select>
+      </div>
     </div>
-  </nav>
-  <slot/>
+    <button @click="onUpdateData">
+      update Data
+    </button>
+  </div>
+  <div id="main">
+    <slot/>
+  </div>
 </template>
 
 <style scoped>
-nav {
+#nav {
   padding: 10px;
   margin: 10px;
 
@@ -29,12 +61,33 @@ nav {
   align-items: center;
 
   #header {
+    font-weight: bold;
     font-size: xx-large;
   }
 
-  a {
-    font-size: large;
+  button {
+    color: black;
+  }
 
+  #downloads {
+    display: flex;
+    flex-direction: column;
+
+    .header {
+      transition: 0.2s color ease-out;
+      font-size: x-large;
+    }
+
+    select {
+      background-color: transparent;
+      border: none;
+      border-radius: 7px;
+
+      padding: 0 0 5px;
+    }
+  }
+
+  a {
     text-decoration: none;
     transition: 0.2s color ease-out;
 
@@ -42,5 +95,9 @@ nav {
       color: var(--primary-100);
     }
   }
+}
+
+#main {
+  flex: 1;
 }
 </style>

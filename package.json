@@ -10,8 +10,13 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "chart.js": "^4.4.3",
     "nuxt": "^3.12.2",
     "vue": "^3.4.29",
+    "vue-chartjs": "^5.3.1",
     "vue-router": "^4.3.3"
+  },
+  "devDependencies": {
+    "nuxt-icon": "^0.6.10"
   }
 }
