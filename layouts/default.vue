@@ -46,9 +46,11 @@ const modpackCountUrls = [
         <DropDownLink :urls="modpackCountUrls" title="Modpack Counts"/>
       </div>
     </div>
-    <button @click="onUpdateData">
-      update Data
-    </button>
+    <DevOnly>
+      <button @click="onUpdateData">
+        update Data
+      </button>
+    </DevOnly>
   </div>
   <div id="main">
     <slot/>

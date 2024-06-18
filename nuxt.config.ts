@@ -1,7 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     devtools: {enabled: true},
-
     routeRules: {
         "/downloads": {
             redirect: "/downloads/major"
@@ -17,8 +16,8 @@ export default defineNuxtConfig({
         //     prerender: true
         // }
     },
-
     nitro: {
+        preset: "bun",
         storage: {
             statistics: {
                 driver: 'fs',
@@ -26,6 +25,5 @@ export default defineNuxtConfig({
             }
         }
     },
-
     modules: ["nuxt-icon"]
 })
