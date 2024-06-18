@@ -6,7 +6,7 @@ export async function getProjectIds(offset: number): Promise<string[]> {
             limit: 100,
             offset: offset,
             //todo - remove newest
-            // index: "newest",
+            index: "newest",
             facets: "[[\"project_types:mod\"]]"
         }
     })
@@ -53,4 +53,23 @@ export type Version = {
     loaders: string[]
     game_versions: string[]
     downloads: number
+}
+
+export async function getGameVersions(): Promise<GameVersion[]> {
+    const data = await $modrinthFetch<{
+        version: string,
+        version_type: string
+    }[]>("/tag/game_version")
+
+    return data.map(value => {
+        return {
+            name: value.version,
+            fullVersion: value.version_type == "release"
+        }
+    }).toReversed()
+}
+
+export type GameVersion = {
+    name: string,
+    fullVersion: boolean,
 }

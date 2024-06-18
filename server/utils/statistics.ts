@@ -1,7 +1,3 @@
-import {Downloads} from "~/server/utils/types/downloads";
-import {Version} from "~/server/utils/fetchData";
-import {isAllowedModLoader} from "~/server/utils/allowed";
-
 export async function updateStatistics() {
     const projectIds = await getProjectIds(0);
     console.log("project ids", projectIds.length);
@@ -10,13 +6,13 @@ export async function updateStatistics() {
     console.log("version ids", versionIds.length);
 
     let data = new Map<string, Map<string, number>>()
-    let versionsSet = new Set<string>()
+    let versions = await getGameVersions()
 
-    await insertVersionsFromIds(versionIds, data, versionsSet);
+    await insertVersionsFromIds(versionIds, data);
 
-    let allDownloads = downloadsFromData(versionsSet, data);
-    let minorVersionDownloads = onlyMinorVersions(allDownloads);
-    let majorVersionDownloads = onlyMajorVersions(allDownloads);
+    let allDownloads = downloadsFromData(versions, data);
+    let {gameVersions: minorGameVersions, downloads: minorVersionDownloads} = onlyMinorVersions(versions, allDownloads);
+    let majorVersionDownloads = onlyMajorVersions(minorGameVersions, minorVersionDownloads);
 
     const storage = useStorage("statistics");
     await storage.setItem<Downloads>("allVersionDownloads", allDownloads)
@@ -24,7 +20,7 @@ export async function updateStatistics() {
     await storage.setItem<Downloads>("majorVersionDownloads", majorVersionDownloads)
 }
 
-async function insertVersionsFromIds(versionIds: string[], data: Map<string, Map<string, number>>, versionsSet: Set<string>) {
+async function insertVersionsFromIds(versionIds: string[], data: Map<string, Map<string, number>>) {
     const BATCH_SIZE = 1000;
 
     let currentIndex = 0;
@@ -36,14 +32,18 @@ async function insertVersionsFromIds(versionIds: string[], data: Map<string, Map
         const versions = await getVersions(ids)
         console.log("versions", versions.length);
 
-        insertVersions(versions, data, versionsSet);
+        insertVersions(versions, data);
         if (ids.length != BATCH_SIZE)
             break
     }
 }
 
-function insertVersions(versions: Version[], data: Map<string, Map<string, number>>, versionsSet: Set<string>) {
+function insertVersions(versions: Version[], data: Map<string, Map<string, number>>) {
     for (let version of versions) {
+
+        // compensate for a version contributing to multiple loaders and versions
+        let versionDownloads = version.downloads / (version.loaders.length * version.game_versions.length)
+
         for (let loader of version.loaders) {
             if (!isAllowedModLoader(loader)) {
                 continue
@@ -58,12 +58,10 @@ function insertVersions(versions: Version[], data: Map<string, Map<string, numbe
             }
 
             for (let gameVersion of version.game_versions) {
-                versionsSet.add(gameVersion);
-
                 if (downloads.has(gameVersion)) {
-                    downloads.set(gameVersion, downloads.get(gameVersion)! + version.downloads)
+                    downloads.set(gameVersion, downloads.get(gameVersion)! + versionDownloads)
                 } else {
-                    downloads.set(gameVersion, version.downloads)
+                    downloads.set(gameVersion, versionDownloads)
                 }
             }
         }
@@ -71,76 +69,81 @@ function insertVersions(versions: Version[], data: Map<string, Map<string, numbe
 }
 
 
-function onlyMinorVersions(all: Downloads): Downloads {
+function onlyMinorVersions(gameVersions: GameVersion[], all: Downloads): {
+    gameVersions: GameVersion[],
+    downloads: Downloads
+} {
+    const versions = Array.from(gameVersions)
+    const downloads: Downloads = JSON.parse(JSON.stringify(all))
 
-    let data = new Map<string, Map<string, number>>()
-    let versionsSet = new Set<string>()
+    let index = 0
 
-    for (let loader of all.data) {
-        let downloads = new Map<string, number>();
+    while (true) {
+        if (index == versions.length)
+            break
 
-        for (let i = 0; i < all.versions.length; i++) {
-            let versionText = all.versions[i];
+        let gameVersion = versions[index];
 
-            //todo - dont somehow handle snapshot versions
-            if (versionText.includes("w")) {
+        if (gameVersion.fullVersion) {
+            index++
+            continue
+        }
+
+        for (let loader of downloads.data) {
+            let downloads = loader.downloads.splice(index, 1);
+
+            if (index + 1 >= loader.downloads.length) {
                 continue
             }
 
-            let version = versionText.split("-")[0];
-
-            versionsSet.add(version);
-
-            if (downloads.has(version)) {
-                downloads.set(version, downloads.get(version)! + loader.downloads[i])
-            } else {
-                downloads.set(version, loader.downloads[i])
-            }
+            loader.downloads[index + 1] += downloads[0]
         }
 
-        data.set(loader.name, downloads)
+        versions.splice(index, 1)
+        downloads.versions.splice(index, 1)
     }
 
-    return downloadsFromData(versionsSet, data);
+    return {gameVersions: versions, downloads: downloads}
 }
 
-function onlyMajorVersions(all: Downloads): Downloads {
+function onlyMajorVersions(gameVersions: GameVersion[], all: Downloads): Downloads {
+    const versions = Array.from(gameVersions)
+    const downloads: Downloads = JSON.parse(JSON.stringify(all))
 
-    let data = new Map<string, Map<string, number>>()
-    let versionsSet = new Set<string>()
+    let index = versions.length - 1
 
-    for (let loader of all.data) {
-        let downloads = new Map<string, number>();
+    while (true) {
+        if (index == -1)
+            break
 
-        for (let i = 0; i < all.versions.length; i++) {
-            let versionText = all.versions[i];
+        let gameVersion = versions[index];
 
-            //todo - dont somehow handle snapshot versions
-            if (versionText.includes("w")) {
+        if (gameVersion.name.split(".").length == 2) {
+            index--
+            continue
+        }
+
+        for (let loader of downloads.data) {
+            let downloads = loader.downloads.splice(index, 1);
+
+            if (index - 1 < 0) {
                 continue
             }
 
-            let version = versionText.split("-")[0];
-            version = version.split(".").slice(0, 2).join(".")
-
-            versionsSet.add(version);
-
-            if (downloads.has(version)) {
-                downloads.set(version, downloads.get(version)! + loader.downloads[i])
-            } else {
-                downloads.set(version, loader.downloads[i])
-            }
+            loader.downloads[index - 1] += downloads[0]
         }
 
-        data.set(loader.name, downloads)
+        versions.splice(index, 1)
+        downloads.versions.splice(index, 1)
     }
 
-    return downloadsFromData(versionsSet, data);
+    return downloads
 }
 
-function downloadsFromData(versionsSet: Set<string>, data: Map<string, Map<string, number>>): Downloads {
-    const versionArray = Array.from(versionsSet)
-    versionArray.sort((a, b) => a.localeCompare(b, undefined, {numeric: true}))
+function downloadsFromData(versions: GameVersion[], data: Map<string, Map<string, number>>): Downloads {
+    const versionArray = versions.map(value => {
+        return value.name
+    })
 
     const loaderData = []
 
@@ -155,6 +158,10 @@ function downloadsFromData(versionsSet: Set<string>, data: Map<string, Map<strin
                 downloads.push(0)
             }
         }
+
+        downloads = downloads.map((value) => {
+            return Math.round(value)
+        })
 
         loaderData.push({
             name: loader[0],
