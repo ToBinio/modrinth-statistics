@@ -66,8 +66,10 @@ const modpackCountUrls = [
 
   display: flex;
 
-  gap: 10%;
+  gap: max(10%, 75px);
   align-items: center;
+
+  overflow: scroll;
 
   #header {
     font-weight: bold;
