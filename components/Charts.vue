@@ -25,7 +25,12 @@ let downloadData = computed(() => {
 const chartData = computed(() => {
   return {
     labels: downloadData.value.labels,
-    datasets: downloadData.value.data
+    datasets: downloadData.value.data.map((value) => {
+      return {
+        ...value,
+        borderRadius: 3
+      }
+    })
   }
 })
 
@@ -56,7 +61,8 @@ const chartOptions = ref({
   plugins: {
     legend: {
       labels: {
-        color: "#8a8a8c"
+        color: "#8a8a8c",
+        useBorderRadius: true
       }
     }
   },
