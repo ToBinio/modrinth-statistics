@@ -51,7 +51,7 @@ const modpackCountUrls = [
         update Data
       </button>
     </DevOnly>
-    <NuxtLink to="https://github.com/ToBinio/modrinth-statistics" target="_blank">
+    <NuxtLink id="github" to="https://github.com/ToBinio/modrinth-statistics" target="_blank">
       <Icon name="mdi:github" size="40"/>
     </NuxtLink>
   </div>
@@ -89,6 +89,14 @@ const modpackCountUrls = [
     }
   }
 
+  #github {
+    transition: 0.1s scale ease-in-out;
+
+    &:hover {
+      scale: 1.05;
+    }
+  }
+
   button {
     color: black;
   }
@@ -96,6 +104,10 @@ const modpackCountUrls = [
   a {
     text-decoration: none;
     transition: 0.2s color ease-out;
+
+    &:hover {
+      color: var(--primary-600);
+    }
 
     &.router-link-active {
       color: var(--primary-100);

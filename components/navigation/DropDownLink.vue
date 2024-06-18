@@ -53,6 +53,10 @@ watch(currentUrl, (url) => {
     &.router-link-active {
       color: var(--primary-100);
     }
+
+    &:hover {
+      color: var(--primary-600);
+    }
   }
 }
 </style>
