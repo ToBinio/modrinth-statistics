@@ -1,6 +1,4 @@
 import {Downloads} from "~/server/utils/types/downloads";
-import downloads from "~/server/api/downloads";
-import {min} from "@floating-ui/utils";
 
 export default defineEventHandler(async (event) => {
 
@@ -46,7 +44,7 @@ export default defineEventHandler(async (event) => {
     let minorVersionDownloads = onlyMinorVersions(allDownloads);
     let majorVersionDownloads = onlyMajorVersions(allDownloads);
 
-    const storage = useStorage();
+    const storage = useStorage("statistics");
     await storage.setItem<Downloads>("allVersionDownloads", allDownloads)
     await storage.setItem<Downloads>("minorVersionDownloads", minorVersionDownloads)
     await storage.setItem<Downloads>("majorVersionDownloads", majorVersionDownloads)

@@ -10,7 +10,7 @@ type result = {
 }
 
 export default defineEventHandler(async (event): Promise<result> => {
-    const storage = useStorage();
+    const storage = useStorage("statistics");
     let query = getQuery(event);
 
     let downloads

@@ -15,5 +15,13 @@ export default defineNuxtConfig({
         // "/downloads/major": {
         //     prerender: true
         // }
+    },
+    nitro: {
+        storage: {
+            statistics: {
+                driver: 'fs',
+                base: './.data/statistics'
+            }
+        }
     }
 })
