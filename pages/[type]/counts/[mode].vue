@@ -12,5 +12,6 @@ the version will be counted every loader/game-version.
 </script>
 
 <template>
-  <Charts :mode="route.params.mode as string" url="/api/counts" :explanation="explanation"/>
+  <Charts :mode="route.params.mode as string" stat="count" :type="route.params.type as string" url="/api/counts"
+          :explanation="explanation"/>
 </template>

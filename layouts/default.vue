@@ -5,16 +5,28 @@ async function onUpdateData() {
   await $fetch("/api/update")
 }
 
-const downloadUrls = [
-  {title: "Major Versions", url: "/downloads/major"},
-  {title: "Minor Versions", url: "/downloads/minor"},
-  {title: "All Versions", url: "/downloads/all"},
+const modDownloadUrls = [
+  {title: "Major Versions", url: "/mod/downloads/major"},
+  {title: "Minor Versions", url: "/mod/downloads/minor"},
+  {title: "All Versions", url: "/mod/downloads/all"},
 ]
 
-const countUrls = [
-  {title: "Major Versions", url: "/counts/major"},
-  {title: "Minor Versions", url: "/counts/minor"},
-  {title: "All Versions", url: "/counts/all"},
+const modCountUrls = [
+  {title: "Major Versions", url: "/mod/counts/major"},
+  {title: "Minor Versions", url: "/mod/counts/minor"},
+  {title: "All Versions", url: "/mod/counts/all"},
+]
+
+const modpackDownloadUrls = [
+  {title: "Major Versions", url: "/modpack/downloads/major"},
+  {title: "Minor Versions", url: "/modpack/downloads/minor"},
+  {title: "All Versions", url: "/modpack/downloads/all"},
+]
+
+const modpackCountUrls = [
+  {title: "Major Versions", url: "/modpack/counts/major"},
+  {title: "Minor Versions", url: "/modpack/counts/minor"},
+  {title: "All Versions", url: "/modpack/counts/all"},
 ]
 
 </script>
@@ -25,8 +37,14 @@ const countUrls = [
       Modrinth Statistics
     </NuxtLink>
     <div id="links">
-      <DropDownLink :urls="downloadUrls" title="Mod Downloads"/>
-      <DropDownLink :urls="countUrls" title="Mod Counts"/>
+      <div class="groups">
+        <DropDownLink :urls="modDownloadUrls" title="Mod Downloads"/>
+        <DropDownLink :urls="modCountUrls" title="Mod Counts"/>
+      </div>
+      <div class="groups">
+        <DropDownLink :urls="modpackDownloadUrls" title="Modpack Downloads"/>
+        <DropDownLink :urls="modpackCountUrls" title="Modpack Counts"/>
+      </div>
     </div>
     <button @click="onUpdateData">
       update Data
@@ -56,7 +74,12 @@ const countUrls = [
 
   #links {
     display: flex;
-    gap: 25px;
+    gap: 50px;
+
+    .groups {
+      display: flex;
+      gap: 20px;
+    }
   }
 
   button {

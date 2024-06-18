@@ -2,9 +2,15 @@
 import {Bar} from 'vue-chartjs'
 import type {StatExport} from "~/server/utils/api/stats";
 
-const props = defineProps<{ url: string, mode: string, explanation: string }>();
+const props = defineProps<{ stat: string, type: string, mode: string, explanation: string }>();
 
-const {data} = await useFetch<StatExport>(props.url, {query: {mode: props.mode}});
+const {data} = await useFetch<StatExport>("/api/stats", {
+  query: {
+    mode: props.mode,
+    type: props.type,
+    stat: props.stat
+  }
+});
 let downloadData = computed(() => {
   if (data.value) {
     return data.value

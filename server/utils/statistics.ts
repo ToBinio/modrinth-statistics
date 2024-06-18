@@ -3,8 +3,26 @@ import {GameVersion, Version} from "~/server/utils/fetchData";
 
 type StatsData = Map<string, Map<string, { downloads: number, count: number }>>
 
+type AllStats = { all: Stats, minor: Stats, major: Stats };
+
 export async function updateStatistics() {
-    const projectIds = await getProjectIds(0);
+    const modStats = await getStatistics("mod")
+    await saveStats(modStats, "mod")
+
+    const modpackStats = await getStatistics("modpack")
+    await saveStats(modpackStats, "modpack")
+}
+
+async function saveStats(stats: AllStats, type: string) {
+    const storage = useStorage("statistics");
+    await storage.setItem<Stats>(`${type}StatsAll`, stats.all)
+    await storage.setItem<Stats>(`${type}StatsMinor`, stats.minor)
+    await storage.setItem<Stats>(`${type}StatsMajor`, stats.major
+    )
+}
+
+async function getStatistics(type: string): Promise<AllStats> {
+    const projectIds = await getProjectIds(0, type);
     console.log("project ids", projectIds.length);
 
     const versionIds = (await getVersionIds(projectIds))
@@ -19,10 +37,11 @@ export async function updateStatistics() {
     let {gameVersions: minorGameVersions, downloads: minorVersionDownloads} = onlyMinorVersions(versions, allDownloads);
     let majorVersionDownloads = onlyMajorVersions(minorGameVersions, minorVersionDownloads);
 
-    const storage = useStorage("statistics");
-    await storage.setItem<Stats>("versionStatsAll", allDownloads)
-    await storage.setItem<Stats>("versionStatsMinor", minorVersionDownloads)
-    await storage.setItem<Stats>("versionStatsMajor", majorVersionDownloads)
+    return {
+        all: allDownloads,
+        major: majorVersionDownloads,
+        minor: minorVersionDownloads
+    }
 }
 
 async function analyzeVersionsFromIds(versionIds: string[], data: StatsData) {

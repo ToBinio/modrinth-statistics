@@ -11,5 +11,6 @@ the downloads will be divided equally between each loader/game-version.
 </script>
 
 <template>
-  <Charts :mode="route.params.mode as string" url="/api/downloads" :explanation="explanation"/>
+  <Charts :mode="route.params.mode as string" stat="downloads" :type="route.params.type as string" url="/api/downloads"
+          :explanation="explanation"/>
 </template>

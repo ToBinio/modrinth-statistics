@@ -10,21 +10,19 @@ export type StatExport = {
     }[]
 }
 
-export async function exportStats(event: H3Event, fn: (value: StatsValue) => number): Promise<StatExport> {
+export async function exportStats(mode: string, type: string, fn: (value: StatsValue) => number): Promise<StatExport> {
     const storage = useStorage("statistics");
-    let query = getQuery(event);
-
     let stats
 
-    switch (query.mode) {
+    switch (mode) {
         case "minor" :
-            stats = await storage.getItem<Stats>("versionStatsMinor")
+            stats = await storage.getItem<Stats>(`${type}StatsMinor`)
             break
         case "all" :
-            stats = await storage.getItem<Stats>("versionStatsAll")
+            stats = await storage.getItem<Stats>(`${type}StatsAll`)
             break
         default:
-            stats = await storage.getItem<Stats>("versionStatsMajor")
+            stats = await storage.getItem<Stats>(`${type}StatsMajor`)
     }
 
     if (!stats) {
