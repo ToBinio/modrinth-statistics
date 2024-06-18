@@ -11,7 +11,20 @@ type result = {
 
 export default defineEventHandler(async (event): Promise<result> => {
     const storage = useStorage();
-    let downloads = await storage.getItem<Downloads>("allDownloads")
+    let query = getQuery(event);
+
+    let downloads
+
+    switch (query.mode) {
+        case "minor" :
+            downloads = await storage.getItem<Downloads>("minorVersionDownloads")
+            break
+        case "all" :
+            downloads = await storage.getItem<Downloads>("allVersionDownloads")
+            break
+        default:
+            downloads = await storage.getItem<Downloads>("majorVersionDownloads")
+    }
 
     if (!downloads) {
         // todo - error message

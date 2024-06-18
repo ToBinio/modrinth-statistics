@@ -13,13 +13,13 @@ async function onUpdateData() {
       update Data
     </button>
     <div>
-      <NuxtLink href="/downloads">
+      <NuxtLink to="/downloads/all">
         All Downloads
       </NuxtLink>
-      <NuxtLink href="/minorVersionDownloads">
+      <NuxtLink to="/downloads/minor">
         minor Downloads
       </NuxtLink>
-      <NuxtLink href="/majorVersionDownloads">
+      <NuxtLink to="/downloads/major">
         major Downloads
       </NuxtLink>
     </div>

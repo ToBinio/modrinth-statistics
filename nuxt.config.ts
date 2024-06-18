@@ -2,8 +2,18 @@
 export default defineNuxtConfig({
     devtools: {enabled: true},
     routeRules: {
-        "/numberPerLauncher": {
-            prerender: true
-        }
+        "/downloads": {
+            redirect: "/downloads/major"
+        },
+        // see - https://github.com/unjs/nitro/issues/889
+        // "/downloads/all": {
+        //     prerender: true
+        // },
+        // "/downloads/minor": {
+        //     prerender: true
+        // },
+        // "/downloads/major": {
+        //     prerender: true
+        // }
     }
 })

@@ -47,7 +47,7 @@ export default defineEventHandler(async (event) => {
     let majorVersionDownloads = onlyMajorVersions(allDownloads);
 
     const storage = useStorage();
-    await storage.setItem<Downloads>("allDownloads", allDownloads)
+    await storage.setItem<Downloads>("allVersionDownloads", allDownloads)
     await storage.setItem<Downloads>("minorVersionDownloads", minorVersionDownloads)
     await storage.setItem<Downloads>("majorVersionDownloads", majorVersionDownloads)
 })
