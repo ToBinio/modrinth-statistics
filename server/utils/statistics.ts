@@ -64,15 +64,12 @@ async function analyzeVersionsFromIds(versionIds: string[], data: StatsData) {
 
 function analyzeVersions(versions: Version[], data: StatsData) {
     for (let version of versions) {
+        let allowedLaunchers = version.loaders.filter(value => isAllowedModLoader(value));
 
         // compensate for a version contributing to multiple loaders and versions
-        let versionDownloads = version.downloads / (version.loaders.length * version.game_versions.length)
+        let versionDownloads = version.downloads / (allowedLaunchers.length * version.game_versions.length)
 
-        for (let loader of version.loaders) {
-            if (!isAllowedModLoader(loader)) {
-                continue
-            }
-
+        for (let loader of allowedLaunchers) {
             let downloads = new Map<string, { downloads: number, count: number }>();
 
             if (data.has(loader)) {
