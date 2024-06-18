@@ -41,7 +41,7 @@ export default defineEventHandler(async (event): Promise<result> => {
                 label: value.name,
                 backgroundColor: getColorForLauncher(value.name),
                 data: value.values.map((stat) => {
-                    return stat.downloads
+                    return stat.count
                 })
             }
         })

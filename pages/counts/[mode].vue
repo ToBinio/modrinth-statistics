@@ -3,7 +3,7 @@ import {Bar} from 'vue-chartjs'
 
 const route = useRoute();
 
-const {data} = await useFetch("/api/downloads", {query: {mode: route.params.mode}});
+const {data} = await useFetch("/api/counts", {query: {mode: route.params.mode}});
 let downloadData = computed(() => {
   if (data.value) {
     return data.value

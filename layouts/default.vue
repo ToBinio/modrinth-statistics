@@ -1,27 +1,22 @@
 <script setup lang="ts">
+import DropDownLink from "~/components/navigation/DropDownLink.vue";
+
 async function onUpdateData() {
   await $fetch("/api/update")
 }
 
-const urls = [
+const downloadUrls = [
   {title: "Major Versions", url: "/downloads/major"},
   {title: "Minor Versions", url: "/downloads/minor"},
   {title: "All Versions", url: "/downloads/all"},
 ]
 
-let currentUrl = ref(urls[0].url)
+const countUrls = [
+  {title: "Major Versions", url: "/counts/major"},
+  {title: "Minor Versions", url: "/counts/minor"},
+  {title: "All Versions", url: "/counts/all"},
+]
 
-const route = useRoute();
-
-for (let url of urls) {
-  if (url.url == route.path) {
-    currentUrl.value = url.url
-  }
-}
-
-watch(currentUrl, (url) => {
-  navigateTo(url)
-})
 </script>
 
 <template>
@@ -30,14 +25,8 @@ watch(currentUrl, (url) => {
       Modrinth Statistics
     </NuxtLink>
     <div>
-      <div id="downloads">
-        <NuxtLink class="header" :to="currentUrl">Downloads</NuxtLink>
-        <select v-model="currentUrl">
-          <option v-for="download in urls" :key="download.url" :value="download.url">
-            {{ download.title }}
-          </option>
-        </select>
-      </div>
+      <DropDownLink :urls="downloadUrls" title="Downloads"/>
+      <DropDownLink :urls="countUrls" title="Counts"/>
     </div>
     <button @click="onUpdateData">
       update Data
@@ -67,24 +56,6 @@ watch(currentUrl, (url) => {
 
   button {
     color: black;
-  }
-
-  #downloads {
-    display: flex;
-    flex-direction: column;
-
-    .header {
-      transition: 0.2s color ease-out;
-      font-size: x-large;
-    }
-
-    select {
-      background-color: transparent;
-      border: none;
-      border-radius: 7px;
-
-      padding: 0 0 5px;
-    }
   }
 
   a {
