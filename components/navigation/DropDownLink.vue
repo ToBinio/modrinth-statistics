@@ -50,6 +50,10 @@ watch(currentUrl, (url) => {
     text-decoration: none;
     transition: 0.2s color ease-out;
 
+    &:hover {
+      color: var(--primary-600);
+    }
+
     &.router-link-active {
       color: var(--primary-100);
     }

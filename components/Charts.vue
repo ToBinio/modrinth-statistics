@@ -25,7 +25,12 @@ let downloadData = computed(() => {
 const chartData = computed(() => {
   return {
     labels: downloadData.value.labels,
-    datasets: downloadData.value.data
+    datasets: downloadData.value.data.map((value) => {
+      return {
+        ...value,
+        borderRadius: 3
+      }
+    })
   }
 })
 
@@ -56,18 +61,21 @@ const chartOptions = ref({
   plugins: {
     legend: {
       labels: {
-        color: "#8a8a8c"
+        color: "#8a8a8c",
+        useBorderRadius: true
       }
     }
-  }
+  },
 })
 </script>
 
 <template>
-  <Bar
-      :data="chartData"
-      :options="chartOptions"
-  />
+  <div id="container">
+    <Bar
+        :data="chartData"
+        :options="chartOptions"
+    />
+  </div>
   <div id="tooltip">
     <Icon name="ph:question" size="25" style="color: var(--white)"/>
     <div id="explanation" v-html="explanation">
@@ -75,11 +83,19 @@ const chartOptions = ref({
   </div>
 </template>
 <style scoped>
+#container {
+  flex: 1;
+
+  canvas {
+    margin: 10px;
+  }
+}
+
 #tooltip {
   position: absolute;
 
   top: 0;
-  right: 0;
+  right: 10px;
 
   &:not(:hover) {
     #explanation {
