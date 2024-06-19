@@ -40,11 +40,11 @@ const modpackCountUrls = [
       <div id="links">
         <div class="groups">
           <DropDownLink :urls="modDownloadUrls" title="Mod Downloads"/>
-          <DropDownLink :urls="modCountUrls" title="Mod Counts"/>
+          <DropDownLink :urls="modCountUrls" title="Mod Versions"/>
         </div>
         <div class="groups">
           <DropDownLink :urls="modpackDownloadUrls" title="Modpack Downloads"/>
-          <DropDownLink :urls="modpackCountUrls" title="Modpack Counts"/>
+          <DropDownLink :urls="modpackCountUrls" title="Modpack Versions"/>
         </div>
       </div>
       <DevOnly>
