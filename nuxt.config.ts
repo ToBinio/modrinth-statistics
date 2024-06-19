@@ -8,6 +8,12 @@ export default defineNuxtConfig({
             ]
         }
     },
+    runtimeConfig: {
+        public: {
+            posthogPublicKey: 'phc_vD7xT8ICrEYHimKUBG3SJUeMqSKrvq0v9rQsQGW4cI9',
+            posthogHost: 'https://eu.i.posthog.com'
+        }
+    },
     routeRules: {
         "/downloads": {
             redirect: "/downloads/major"
