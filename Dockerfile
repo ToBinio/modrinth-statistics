@@ -1,16 +1,16 @@
 
-FROM oven/bun:1 as build
+FROM node:latest as build
 WORKDIR /app
 
 COPY package.json .
-RUN bun i
+RUN npm i
 
 COPY . .
 
-RUN bun run build
+RUN npm run build
 
 # Run
-FROM oven/bun:1
+FROM node:latest
 WORKDIR /app
 
 COPY --from=build /app/.output /app/.output
