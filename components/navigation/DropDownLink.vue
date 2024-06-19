@@ -39,11 +39,16 @@ watch(currentUrl, (url) => {
   }
 
   select {
-    background-color: transparent;
+    background-color: var(--surface-100) ;
     border: none;
     border-radius: 7px;
 
     padding: 0 0 5px;
+
+    option {
+      color: unset;
+      background-color: var(--surface-100);
+    }
   }
 
   a {

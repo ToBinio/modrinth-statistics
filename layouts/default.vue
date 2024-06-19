@@ -84,7 +84,7 @@ const modpackCountUrls = [
 
     gap: 10px;
 
-    overflow: scroll;
+    overflow: auto;
 
     #header {
       font-weight: bold;
@@ -115,7 +115,6 @@ const modpackCountUrls = [
 
     a {
       text-decoration: none;
-      transition: 0.2s color ease-out;
 
       &:hover {
         color: var(--primary-600);

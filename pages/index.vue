@@ -13,7 +13,7 @@ const {data} = useModrinthFetch<statistics>("/statistics");
   <div id="page">
     <div id="header">
       The place for Stats all about
-      <NuxtLink to="https://modrinth.com" id="modrinth">Modrinth</NuxtLink>
+      <NuxtLink to="https://modrinth.com" id="modrinth" target="_blank">Modrinth</NuxtLink>
       <div id="unofficial">(unofficial)</div>
     </div>
     <div id="values">
@@ -79,8 +79,14 @@ const {data} = useModrinthFetch<statistics>("/statistics");
     font-size: 4rem;
     font-weight: bold;
 
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
     #modrinth {
-      display: block;
+      display: inline-block;
       font-size: 5rem;
 
       color: transparent;
