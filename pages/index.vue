@@ -17,7 +17,7 @@ const {data} = useModrinthFetch<statistics>("/statistics");
 <template>
   <div id="page">
     <div id="header">
-      The place for Stats all about
+      The place for stats all about
       <NuxtLink to="https://modrinth.com" id="modrinth" target="_blank">Modrinth</NuxtLink>
       <div id="unofficial">(unofficial)</div>
     </div>

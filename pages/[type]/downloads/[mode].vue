@@ -7,10 +7,12 @@ useHead({
 })
 
 const explanation = `
-<h4>Number of downloads for a specif loader/game-version.</h4>
-If a version supports multiple loaders or game-versions
+<h4>Number of Downloads per Specific Loader/Game-Version</h4>
 <br/>
-the downloads will be divided equally between each loader/game-version.
+If a version supports multiple loaders or game-versions, the downloads will be divided equally among each supported loader/game-version.
+<br/>
+<br/>
+This may exaggerate widely supported but less commonly used loaders or versions, such as Quilt.
 `
 </script>
 

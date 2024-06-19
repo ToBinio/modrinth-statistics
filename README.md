@@ -2,7 +2,7 @@
 
 a Page to view some global statistics about [Modrinth](https://modrinth.com/)
 
-### Planed Features
+### Planned Features
 
 * data on specific projects - Same graphs as for mods but only showing a single project
 * charts for other project types (plugins, datapacks, shaders, resourcepacks)

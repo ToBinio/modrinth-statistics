@@ -4,7 +4,7 @@ import type {StatExport} from "~/server/utils/api/stats";
 
 const props = defineProps<{ stat: string, type: string, mode: string, explanation: string }>();
 
-const {data} = await useFetch<StatExport>("/api/stats", {
+const {data} = useFetch<StatExport>("/api/stats", {
   query: {
     mode: props.mode,
     type: props.type,
@@ -111,7 +111,8 @@ const chartOptions = ref({
     padding: 10px;
     border-radius: 10px;
 
-    white-space: nowrap;
+    width: 400px;
+    max-width: 90vw;
   }
 }
 </style>
