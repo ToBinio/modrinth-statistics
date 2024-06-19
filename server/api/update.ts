@@ -1,5 +1,5 @@
 import {updateStatistics} from "~/server/utils/statistics";
 
 export default defineEventHandler(async (event) => {
-    await updateStatistics()
+    await runTask("analyze")
 })

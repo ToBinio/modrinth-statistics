@@ -2,7 +2,6 @@ import {Stats} from "~/server/utils/types/stats";
 import {GameVersion, Version} from "~/server/utils/fetchData";
 
 type StatsData = Map<string, Map<string, { downloads: number, count: number }>>
-
 type AllStats = { all: Stats, minor: Stats, major: Stats };
 
 export async function updateStatistics() {
@@ -90,13 +89,11 @@ function analyzeVersions(versions: Version[], data: StatsData) {
         let versionDownloads = version.downloads / (allowedLaunchers.length * version.game_versions.length)
 
         for (let loader of allowedLaunchers) {
-            let downloads = new Map<string, { downloads: number, count: number }>();
-
-            if (data.has(loader)) {
-                downloads = data.get(loader)!;
-            } else {
-                data.set(loader, downloads)
+            if (!data.has(loader)) {
+                data.set(loader, new Map())
             }
+
+            let downloads = data.get(loader)!;
 
             for (let gameVersion of version.game_versions) {
                 if (downloads.has(gameVersion)) {
@@ -138,8 +135,8 @@ function onlyMinorVersions(gameVersions: GameVersion[], all: Stats): {
                 continue
             }
 
-            loader.values[index + 1].count += stats[0].count
-            loader.values[index + 1].downloads += stats[0].downloads
+            loader.values[index].count += stats[0].count
+            loader.values[index].downloads += stats[0].downloads
         }
 
         versions.splice(index, 1)
@@ -176,8 +173,8 @@ function onlyMajorVersions(gameVersions: GameVersion[], all: Stats): Stats {
         for (let loader of downloads.data) {
             let stats = loader.values.splice(index, 1);
 
-            loader.values[index + 1].count += stats[0].count
-            loader.values[index + 1].downloads += stats[0].downloads
+            loader.values[index].count += stats[0].count
+            loader.values[index].downloads += stats[0].downloads
         }
 
         versions.splice(index, 1)
