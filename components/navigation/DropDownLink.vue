@@ -22,7 +22,9 @@ watch(currentUrl, (url) => {
     <NuxtLink class="header" :to="currentUrl">{{ title }}</NuxtLink>
     <select v-model="currentUrl">
       <option v-for="route in urls" :key="route.url" :value="route.url">
-        {{ route.title }}
+        <NuxtLink :to="route.url">
+          {{ route.title }}
+        </NuxtLink>
       </option>
     </select>
   </div>
@@ -39,7 +41,7 @@ watch(currentUrl, (url) => {
   }
 
   select {
-    background-color: var(--surface-100) ;
+    background-color: var(--surface-100);
     border: none;
     border-radius: 7px;
 

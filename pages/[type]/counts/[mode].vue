@@ -2,6 +2,9 @@
 import Charts from "~/components/Charts.vue";
 
 const route = useRoute();
+useHead({
+  title: `Number of versions of ${route.params.type}`
+})
 
 const explanation = `
 <h4>Number of versions that support a specif loader/game-version.</h4>

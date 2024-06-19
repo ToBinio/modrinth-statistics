@@ -1,4 +1,9 @@
 <script setup lang="ts">
+
+useHead({
+  title: "Modrinth Statistics"
+})
+
 type statistics = {
   "projects": number,
   "versions": number,
