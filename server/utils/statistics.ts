@@ -153,28 +153,31 @@ function onlyMajorVersions(gameVersions: GameVersion[], all: Stats): Stats {
     const versions = Array.from(gameVersions)
     const downloads: Stats = JSON.parse(JSON.stringify(all))
 
-    let index = versions.length - 1
+    let index = 0
+    let currentVersion = versions[0].name.split(".").slice(0, 2).join(".")
 
     while (true) {
-        if (index == -1)
+        if (index == (versions.length - 1)) {
+            downloads.versions[index] = currentVersion
             break
+        }
 
-        let gameVersion = versions[index];
+        let nextGameVersions = versions[index + 1].name.split(".").slice(0, 2).join(".")
 
-        if (gameVersion.name.split(".").length == 2) {
-            index--
+        if (currentVersion != nextGameVersions) {
+            downloads.versions[index] = currentVersion
+            currentVersion = nextGameVersions;
+            index++
             continue
         }
+
+        currentVersion = nextGameVersions;
 
         for (let loader of downloads.data) {
             let stats = loader.values.splice(index, 1);
 
-            if (index - 1 < 0) {
-                continue
-            }
-
-            loader.values[index - 1].count += stats[0].count
-            loader.values[index - 1].downloads += stats[0].downloads
+            loader.values[index + 1].count += stats[0].count
+            loader.values[index + 1].downloads += stats[0].downloads
         }
 
         versions.splice(index, 1)
