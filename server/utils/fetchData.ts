@@ -1,12 +1,11 @@
 import {$modrinthFetch} from "~/utils/modrinthFetch";
 
-export async function getProjectIds(offset: number, type: string): Promise<string[]> {
+export async function getProjectIds(offset: number, type: string, limit: number): Promise<string[]> {
     const data = await $modrinthFetch<SimpleProjects>("/search", {
         query: {
-            limit: 100,
+            limit: limit,
             offset: offset,
-            //todo - remove newest
-            index: "newest",
+            index: import.meta.dev ? "newest" : "downloads",
             facets: `[[\"project_types:${type}\"]]`
         }
     })

@@ -22,17 +22,37 @@ async function saveStats(stats: AllStats, type: string) {
 }
 
 async function getStatistics(type: string): Promise<AllStats> {
-    const projectIds = await getProjectIds(0, type);
-    console.log("project ids", projectIds.length);
-
-    const versionIds = (await getVersionIds(projectIds))
-    console.log("version ids", versionIds.length);
-
+    const BATCH_COUNT = import.meta.dev ? 1 : 10;
     let data: StatsData = new Map()
-    await analyzeVersionsFromIds(versionIds, data);
+
+    let index = 0;
+
+    while (true) {
+        let done = false;
+
+        const batchProjectIds = []
+        for (let i = 0; i < BATCH_COUNT; i++) {
+            const projectIds = await getProjectIds(index, type, 100);
+            batchProjectIds.push(...projectIds);
+            index += 100;
+
+            if (projectIds.length != 100) {
+                done = true;
+                break
+            }
+        }
+
+        console.log("project ids", batchProjectIds.length);
+
+        const versionIds = (await getVersionIds(batchProjectIds))
+        console.log("version ids", versionIds.length);
+
+        await analyzeVersionsFromIds(versionIds, data);
+
+        if (done || import.meta.dev) break
+    }
 
     let versions = await getGameVersions()
-
     let allDownloads = StatsFromData(versions, data);
     let {gameVersions: minorGameVersions, downloads: minorVersionDownloads} = onlyMinorVersions(versions, allDownloads);
     let majorVersionDownloads = onlyMajorVersions(minorGameVersions, minorVersionDownloads);
