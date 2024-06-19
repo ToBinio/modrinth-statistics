@@ -30,7 +30,7 @@ export default defineNuxtConfig({
         // }
     },
     nitro: {
-        preset: "bun",
+        // preset: "bun",
         storage: {
             statistics: {
                 driver: 'fs',

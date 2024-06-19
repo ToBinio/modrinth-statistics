@@ -16,4 +16,4 @@ WORKDIR /app
 COPY --from=build /app/.output /app/.output
 
 EXPOSE 3000
-CMD [ "bun", ".output/server/index.mjs" ]
+CMD [ "node", ".output/server/index.mjs" ]
