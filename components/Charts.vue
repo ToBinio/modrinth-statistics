@@ -71,10 +71,10 @@ const chartOptions = ref({
 
 <template>
   <div id="container">
-    <Bar
-        :data="chartData"
-        :options="chartOptions"
-    />
+        <Bar
+            :data="chartData"
+            :options="chartOptions"
+        />
   </div>
   <div id="tooltip">
     <Icon name="ph:question" size="25" style="color: var(--white)"/>
@@ -87,6 +87,7 @@ const chartOptions = ref({
   flex: 1;
 
   canvas {
+    position: absolute;
     margin: 10px;
   }
 }

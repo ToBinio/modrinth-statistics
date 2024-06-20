@@ -82,7 +82,7 @@ const modpackCountUrls = [
     justify-content: space-between;
     align-items: center;
 
-    gap: 10px;
+    gap: 50px;
 
     overflow: auto;
 

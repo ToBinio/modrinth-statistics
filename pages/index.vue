@@ -73,11 +73,13 @@ const {data} = useModrinthFetch<statistics>("/statistics");
 <style scoped>
 #page {
   flex: 1;
-  background: linear-gradient(180deg, var(--surface-100) 0%, black 100%);
+  background: linear-gradient(180deg, var(--surface-100) 0%, var(--surface-mixed-100) 150%);
 
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+
+  gap: 50px;
 
   #header {
     text-align: center;
@@ -117,6 +119,8 @@ const {data} = useModrinthFetch<statistics>("/statistics");
     align-items: center;
 
     flex-wrap: wrap;
+
+    gap: 25px;
 
     .container {
       display: flex;
