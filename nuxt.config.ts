@@ -38,5 +38,5 @@ export default defineNuxtConfig({
             '0 0 * * *': ['analyze']
         }
     },
-    modules: ["nuxt-icon"]
+    modules: ["@nuxt/icon"]
 })

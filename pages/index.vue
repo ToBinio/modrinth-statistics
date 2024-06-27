@@ -23,7 +23,7 @@ const {data} = useModrinthFetch<statistics>("/statistics");
     </div>
     <div id="values">
       <div class="container">
-        <IconCSS name="akar-icons:game-controller" size="200"/>
+        <Icon name="akar-icons:game-controller" size="200"/>
         <div class="text">
           <div class="value">
             {{ data?.projects.toLocaleString() }}
@@ -34,7 +34,7 @@ const {data} = useModrinthFetch<statistics>("/statistics");
         </div>
       </div>
       <div class="container">
-        <IconCSS name="akar-icons:attach" size="200"/>
+        <Icon name="akar-icons:attach" size="200"/>
         <div class="text">
           <div class="value">
             {{ data?.versions.toLocaleString() }}
@@ -45,7 +45,7 @@ const {data} = useModrinthFetch<statistics>("/statistics");
         </div>
       </div>
       <div class="container">
-        <IconCSS name="akar-icons:file" size="200"/>
+        <Icon name="akar-icons:file" size="200"/>
         <div class="text">
           <div class="value">
             {{ data?.files.toLocaleString() }}
@@ -56,7 +56,7 @@ const {data} = useModrinthFetch<statistics>("/statistics");
         </div>
       </div>
       <div class="container">
-        <IconCSS name="akar-icons:person" size="200"/>
+        <Icon name="akar-icons:person" size="200"/>
         <div class="text">
           <div class="value">
             {{ data?.authors.toLocaleString() }}
