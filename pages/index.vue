@@ -23,7 +23,7 @@ const {data} = useModrinthFetch<statistics>("/statistics");
     </div>
     <div id="values">
       <div class="container">
-        <Icon name="akar-icons:game-controller" size="200"/>
+        <Icon name="akar-icons:game-controller" size="150"/>
         <div class="text">
           <div class="value">
             {{ data?.projects.toLocaleString() }}
@@ -34,7 +34,7 @@ const {data} = useModrinthFetch<statistics>("/statistics");
         </div>
       </div>
       <div class="container">
-        <Icon name="akar-icons:attach" size="200"/>
+        <Icon name="akar-icons:attach" size="150"/>
         <div class="text">
           <div class="value">
             {{ data?.versions.toLocaleString() }}
@@ -45,7 +45,7 @@ const {data} = useModrinthFetch<statistics>("/statistics");
         </div>
       </div>
       <div class="container">
-        <Icon name="akar-icons:file" size="200"/>
+        <Icon name="akar-icons:file" size="150"/>
         <div class="text">
           <div class="value">
             {{ data?.files.toLocaleString() }}
@@ -56,7 +56,7 @@ const {data} = useModrinthFetch<statistics>("/statistics");
         </div>
       </div>
       <div class="container">
-        <Icon name="akar-icons:person" size="200"/>
+        <Icon name="akar-icons:person" size="150"/>
         <div class="text">
           <div class="value">
             {{ data?.authors.toLocaleString() }}
@@ -114,16 +114,17 @@ const {data} = useModrinthFetch<statistics>("/statistics");
   }
 
   #values {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+
 
     flex-wrap: wrap;
 
-    gap: 25px;
+    gap: 50px;
 
     .container {
       display: flex;
+      justify-content: center;
 
       gap: 10px;
 
@@ -141,6 +142,18 @@ const {data} = useModrinthFetch<statistics>("/statistics");
         background: linear-gradient(70deg, var(--primary-100) 30%, var(--primary-600) 70%);
       }
     }
+  }
+}
+
+@media only screen and (max-width: 1500px) {
+  #values {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  #values {
+    grid-template-columns: 1fr !important;
   }
 }
 </style>
