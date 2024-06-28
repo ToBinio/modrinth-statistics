@@ -1,5 +1,5 @@
 import {Stats, StatsValue} from "~/server/utils/types/stats";
-import {ProjectTypes} from "~/server/utils/types/project";
+import {ProjectTypes} from "~/utils/project";
 
 export type StatExport = {
     labels: string[]

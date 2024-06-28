@@ -1,4 +1,4 @@
-import {ProjectTypes} from "~/server/utils/types/project";
+import {ProjectTypes} from "~/utils/project";
 
 const allowedModLoaders = ["fabric", "forge", "neoforge", "quilt", "liteloader", "modloader", "rift"]
 const allowedPluginLoaders = ["bukkit", "folia", "paper", "purpur", "spigot", "sponge"]

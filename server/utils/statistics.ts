@@ -1,17 +1,14 @@
 import {Stats} from "~/server/utils/types/stats";
 import {GameVersion, Version} from "~/server/utils/fetchData";
-import {ProjectTypes} from "~/server/utils/types/project";
+import {projectTypeList, ProjectTypes} from "~/utils/project";
 
 type StatsData = Map<string, Map<string, { downloads: number, count: number }>>
 type AllStats = { all: Stats, minor: Stats, major: Stats };
 
 export async function updateStatistics() {
-    await updateStatistic("mod")
-    await updateStatistic("modpack")
-    await updateStatistic("resourcepack")
-    await updateStatistic("shader")
-    await updateStatistic("plugin")
-    await updateStatistic("datapack")
+    for (let type of projectTypeList) {
+        await updateStatistic(type)
+    }
 }
 
 async function updateStatistic(type: ProjectTypes) {
