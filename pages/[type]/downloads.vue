@@ -6,6 +6,8 @@ useHead({
   title: `Number of downloads of ${route.params.type}`
 })
 
+const version = useVersion();
+
 const explanation = `
 <h4>Number of Downloads per Specific Loader/Game-Version</h4>
 <br/>
@@ -17,6 +19,6 @@ This may exaggerate widely supported but less commonly used loaders or versions,
 </script>
 
 <template>
-  <Charts :mode="route.params.mode as string" stat="downloads" :type="route.params.type as string" url="/api/downloads"
+  <Charts stat="downloads" :type="route.params.type as string"
           :explanation="explanation"/>
 </template>

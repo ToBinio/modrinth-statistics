@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import LinksContainer from "~/components/navigation/LinksContainer.vue";
+import Settings from "~/components/navigation/Settings.vue";
 
 async function onUpdateData() {
   await $fetch("/api/update")
@@ -18,9 +19,12 @@ async function onUpdateData() {
           update Data
         </button>
       </DevOnly>
-      <NuxtLink id="github" to="https://github.com/ToBinio/modrinth-statistics" target="_blank">
-        <Icon name="mdi:github" size="40"/>
-      </NuxtLink>
+      <div id="icons">
+        <Settings/>
+        <NuxtLink id="github" to="https://github.com/ToBinio/modrinth-statistics" target="_blank">
+          <Icon name="mdi:github" size="40"/>
+        </NuxtLink>
+      </div>
     </div>
     <div id="main">
       <slot/>
@@ -38,6 +42,8 @@ async function onUpdateData() {
   flex-direction: column;
 
   #nav {
+    z-index: 10;
+
     padding: 10px;
     margin: 10px;
 
@@ -50,18 +56,22 @@ async function onUpdateData() {
 
     gap: 50px;
 
-    overflow: auto;
-
     #header {
       font-weight: bold;
       font-size: xx-large;
     }
 
-    #github {
-      transition: 0.1s scale ease-in-out;
+    #icons {
+      display: flex;
+      gap: 25px;
 
-      &:hover {
-        scale: 1.05;
+      #github {
+        display: block;
+        transition: 0.1s scale ease-in-out;
+
+        &:hover {
+          scale: 1.05;
+        }
       }
     }
 
@@ -91,5 +101,6 @@ async function onUpdateData() {
     display: flex;
     flex-direction: column;
   }
+
 }
 </style>

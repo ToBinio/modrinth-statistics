@@ -2,34 +2,25 @@
 import DropDownLink from "~/components/navigation/DropDownLink.vue";
 import {projectTypeList, type ProjectTypes} from "~/utils/project";
 
-let urls = new Map<ProjectTypes, {
-  download: { title: string, url: string }[],
-  count: { title: string, url: string }[]
-}>();
+let urls = new Map<ProjectTypes, { title: string, url: string }[]>();
 
 for (let type of projectTypeList) {
-  const downloads = [
-    {title: "Major Versions", url: `/${type}/downloads/major`},
-    {title: "Minor Versions", url: `/${type}/downloads/minor`},
-    {title: "All Versions", url: `/${type}/downloads/all`},
+  const urlList = [
+    {title: "Downloads", url: `/${type}/downloads`},
+    {title: "Versions", url: `/${type}/counts`},
   ]
 
-  const counts = [
-    {title: "Major Versions", url: `/${type}/counts/major`},
-    {title: "Minor Versions", url: `/${type}/counts/minor`},
-    {title: "All Versions", url: `/${type}/counts/all`},
-  ]
+  urls.set(type, urlList)
+}
 
-  urls.set(type, {download: downloads, count: counts})
+function firstLetterUpperCase(text: string): string {
+  return text.charAt(0).toUpperCase() + text.slice(1);
 }
 </script>
 
 <template>
   <div id="links">
-    <div class="groups" v-for="type in projectTypeList">
-      <DropDownLink :urls="urls.get(type)!.download" :title="`${type} Downloads`"/>
-      <DropDownLink :urls="urls.get(type)!.count" :title="`${type} Versions`"/>
-    </div>
+    <DropDownLink v-for="type in projectTypeList" :urls="urls.get(type)!" :title="`${firstLetterUpperCase(type)}s`"/>
   </div>
 </template>
 
@@ -37,10 +28,5 @@ for (let type of projectTypeList) {
 #links {
   display: flex;
   gap: 50px;
-
-  .groups {
-    display: flex;
-    gap: 20px;
-  }
 }
 </style>

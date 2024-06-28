@@ -43,6 +43,19 @@ body {
     margin: 0;
 }
 
+select {
+    background: transparent;
+    border: none;
+
+    padding: 0;
+    position: relative;
+
+    option {
+        color: unset;
+        background-color: var(--surface-100);
+    }
+}
+
 /* improve scrollbar on chrome... */
 ::-webkit-scrollbar {
     width: 4px;
