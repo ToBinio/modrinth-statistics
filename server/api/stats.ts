@@ -7,8 +7,8 @@ export default defineEventHandler(async (event): Promise<StatExport> => {
     let mode = query.mode as string;
     let type = query.type as ProjectTypes;
 
-    if (query.stat == "count") {
-        return exportStats(mode, type, value => value.count)
+    if (query.stat == "versions") {
+        return exportStats(mode, type, value => value.versions)
     } else {
         return exportStats(mode, type, value => value.downloads)
     }

@@ -139,7 +139,7 @@ function onlyMinorVersions(gameVersions: GameVersion[], all: Stats): {
                 continue
             }
 
-            loader.values[index].count += stats[0].count
+            loader.values[index].versions += stats[0].versions
             loader.values[index].downloads += stats[0].downloads
         }
 
@@ -177,7 +177,7 @@ function onlyMajorVersions(gameVersions: GameVersion[], all: Stats): Stats {
         for (let loader of downloads.data) {
             let stats = loader.values.splice(index, 1);
 
-            loader.values[index].count += stats[0].count
+            loader.values[index].versions += stats[0].versions
             loader.values[index].downloads += stats[0].downloads
         }
 
@@ -210,7 +210,7 @@ function StatsFromData(versions: GameVersion[], data: StatsData): Stats {
         downloads = downloads.map((value) => {
             return {
                 downloads: Math.round(value.downloads),
-                count: value.count
+                versions: value.count
             }
         })
 

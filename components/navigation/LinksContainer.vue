@@ -7,7 +7,7 @@ let urls = new Map<ProjectTypes, { title: string, url: string }[]>();
 for (let type of projectTypeList) {
   const urlList = [
     {title: "Downloads", url: `/${type}/downloads`},
-    {title: "Versions", url: `/${type}/counts`},
+    {title: "Versions", url: `/${type}/versions`},
   ]
 
   urls.set(type, urlList)
