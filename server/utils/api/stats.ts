@@ -1,5 +1,5 @@
 import {Stats, StatsValue} from "~/server/utils/types/stats";
-import {H3Event} from "h3";
+import {ProjectTypes} from "~/server/utils/types/project";
 
 export type StatExport = {
     labels: string[]
@@ -10,7 +10,7 @@ export type StatExport = {
     }[]
 }
 
-export async function exportStats(mode: string, type: string, fn: (value: StatsValue) => number): Promise<StatExport> {
+export async function exportStats(mode: string, type: ProjectTypes, fn: (value: StatsValue) => number): Promise<StatExport> {
     const storage = useStorage("statistics");
     let stats
 

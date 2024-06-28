@@ -1,18 +1,25 @@
 import {Stats} from "~/server/utils/types/stats";
 import {GameVersion, Version} from "~/server/utils/fetchData";
+import {ProjectTypes} from "~/server/utils/types/project";
 
 type StatsData = Map<string, Map<string, { downloads: number, count: number }>>
 type AllStats = { all: Stats, minor: Stats, major: Stats };
 
 export async function updateStatistics() {
-    const modStats = await getStatistics("mod")
-    await saveStats(modStats, "mod")
-
-    const modpackStats = await getStatistics("modpack")
-    await saveStats(modpackStats, "modpack")
+    await updateStatistic("mod")
+    await updateStatistic("modpack")
+    await updateStatistic("resourcepack")
+    await updateStatistic("shader")
+    await updateStatistic("plugin")
+    await updateStatistic("datapack")
 }
 
-async function saveStats(stats: AllStats, type: string) {
+async function updateStatistic(type: ProjectTypes) {
+    const stats = await getStatistics(type)
+    await saveStats(stats, type)
+}
+
+async function saveStats(stats: AllStats, type: ProjectTypes) {
     const storage = useStorage("statistics");
     await storage.setItem<Stats>(`${type}StatsAll`, stats.all)
     await storage.setItem<Stats>(`${type}StatsMinor`, stats.minor)
@@ -20,7 +27,7 @@ async function saveStats(stats: AllStats, type: string) {
     )
 }
 
-async function getStatistics(type: string): Promise<AllStats> {
+async function getStatistics(type: ProjectTypes): Promise<AllStats> {
     const BATCH_COUNT = import.meta.dev ? 1 : 10;
     let data: StatsData = new Map()
 
@@ -46,7 +53,7 @@ async function getStatistics(type: string): Promise<AllStats> {
         const versionIds = (await getVersionIds(batchProjectIds))
         console.log("version ids", versionIds.length);
 
-        await analyzeVersionsFromIds(versionIds, data);
+        await analyzeVersionsFromIds(versionIds, data, type);
 
         if (done || import.meta.dev) break
     }
@@ -63,7 +70,7 @@ async function getStatistics(type: string): Promise<AllStats> {
     }
 }
 
-async function analyzeVersionsFromIds(versionIds: string[], data: StatsData) {
+async function analyzeVersionsFromIds(versionIds: string[], data: StatsData, type: ProjectTypes) {
     const BATCH_SIZE = 1000;
 
     let currentIndex = 0;
@@ -75,15 +82,15 @@ async function analyzeVersionsFromIds(versionIds: string[], data: StatsData) {
         const versions = await getVersions(ids)
         console.log("versions", versions.length);
 
-        analyzeVersions(versions, data);
+        analyzeVersions(versions, data, type);
         if (ids.length != BATCH_SIZE)
             break
     }
 }
 
-function analyzeVersions(versions: Version[], data: StatsData) {
+function analyzeVersions(versions: Version[], data: StatsData, type: ProjectTypes) {
     for (let version of versions) {
-        let allowedLaunchers = version.loaders.filter(value => isAllowedModLoader(value));
+        let allowedLaunchers = version.loaders.filter(value => isAllowedModLoader(value, type));
 
         // compensate for a version contributing to multiple loaders and versions
         let versionDownloads = version.downloads / (allowedLaunchers.length * version.game_versions.length)

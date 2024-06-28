@@ -1,0 +1,1 @@
+export type ProjectTypes = "mod" | "plugin" | "datapack" | "shader" | "resourcepack" | "modpack"
