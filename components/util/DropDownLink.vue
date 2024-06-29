@@ -12,19 +12,26 @@ for (let url of props.urls) {
   }
 }
 
+function onClick(event: Event) {
+  const tagName = (event.target! as HTMLElement).tagName;
+
+  if (tagName == "OPTION") {
+    navigateTo(currentUrl.value)
+  }
+}
+
 watch(currentUrl, (url) => {
   navigateTo(url)
 })
+
 </script>
 
 <template>
   <div id="dropdown">
     <NuxtLink class="header" :to="currentUrl">{{ title }}</NuxtLink>
-    <select v-model="currentUrl">
+    <select v-model="currentUrl" @click="onClick">
       <option v-for="route in urls" :key="route.url" :value="route.url">
-        <NuxtLink :to="route.url">
-          {{ route.title }}
-        </NuxtLink>
+        {{ route.title }}
       </option>
     </select>
   </div>
@@ -38,19 +45,6 @@ watch(currentUrl, (url) => {
   .header {
     transition: 0.2s color ease-out;
     font-size: x-large;
-  }
-
-  select {
-    background-color: var(--surface-100);
-    border: none;
-    border-radius: 7px;
-
-    padding: 0 0 5px;
-
-    option {
-      color: unset;
-      background-color: var(--surface-100);
-    }
   }
 
   a {

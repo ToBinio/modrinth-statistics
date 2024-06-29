@@ -12,12 +12,13 @@
   "dependencies": {
     "chart.js": "^4.4.3",
     "nuxt": "^3.12.2",
-    "vue": "^3.4.30",
+    "vue": "^3.4.31",
     "vue-chartjs": "^5.3.1",
     "vue-router": "^4.4.0"
   },
   "devDependencies": {
     "@iconify-json/akar-icons": "^1.1.24",
+    "@iconify-json/ion": "^1.1.18",
     "@iconify-json/mdi": "^1.1.67",
     "@iconify-json/ph": "^1.1.13",
     "@nuxt/icon": "^1.0.0"

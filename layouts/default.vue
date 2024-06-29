@@ -1,33 +1,7 @@
 <script setup lang="ts">
-import DropDownLink from "~/components/navigation/DropDownLink.vue";
-
-async function onUpdateData() {
-  await $fetch("/api/update")
-}
-
-const modDownloadUrls = [
-  {title: "Major Versions", url: "/mod/downloads/major"},
-  {title: "Minor Versions", url: "/mod/downloads/minor"},
-  {title: "All Versions", url: "/mod/downloads/all"},
-]
-
-const modCountUrls = [
-  {title: "Major Versions", url: "/mod/counts/major"},
-  {title: "Minor Versions", url: "/mod/counts/minor"},
-  {title: "All Versions", url: "/mod/counts/all"},
-]
-
-const modpackDownloadUrls = [
-  {title: "Major Versions", url: "/modpack/downloads/major"},
-  {title: "Minor Versions", url: "/modpack/downloads/minor"},
-  {title: "All Versions", url: "/modpack/downloads/all"},
-]
-
-const modpackCountUrls = [
-  {title: "Major Versions", url: "/modpack/counts/major"},
-  {title: "Minor Versions", url: "/modpack/counts/minor"},
-  {title: "All Versions", url: "/modpack/counts/all"},
-]
+import Settings from "~/components/navigation/Settings.vue";
+import Links from "~/components/navigation/Links.vue";
+import ButtonLinks from "~/components/navigation/ButtonLinks.vue";
 
 </script>
 
@@ -37,24 +11,16 @@ const modpackCountUrls = [
       <NuxtLink id="header" href="/">
         Modrinth Statistics
       </NuxtLink>
-      <div id="links">
-        <div class="groups">
-          <DropDownLink :urls="modDownloadUrls" title="Mod Downloads"/>
-          <DropDownLink :urls="modCountUrls" title="Mod Versions"/>
-        </div>
-        <div class="groups">
-          <DropDownLink :urls="modpackDownloadUrls" title="Modpack Downloads"/>
-          <DropDownLink :urls="modpackCountUrls" title="Modpack Versions"/>
-        </div>
+      <div id="fullLinks">
+        <Links/>
       </div>
-      <DevOnly>
-        <button @click="onUpdateData">
-          update Data
-        </button>
-      </DevOnly>
-      <NuxtLink id="github" to="https://github.com/ToBinio/modrinth-statistics" target="_blank">
-        <Icon name="mdi:github" size="40"/>
-      </NuxtLink>
+      <div id="icons">
+        <ButtonLinks class="linksButton"/>
+        <Settings/>
+        <NuxtLink id="github" to="https://github.com/ToBinio/modrinth-statistics" target="_blank">
+          <Icon name="mdi:github" size="40"/>
+        </NuxtLink>
+      </div>
     </div>
     <div id="main">
       <slot/>
@@ -72,6 +38,8 @@ const modpackCountUrls = [
   flex-direction: column;
 
   #nav {
+    z-index: 10;
+
     padding: 10px;
     margin: 10px;
 
@@ -84,28 +52,27 @@ const modpackCountUrls = [
 
     gap: 50px;
 
-    overflow: auto;
-
     #header {
       font-weight: bold;
       font-size: xx-large;
     }
 
-    #links {
+    #fullLinks {
       display: flex;
-      gap: 50px;
-
-      .groups {
-        display: flex;
-        gap: 20px;
-      }
+      gap: 25px;
     }
 
-    #github {
-      transition: 0.1s scale ease-in-out;
+    #icons {
+      display: flex;
+      gap: 25px;
 
-      &:hover {
-        scale: 1.05;
+      #github {
+        display: block;
+        transition: 0.1s scale ease-in-out;
+
+        &:hover {
+          scale: 1.05;
+        }
       }
     }
 
@@ -136,4 +103,33 @@ const modpackCountUrls = [
     flex-direction: column;
   }
 }
+
+@media only screen and (max-width: 1400px) {
+  #header {
+    width: min-content !important;
+  }
+}
+
+@media only screen and (max-width: 1220px) {
+  #fullLinks {
+    display: none !important;
+  }
+}
+
+@media only screen and (min-width: 1221px) {
+  .linksButton {
+    display: none !important;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  #nav {
+    gap: 20px !important;
+
+    #icons {
+      gap: 10px !important;
+    }
+  }
+}
 </style>
+

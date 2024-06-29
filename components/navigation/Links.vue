@@ -1,0 +1,26 @@
+<script setup lang="ts">
+import {projectTypeList, type ProjectTypes} from "~/utils/project";
+import DropDownLink from "~/components/util/DropDownLink.vue";
+
+let urls = new Map<ProjectTypes, { title: string, url: string }[]>();
+
+for (let type of projectTypeList) {
+  const urlList = [
+    {title: "Downloads", url: `/${type}/downloads`},
+    {title: "Versions", url: `/${type}/versions`},
+  ]
+
+  urls.set(type, urlList)
+}
+
+function firstLetterUpperCase(text: string): string {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+</script>
+
+<template>
+  <DropDownLink v-for="type in projectTypeList" :urls="urls.get(type)!" :title="`${firstLetterUpperCase(type)}s`"/>
+</template>
+
+<style scoped>
+</style>

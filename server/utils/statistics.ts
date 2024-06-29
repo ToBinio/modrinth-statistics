@@ -1,18 +1,24 @@
 import {Stats} from "~/server/utils/types/stats";
 import {GameVersion, Version} from "~/server/utils/fetchData";
+import {projectTypeList, ProjectTypes} from "~/utils/project";
+import consola from "consola";
 
 type StatsData = Map<string, Map<string, { downloads: number, count: number }>>
 type AllStats = { all: Stats, minor: Stats, major: Stats };
 
 export async function updateStatistics() {
-    const modStats = await getStatistics("mod")
-    await saveStats(modStats, "mod")
-
-    const modpackStats = await getStatistics("modpack")
-    await saveStats(modpackStats, "modpack")
+    for (let type of projectTypeList) {
+        await updateStatistic(type)
+    }
 }
 
-async function saveStats(stats: AllStats, type: string) {
+async function updateStatistic(type: ProjectTypes) {
+    consola.log(`analyzing - ${type}`)
+    const stats = await getStatistics(type)
+    await saveStats(stats, type)
+}
+
+async function saveStats(stats: AllStats, type: ProjectTypes) {
     const storage = useStorage("statistics");
     await storage.setItem<Stats>(`${type}StatsAll`, stats.all)
     await storage.setItem<Stats>(`${type}StatsMinor`, stats.minor)
@@ -20,7 +26,7 @@ async function saveStats(stats: AllStats, type: string) {
     )
 }
 
-async function getStatistics(type: string): Promise<AllStats> {
+async function getStatistics(type: ProjectTypes): Promise<AllStats> {
     const BATCH_COUNT = import.meta.dev ? 1 : 10;
     let data: StatsData = new Map()
 
@@ -41,12 +47,9 @@ async function getStatistics(type: string): Promise<AllStats> {
             }
         }
 
-        console.log("project ids", batchProjectIds.length);
-
         const versionIds = (await getVersionIds(batchProjectIds))
-        console.log("version ids", versionIds.length);
 
-        await analyzeVersionsFromIds(versionIds, data);
+        await analyzeVersionsFromIds(versionIds, data, type);
 
         if (done || import.meta.dev) break
     }
@@ -63,7 +66,7 @@ async function getStatistics(type: string): Promise<AllStats> {
     }
 }
 
-async function analyzeVersionsFromIds(versionIds: string[], data: StatsData) {
+async function analyzeVersionsFromIds(versionIds: string[], data: StatsData, type: ProjectTypes) {
     const BATCH_SIZE = 1000;
 
     let currentIndex = 0;
@@ -73,17 +76,16 @@ async function analyzeVersionsFromIds(versionIds: string[], data: StatsData) {
         currentIndex += BATCH_SIZE
 
         const versions = await getVersions(ids)
-        console.log("versions", versions.length);
 
-        analyzeVersions(versions, data);
+        analyzeVersions(versions, data, type);
         if (ids.length != BATCH_SIZE)
             break
     }
 }
 
-function analyzeVersions(versions: Version[], data: StatsData) {
+function analyzeVersions(versions: Version[], data: StatsData, type: ProjectTypes) {
     for (let version of versions) {
-        let allowedLaunchers = version.loaders.filter(value => isAllowedModLoader(value));
+        let allowedLaunchers = version.loaders.filter(value => isAllowedModLoader(value, type));
 
         // compensate for a version contributing to multiple loaders and versions
         let versionDownloads = version.downloads / (allowedLaunchers.length * version.game_versions.length)
@@ -135,7 +137,7 @@ function onlyMinorVersions(gameVersions: GameVersion[], all: Stats): {
                 continue
             }
 
-            loader.values[index].count += stats[0].count
+            loader.values[index].versions += stats[0].versions
             loader.values[index].downloads += stats[0].downloads
         }
 
@@ -173,7 +175,7 @@ function onlyMajorVersions(gameVersions: GameVersion[], all: Stats): Stats {
         for (let loader of downloads.data) {
             let stats = loader.values.splice(index, 1);
 
-            loader.values[index].count += stats[0].count
+            loader.values[index].versions += stats[0].versions
             loader.values[index].downloads += stats[0].downloads
         }
 
@@ -206,7 +208,7 @@ function StatsFromData(versions: GameVersion[], data: StatsData): Stats {
         downloads = downloads.map((value) => {
             return {
                 downloads: Math.round(value.downloads),
-                count: value.count
+                versions: value.count
             }
         })
 

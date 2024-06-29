@@ -1,14 +1,16 @@
+import consola from "consola";
+
 export default defineTask({
     meta: {
         name: "analyze",
         description: "Update all the statistics",
     },
     async run() {
-        console.log("Running statistics update");
+        consola.log("starting analyze");
 
-        console.time("finish update");
+        console.time("finish analyze");
         await updateStatistics()
-        console.timeEnd("finish update");
+        console.timeEnd("finish analyze");
 
         return {result: "Success"};
     },

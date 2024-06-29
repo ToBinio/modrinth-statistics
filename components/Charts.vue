@@ -2,15 +2,17 @@
 import {Bar} from 'vue-chartjs'
 import type {StatExport} from "~/server/utils/api/stats";
 
-const props = defineProps<{ stat: string, type: string, mode: string, explanation: string }>();
+const props = defineProps<{ stat: string, type: string, explanation: string }>();
+const version = useVersion();
 
 const {data} = useFetch<StatExport>("/api/stats", {
   query: {
-    mode: props.mode,
+    mode: version,
     type: props.type,
     stat: props.stat
   }
 });
+
 let downloadData = computed(() => {
   if (data.value) {
     return data.value
@@ -71,10 +73,10 @@ const chartOptions = ref({
 
 <template>
   <div id="container">
-        <Bar
-            :data="chartData"
-            :options="chartOptions"
-        />
+    <Bar
+        :data="chartData"
+        :options="chartOptions"
+    />
   </div>
   <div id="tooltip">
     <Icon name="ph:question" size="25" style="color: var(--white)"/>
