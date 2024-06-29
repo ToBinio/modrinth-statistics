@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import LinksContainer from "~/components/navigation/LinksContainer.vue";
 import Settings from "~/components/navigation/Settings.vue";
+import Links from "~/components/navigation/Links.vue";
+import ButtonLinks from "~/components/navigation/ButtonLinks.vue";
 
-async function onUpdateData() {
-  await $fetch("/api/update")
-}
 </script>
 
 <template>
@@ -13,13 +11,11 @@ async function onUpdateData() {
       <NuxtLink id="header" href="/">
         Modrinth Statistics
       </NuxtLink>
-      <LinksContainer/>
-      <DevOnly>
-        <button @click="onUpdateData">
-          update Data
-        </button>
-      </DevOnly>
+      <div id="fullLinks">
+        <Links/>
+      </div>
       <div id="icons">
+        <ButtonLinks class="linksButton"/>
         <Settings/>
         <NuxtLink id="github" to="https://github.com/ToBinio/modrinth-statistics" target="_blank">
           <Icon name="mdi:github" size="40"/>
@@ -59,6 +55,11 @@ async function onUpdateData() {
     #header {
       font-weight: bold;
       font-size: xx-large;
+    }
+
+    #fullLinks {
+      display: flex;
+      gap: 25px;
     }
 
     #icons {
@@ -101,6 +102,34 @@ async function onUpdateData() {
     display: flex;
     flex-direction: column;
   }
+}
 
+@media only screen and (max-width: 1400px) {
+  #header {
+    width: min-content !important;
+  }
+}
+
+@media only screen and (max-width: 1220px) {
+  #fullLinks {
+    display: none !important;
+  }
+}
+
+@media only screen and (min-width: 1221px) {
+  .linksButton {
+    display: none !important;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  #nav {
+    gap: 20px !important;
+
+    #icons {
+      gap: 10px !important;
+    }
+  }
 }
 </style>
+

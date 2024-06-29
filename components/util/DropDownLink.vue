@@ -12,15 +12,19 @@ for (let url of props.urls) {
   }
 }
 
-watch(currentUrl, (url) => {
-  navigateTo(url)
-})
+function onClick(event: Event) {
+  const tagName = (event.target! as HTMLElement).tagName;
+
+  if (tagName == "OPTION") {
+    navigateTo(currentUrl.value)
+  }
+}
 </script>
 
 <template>
   <div id="dropdown">
     <NuxtLink class="header" :to="currentUrl">{{ title }}</NuxtLink>
-    <select v-model="currentUrl">
+    <select v-model="currentUrl" @click="onClick">
       <option v-for="route in urls" :key="route.url" :value="route.url">
         {{ route.title }}
       </option>

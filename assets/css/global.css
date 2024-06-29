@@ -50,6 +50,8 @@ select {
     padding: 0;
     position: relative;
 
+    width: min-content;
+
     option {
         color: unset;
         background-color: var(--surface-100);
