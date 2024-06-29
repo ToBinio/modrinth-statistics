@@ -19,6 +19,11 @@ function onClick(event: Event) {
     navigateTo(currentUrl.value)
   }
 }
+
+watch(currentUrl, (url) => {
+  navigateTo(url)
+})
+
 </script>
 
 <template>
