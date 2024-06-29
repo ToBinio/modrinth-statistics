@@ -1,6 +1,7 @@
 import {Stats} from "~/server/utils/types/stats";
 import {GameVersion, Version} from "~/server/utils/fetchData";
 import {projectTypeList, ProjectTypes} from "~/utils/project";
+import consola from "consola";
 
 type StatsData = Map<string, Map<string, { downloads: number, count: number }>>
 type AllStats = { all: Stats, minor: Stats, major: Stats };
@@ -12,6 +13,7 @@ export async function updateStatistics() {
 }
 
 async function updateStatistic(type: ProjectTypes) {
+    consola.log(`analyzing - ${type}`)
     const stats = await getStatistics(type)
     await saveStats(stats, type)
 }
@@ -45,10 +47,7 @@ async function getStatistics(type: ProjectTypes): Promise<AllStats> {
             }
         }
 
-        console.log("project ids", batchProjectIds.length);
-
         const versionIds = (await getVersionIds(batchProjectIds))
-        console.log("version ids", versionIds.length);
 
         await analyzeVersionsFromIds(versionIds, data, type);
 
@@ -77,7 +76,6 @@ async function analyzeVersionsFromIds(versionIds: string[], data: StatsData, typ
         currentIndex += BATCH_SIZE
 
         const versions = await getVersions(ids)
-        console.log("versions", versions.length);
 
         analyzeVersions(versions, data, type);
         if (ids.length != BATCH_SIZE)
