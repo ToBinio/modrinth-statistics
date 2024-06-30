@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {projectTypeList, type ProjectTypes} from "~/utils/project";
 import DropDownLink from "~/components/util/DropDownLink.vue";
+import {firstLetterUpperCase} from "~/utils/text";
 
 let urls = new Map<ProjectTypes, { title: string, url: string }[]>();
 
@@ -11,10 +12,6 @@ for (let type of projectTypeList) {
   ]
 
   urls.set(type, urlList)
-}
-
-function firstLetterUpperCase(text: string): string {
-  return text.charAt(0).toUpperCase() + text.slice(1);
 }
 </script>
 

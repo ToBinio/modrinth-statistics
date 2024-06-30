@@ -1,5 +1,7 @@
 import {Stats, StatsValue} from "~/server/utils/types/stats";
 import {ProjectTypes} from "~/utils/project";
+import {firstLetterUpperCase} from "~/utils/text";
+import consola from "consola";
 
 export type StatExport = {
     labels: string[]
@@ -10,23 +12,20 @@ export type StatExport = {
     }[]
 }
 
-export async function exportStats(mode: string, type: ProjectTypes, fn: (value: StatsValue) => number): Promise<StatExport> {
+export async function exportStats(mode: string, type: ProjectTypes, exclusive: boolean, fn: (value: StatsValue) => number): Promise<StatExport> {
     const storage = useStorage("statistics");
-    let stats
 
-    switch (mode) {
-        case "minor" :
-            stats = await storage.getItem<Stats>(`${type}StatsMinor`)
-            break
-        case "all" :
-            stats = await storage.getItem<Stats>(`${type}StatsAll`)
-            break
-        default:
-            stats = await storage.getItem<Stats>(`${type}StatsMajor`)
+    let key = `${type}Stats${firstLetterUpperCase(mode)}`;
+
+    if (exclusive) {
+        key += "Exclusive"
     }
 
+    let stats = await storage.getItem<Stats>(key)
+
     if (!stats) {
-        // todo - error message
+        consola.error(`could not find stats for key - "${key}"`)
+
         return {
             labels: [],
             data: []

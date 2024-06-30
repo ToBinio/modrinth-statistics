@@ -6,8 +6,6 @@ useHead({
   title: `Number of downloads of ${route.params.type}`
 })
 
-const version = useVersion();
-
 const explanation = `
 <h4>Number of Downloads per Specific Loader/Game-Version</h4>
 <br/>

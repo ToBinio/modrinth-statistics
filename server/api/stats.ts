@@ -6,10 +6,11 @@ export default defineEventHandler(async (event): Promise<StatExport> => {
 
     let mode = query.mode as string;
     let type = query.type as ProjectTypes;
+    let exclusive = query.exclusive === "true";
 
     if (query.stat == "versions") {
-        return exportStats(mode, type, value => value.versions)
+        return exportStats(mode, type, exclusive, value => value.versions)
     } else {
-        return exportStats(mode, type, value => value.downloads)
+        return exportStats(mode, type, exclusive, value => value.downloads)
     }
 })

@@ -3,8 +3,12 @@ import {GameVersion, Version} from "~/server/utils/fetchData";
 import {projectTypeList, ProjectTypes} from "~/utils/project";
 import consola from "consola";
 
-type StatsData = Map<string, Map<string, { downloads: number, count: number }>>
-type AllStats = { all: Stats, minor: Stats, major: Stats };
+type StatsDataEntry = Map<string, Map<string, { downloads: number, count: number }>>
+type StatsData = { all: StatsDataEntry, exclusive: StatsDataEntry }
+
+type AllStatsEntry = { all: Stats, minor: Stats, major: Stats };
+type AllStats = { all: AllStatsEntry, exclusive: AllStatsEntry }
+
 
 export async function updateStatistics() {
     for (let type of projectTypeList) {
@@ -20,15 +24,19 @@ async function updateStatistic(type: ProjectTypes) {
 
 async function saveStats(stats: AllStats, type: ProjectTypes) {
     const storage = useStorage("statistics");
-    await storage.setItem<Stats>(`${type}StatsAll`, stats.all)
-    await storage.setItem<Stats>(`${type}StatsMinor`, stats.minor)
-    await storage.setItem<Stats>(`${type}StatsMajor`, stats.major
-    )
+
+    await storage.setItem<Stats>(`${type}StatsAll`, stats.all.all)
+    await storage.setItem<Stats>(`${type}StatsMinor`, stats.all.minor)
+    await storage.setItem<Stats>(`${type}StatsMajor`, stats.all.major)
+
+    await storage.setItem<Stats>(`${type}StatsAllExclusive`, stats.exclusive.all)
+    await storage.setItem<Stats>(`${type}StatsMinorExclusive`, stats.exclusive.minor)
+    await storage.setItem<Stats>(`${type}StatsMajorExclusive`, stats.exclusive.major)
 }
 
 async function getStatistics(type: ProjectTypes): Promise<AllStats> {
     const BATCH_COUNT = import.meta.dev ? 1 : 10;
-    let data: StatsData = new Map()
+    let data: StatsData = {all: new Map(), exclusive: new Map()}
 
     let index = 0;
 
@@ -55,14 +63,21 @@ async function getStatistics(type: ProjectTypes): Promise<AllStats> {
     }
 
     let versions = await getGameVersions()
-    let allDownloads = StatsFromData(versions, data);
-    let {gameVersions: minorGameVersions, downloads: minorVersionDownloads} = onlyMinorVersions(versions, allDownloads);
-    let majorVersionDownloads = onlyMajorVersions(minorGameVersions, minorVersionDownloads);
+
+    function toVersions(data: StatsDataEntry): AllStatsEntry {
+        let allDownloads = StatsFromData(versions, data);
+        let {
+            gameVersions: minorGameVersions,
+            downloads: minorVersionDownloads
+        } = onlyMinorVersions(versions, allDownloads);
+        let majorVersionDownloads = onlyMajorVersions(minorGameVersions, minorVersionDownloads);
+
+        return {all: allDownloads, minor: minorVersionDownloads, major: majorVersionDownloads};
+    }
 
     return {
-        all: allDownloads,
-        major: majorVersionDownloads,
-        minor: minorVersionDownloads
+        all: toVersions(data.all),
+        exclusive: toVersions(data.exclusive)
     }
 }
 
@@ -90,21 +105,28 @@ function analyzeVersions(versions: Version[], data: StatsData, type: ProjectType
         // compensate for a version contributing to multiple loaders and versions
         let versionDownloads = version.downloads / (allowedLaunchers.length * version.game_versions.length)
 
-        for (let loader of allowedLaunchers) {
-            if (!data.has(loader)) {
-                data.set(loader, new Map())
-            }
+        insertLauncherData(allowedLaunchers, data.all, version, versionDownloads);
+        if (allowedLaunchers.length == 1) {
+            insertLauncherData(allowedLaunchers, data.exclusive, version, versionDownloads);
+        }
+    }
+}
 
-            let downloads = data.get(loader)!;
+function insertLauncherData(allowedLaunchers: Array<string>, data: StatsDataEntry, version: Version, versionDownloads: number) {
+    for (let loader of allowedLaunchers) {
+        if (!data.has(loader)) {
+            data.set(loader, new Map())
+        }
 
-            for (let gameVersion of version.game_versions) {
-                if (downloads.has(gameVersion)) {
-                    let data = downloads.get(gameVersion)!;
+        let downloads = data.get(loader)!;
 
-                    downloads.set(gameVersion, {downloads: data.downloads + versionDownloads, count: data.count + 1})
-                } else {
-                    downloads.set(gameVersion, {downloads: versionDownloads, count: 1})
-                }
+        for (let gameVersion of version.game_versions) {
+            if (downloads.has(gameVersion)) {
+                let data = downloads.get(gameVersion)!;
+
+                downloads.set(gameVersion, {downloads: data.downloads + versionDownloads, count: data.count + 1})
+            } else {
+                downloads.set(gameVersion, {downloads: versionDownloads, count: 1})
             }
         }
     }
@@ -186,7 +208,7 @@ function onlyMajorVersions(gameVersions: GameVersion[], all: Stats): Stats {
     return downloads
 }
 
-function StatsFromData(versions: GameVersion[], data: StatsData): Stats {
+function StatsFromData(versions: GameVersion[], data: StatsDataEntry): Stats {
     const versionArray = versions.map(value => {
         return value.name
     })

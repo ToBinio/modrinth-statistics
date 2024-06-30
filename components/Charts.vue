@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import {Bar} from 'vue-chartjs'
 import type {StatExport} from "~/server/utils/api/stats";
+import {useSettings} from "~/composables/useSettings";
 
 const props = defineProps<{ stat: string, type: string, explanation: string }>();
-const version = useVersion();
+const {version, exclusive} = useSettings();
 
 const {data} = useFetch<StatExport>("/api/stats", {
   query: {
     mode: version,
+    exclusive: exclusive,
     type: props.type,
     stat: props.stat
   }
