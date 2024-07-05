@@ -6,4 +6,4 @@ export type Stats = {
     }[]
 }
 
-export type StatsValue = { downloads: number, versions: number }
+export type StatsValue = { downloads: number, versions: number, count: number }

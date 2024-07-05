@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     devtools: {enabled: true},
+
     app: {
         head: {
             link: [
@@ -8,6 +9,7 @@ export default defineNuxtConfig({
             ]
         }
     },
+
     routeRules: {
         "/downloads": {
             redirect: "/downloads/major"
@@ -23,6 +25,7 @@ export default defineNuxtConfig({
         //     prerender: true
         // }
     },
+
     nitro: {
         // preset: "bun",
         storage: {
@@ -38,5 +41,7 @@ export default defineNuxtConfig({
             '0 0 * * *': ['analyze']
         }
     },
-    modules: ["@nuxt/icon"]
+
+    modules: ["@nuxt/icon"],
+    compatibilityDate: "2024-07-05"
 })

@@ -41,6 +41,7 @@ export async function getVersions(versionIds: string[]): Promise<Version[]> {
     //done to remove unused values from the ram
     return data.flatMap(value => {
         return {
+            project_id: value.project_id,
             loaders: value.loaders,
             game_versions: value.game_versions,
             downloads: value.downloads
@@ -49,6 +50,7 @@ export async function getVersions(versionIds: string[]): Promise<Version[]> {
 }
 
 export type Version = {
+    project_id: string
     loaders: string[]
     game_versions: string[]
     downloads: number

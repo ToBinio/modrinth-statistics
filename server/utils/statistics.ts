@@ -1,13 +1,29 @@
-import {Stats} from "~/server/utils/types/stats";
+import {Stats, StatsValue} from "~/server/utils/types/stats";
 import {GameVersion, Version} from "~/server/utils/fetchData";
 import {projectTypeList, ProjectTypes} from "~/utils/project";
 import consola from "consola";
 
-type StatsDataEntry = Map<string, Map<string, { downloads: number, count: number }>>
+type StatsDataEntry = Map<string, Map<string, {
+    downloads: number,
+    versions: number,
+    unique_projects: Set<string>
+}>>
 type StatsData = { all: StatsDataEntry, exclusive: StatsDataEntry }
 
 type AllStatsEntry = { all: Stats, minor: Stats, major: Stats };
 type AllStats = { all: AllStatsEntry, exclusive: AllStatsEntry }
+
+type GroupStats = {
+    versions: string[]
+    data: {
+        name: string
+        values: {
+            downloads: number,
+            versions: number,
+            unique_projects: Set<string>
+        }[]
+    }[]
+}
 
 
 export async function updateStatistics() {
@@ -72,12 +88,35 @@ async function getStatistics(type: ProjectTypes): Promise<AllStats> {
         } = onlyMinorVersions(versions, allDownloads);
         let majorVersionDownloads = onlyMajorVersions(minorGameVersions, minorVersionDownloads);
 
-        return {all: allDownloads, minor: minorVersionDownloads, major: majorVersionDownloads};
+        return {
+            all: groupStatsToStats(allDownloads),
+            minor: groupStatsToStats(minorVersionDownloads),
+            major: groupStatsToStats(majorVersionDownloads)
+        };
     }
 
     return {
         all: toVersions(data.all),
         exclusive: toVersions(data.exclusive)
+    }
+}
+
+function groupStatsToStats(groupStats: GroupStats): Stats {
+    return {
+        versions: groupStats.versions,
+        data: groupStats.data.map(value => {
+            return {
+                name: value.name,
+                values:
+                    value.values.map(value1 => {
+                        return {
+                            downloads: value1.downloads,
+                            versions: value1.versions,
+                            count: value1.unique_projects.size
+                        }
+                    })
+            }
+        })
     }
 }
 
@@ -124,20 +163,31 @@ function insertLauncherData(allowedLaunchers: Array<string>, data: StatsDataEntr
             if (downloads.has(gameVersion)) {
                 let data = downloads.get(gameVersion)!;
 
-                downloads.set(gameVersion, {downloads: data.downloads + versionDownloads, count: data.count + 1})
+                data.unique_projects.add(version.project_id)
+                downloads.set(gameVersion, {
+                    downloads: data.downloads + versionDownloads,
+                    versions: data.versions + 1,
+                    unique_projects: data.unique_projects
+                })
             } else {
-                downloads.set(gameVersion, {downloads: versionDownloads, count: 1})
+                let set = new Set<string>();
+
+                downloads.set(gameVersion, {
+                    downloads: versionDownloads,
+                    versions: 1,
+                    unique_projects: set
+                })
             }
         }
     }
 }
 
-function onlyMinorVersions(gameVersions: GameVersion[], all: Stats): {
+function onlyMinorVersions(gameVersions: GameVersion[], all: GroupStats): {
     gameVersions: GameVersion[],
-    downloads: Stats
+    downloads: GroupStats
 } {
     const versions = Array.from(gameVersions)
-    const downloads: Stats = JSON.parse(JSON.stringify(all))
+    const downloads: GroupStats = structuredClone(all)
 
     let index = 0
 
@@ -161,6 +211,9 @@ function onlyMinorVersions(gameVersions: GameVersion[], all: Stats): {
 
             loader.values[index].versions += stats[0].versions
             loader.values[index].downloads += stats[0].downloads
+            for (let uniqueProject of stats[0].unique_projects) {
+                loader.values[index].unique_projects.add(uniqueProject)
+            }
         }
 
         versions.splice(index, 1)
@@ -170,9 +223,10 @@ function onlyMinorVersions(gameVersions: GameVersion[], all: Stats): {
     return {gameVersions: versions, downloads: downloads}
 }
 
-function onlyMajorVersions(gameVersions: GameVersion[], all: Stats): Stats {
+function onlyMajorVersions(gameVersions: GameVersion[], all: GroupStats): GroupStats {
     const versions = Array.from(gameVersions)
-    const downloads: Stats = JSON.parse(JSON.stringify(all))
+    const downloads = structuredClone(all)
+
 
     let index = 0
     let currentVersion = versions[0].name.split(".").slice(0, 2).join(".")
@@ -199,6 +253,9 @@ function onlyMajorVersions(gameVersions: GameVersion[], all: Stats): Stats {
 
             loader.values[index].versions += stats[0].versions
             loader.values[index].downloads += stats[0].downloads
+            for (let uniqueProject of stats[0].unique_projects) {
+                loader.values[index].unique_projects.add(uniqueProject)
+            }
         }
 
         versions.splice(index, 1)
@@ -208,7 +265,7 @@ function onlyMajorVersions(gameVersions: GameVersion[], all: Stats): Stats {
     return downloads
 }
 
-function StatsFromData(versions: GameVersion[], data: StatsDataEntry): Stats {
+function StatsFromData(versions: GameVersion[], data: StatsDataEntry): GroupStats {
     const versionArray = versions.map(value => {
         return value.name
     })
@@ -223,14 +280,15 @@ function StatsFromData(versions: GameVersion[], data: StatsDataEntry): Stats {
             if (downloadsMap.has(version)) {
                 downloads.push(downloadsMap.get(version)!);
             } else {
-                downloads.push({downloads: 0, count: 0})
+                downloads.push({downloads: 0, versions: 0, unique_projects: new Set<string>()})
             }
         }
 
         downloads = downloads.map((value) => {
             return {
                 downloads: Math.round(value.downloads),
-                versions: value.count
+                versions: value.versions,
+                unique_projects: value.unique_projects
             }
         })
 
