@@ -1,13 +1,20 @@
-import {Stats, StatsValue} from "~/server/utils/types/stats";
-import {GameVersion, Version} from "~/server/utils/fetchData";
+import {Stats} from "~/server/utils/types/stats";
+import {Version} from "~/server/utils/fetchData";
 import {projectTypeList, ProjectTypes} from "~/utils/project";
 import consola from "consola";
+import {
+    GameVersionData,
+    GameVersions,
+    getSupportedGameVersions,
+    splitGameVersions,
+} from "~/server/utils/gameVersions";
 
-type StatsDataEntry = Map<string, Map<string, {
+type StatsDataType = Map<string, Map<string, {
     downloads: number,
     versions: number,
     unique_projects: Set<string>
 }>>
+type StatsDataEntry = { all: StatsDataType, minor: StatsDataType, major: StatsDataType }
 type StatsData = { all: StatsDataEntry, exclusive: StatsDataEntry }
 
 type AllStatsEntry = { all: Stats, minor: Stats, major: Stats };
@@ -52,18 +59,23 @@ async function saveStats(stats: AllStats, type: ProjectTypes) {
 
 async function getStatistics(type: ProjectTypes): Promise<AllStats> {
     const BATCH_COUNT = import.meta.dev ? 1 : 10;
-    let data: StatsData = {all: new Map(), exclusive: new Map()}
+    let data: StatsData = {
+        all: {all: new Map(), major: new Map(), minor: new Map()},
+        exclusive: {all: new Map(), major: new Map(), minor: new Map()}
+    }
 
-    let index = 0;
+    let versions = await getGameVersions()
+    let gameVersions = splitGameVersions(versions);
 
+    let projectIndex = 0;
     while (true) {
         let done = false;
 
         const batchProjectIds = []
         for (let i = 0; i < BATCH_COUNT; i++) {
-            const projectIds = await getProjectIds(index, type, 100);
+            const projectIds = await getProjectIds(projectIndex, type, 100);
             batchProjectIds.push(...projectIds);
-            index += 100;
+            projectIndex += 100;
 
             if (projectIds.length != 100) {
                 done = true;
@@ -73,25 +85,16 @@ async function getStatistics(type: ProjectTypes): Promise<AllStats> {
 
         const versionIds = (await getVersionIds(batchProjectIds))
 
-        await analyzeVersionsFromIds(versionIds, data, type);
+        await analyzeVersionsFromIds(gameVersions, versionIds, data, type);
 
         if (done || import.meta.dev) break
     }
 
-    let versions = await getGameVersions()
-
     function toVersions(data: StatsDataEntry): AllStatsEntry {
-        let allDownloads = StatsFromData(versions, data);
-        let {
-            gameVersions: minorGameVersions,
-            downloads: minorVersionDownloads
-        } = onlyMinorVersions(versions, allDownloads);
-        let majorVersionDownloads = onlyMajorVersions(minorGameVersions, minorVersionDownloads);
-
         return {
-            all: groupStatsToStats(allDownloads),
-            minor: groupStatsToStats(minorVersionDownloads),
-            major: groupStatsToStats(majorVersionDownloads)
+            all: groupStatsToStats(StatsFromType(gameVersions.all, data.all)),
+            minor: groupStatsToStats(StatsFromType(gameVersions.minor, data.minor)),
+            major: groupStatsToStats(StatsFromType(gameVersions.major, data.major))
         };
     }
 
@@ -120,7 +123,7 @@ function groupStatsToStats(groupStats: GroupStats): Stats {
     }
 }
 
-async function analyzeVersionsFromIds(versionIds: string[], data: StatsData, type: ProjectTypes) {
+async function analyzeVersionsFromIds(gameVersions: GameVersions, versionIds: string[], data: StatsData, type: ProjectTypes) {
     const BATCH_SIZE = 1000;
 
     let currentIndex = 0;
@@ -131,49 +134,56 @@ async function analyzeVersionsFromIds(versionIds: string[], data: StatsData, typ
 
         const versions = await getVersions(ids)
 
-        analyzeVersions(versions, data, type);
+        analyzeVersions(gameVersions, versions, data, type);
         if (ids.length != BATCH_SIZE)
             break
     }
 }
 
-function analyzeVersions(versions: Version[], data: StatsData, type: ProjectTypes) {
+function analyzeVersions(gameVersions: GameVersions, versions: Version[], data: StatsData, type: ProjectTypes) {
     for (let version of versions) {
-        let allowedLaunchers = version.loaders.filter(value => isAllowedModLoader(value, type));
+        let supportedLaunchers = version.loaders.filter(value => isAllowedModLoader(value, type));
+        let supportedVersions = getSupportedGameVersions(gameVersions, version)
 
-        // compensate for a version contributing to multiple loaders and versions
-        let versionDownloads = version.downloads / (allowedLaunchers.length * version.game_versions.length)
 
-        insertLauncherData(allowedLaunchers, data.all, version, versionDownloads);
-        if (allowedLaunchers.length == 1) {
-            insertLauncherData(allowedLaunchers, data.exclusive, version, versionDownloads);
+        insertLauncherData(data.all.all, supportedLaunchers, supportedVersions.all, version.project_id, version.downloads);
+        insertLauncherData(data.all.minor, supportedLaunchers, supportedVersions.minor, version.project_id, version.downloads);
+        insertLauncherData(data.all.major, supportedLaunchers, supportedVersions.major, version.project_id, version.downloads);
+
+        if (supportedLaunchers.length == 1) {
+            insertLauncherData(data.exclusive.all, supportedLaunchers, supportedVersions.all, version.project_id, version.downloads);
+            insertLauncherData(data.exclusive.minor, supportedLaunchers, supportedVersions.minor, version.project_id, version.downloads);
+            insertLauncherData(data.exclusive.major, supportedLaunchers, supportedVersions.major, version.project_id, version.downloads);
         }
     }
 }
 
-function insertLauncherData(allowedLaunchers: Array<string>, data: StatsDataEntry, version: Version, versionDownloads: number) {
-    for (let loader of allowedLaunchers) {
+function insertLauncherData(data: StatsDataType, supportedLaunchers: string[], supportedVersions: string[], project_id: string, downloads: number) {
+    // compensate for a version contributing to multiple loaders and versions
+    let downloadsPerVersion = downloads / (supportedLaunchers.length * supportedVersions.length)
+
+    for (let loader of supportedLaunchers) {
         if (!data.has(loader)) {
             data.set(loader, new Map())
         }
 
-        let downloads = data.get(loader)!;
+        let loaderData = data.get(loader)!;
 
-        for (let gameVersion of version.game_versions) {
-            if (downloads.has(gameVersion)) {
-                let data = downloads.get(gameVersion)!;
+        for (let gameVersion of supportedVersions) {
+            if (loaderData.has(gameVersion)) {
+                let data = loaderData.get(gameVersion)!;
 
-                data.unique_projects.add(version.project_id)
-                downloads.set(gameVersion, {
-                    downloads: data.downloads + versionDownloads,
+                data.unique_projects.add(project_id)
+                loaderData.set(gameVersion, {
+                    downloads: data.downloads + downloadsPerVersion,
                     versions: data.versions + 1,
                     unique_projects: data.unique_projects
                 })
             } else {
                 let set = new Set<string>();
 
-                downloads.set(gameVersion, {
-                    downloads: versionDownloads,
+                loaderData.set(gameVersion, {
+                    downloads: downloadsPerVersion,
                     versions: 1,
                     unique_projects: set
                 })
@@ -182,93 +192,9 @@ function insertLauncherData(allowedLaunchers: Array<string>, data: StatsDataEntr
     }
 }
 
-function onlyMinorVersions(gameVersions: GameVersion[], all: GroupStats): {
-    gameVersions: GameVersion[],
-    downloads: GroupStats
-} {
-    const versions = Array.from(gameVersions)
-    const downloads: GroupStats = structuredClone(all)
+function StatsFromType(gameVersions: GameVersionData, data: StatsDataType): GroupStats {
 
-    let index = 0
-
-    while (true) {
-        if (index == versions.length)
-            break
-
-        let gameVersion = versions[index];
-
-        if (gameVersion.fullVersion) {
-            index++
-            continue
-        }
-
-        for (let loader of downloads.data) {
-            let stats = loader.values.splice(index, 1);
-
-            if (index + 1 >= loader.values.length) {
-                continue
-            }
-
-            loader.values[index].versions += stats[0].versions
-            loader.values[index].downloads += stats[0].downloads
-            for (let uniqueProject of stats[0].unique_projects) {
-                loader.values[index].unique_projects.add(uniqueProject)
-            }
-        }
-
-        versions.splice(index, 1)
-        downloads.versions.splice(index, 1)
-    }
-
-    return {gameVersions: versions, downloads: downloads}
-}
-
-function onlyMajorVersions(gameVersions: GameVersion[], all: GroupStats): GroupStats {
-    const versions = Array.from(gameVersions)
-    const downloads = structuredClone(all)
-
-
-    let index = 0
-    let currentVersion = versions[0].name.split(".").slice(0, 2).join(".")
-
-    while (true) {
-        if (index == (versions.length - 1)) {
-            downloads.versions[index] = currentVersion
-            break
-        }
-
-        let nextGameVersions = versions[index + 1].name.split(".").slice(0, 2).join(".")
-
-        if (currentVersion != nextGameVersions) {
-            downloads.versions[index] = currentVersion
-            currentVersion = nextGameVersions;
-            index++
-            continue
-        }
-
-        currentVersion = nextGameVersions;
-
-        for (let loader of downloads.data) {
-            let stats = loader.values.splice(index, 1);
-
-            loader.values[index].versions += stats[0].versions
-            loader.values[index].downloads += stats[0].downloads
-            for (let uniqueProject of stats[0].unique_projects) {
-                loader.values[index].unique_projects.add(uniqueProject)
-            }
-        }
-
-        versions.splice(index, 1)
-        downloads.versions.splice(index, 1)
-    }
-
-    return downloads
-}
-
-function StatsFromData(versions: GameVersion[], data: StatsDataEntry): GroupStats {
-    const versionArray = versions.map(value => {
-        return value.name
-    })
+    let versions = gameVersions.map(value => value.name)
 
     const loaderData = []
 
@@ -276,7 +202,7 @@ function StatsFromData(versions: GameVersion[], data: StatsDataEntry): GroupStat
         let downloadsMap = loader[1];
         let downloads = []
 
-        for (let version of versionArray) {
+        for (let version of versions) {
             if (downloadsMap.has(version)) {
                 downloads.push(downloadsMap.get(version)!);
             } else {
@@ -300,5 +226,5 @@ function StatsFromData(versions: GameVersion[], data: StatsDataEntry): GroupStat
 
     loaderData.sort((a, b) => a.name.localeCompare(b.name))
 
-    return {versions: versionArray, data: loaderData}
+    return {versions: versions, data: loaderData}
 }
