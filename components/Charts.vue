@@ -1,76 +1,80 @@
 <script setup lang="ts">
-import {Bar} from 'vue-chartjs'
-import type {StatExport} from "~/server/utils/api/stats";
-import {useSettings} from "~/composables/useSettings";
+import { Bar } from "vue-chartjs";
+import { useSettings } from "~/composables/useSettings";
+import type { StatExport } from "~/server/utils/api/stats";
 
-const props = defineProps<{ stat: string, type: string, explanation: string }>();
-const {version, exclusive} = useSettings();
+const props = defineProps<{
+	stat: string;
+	type: string;
+	explanation: string;
+}>();
+const { version, exclusive } = useSettings();
 
-const {data} = useFetch<StatExport>("/api/stats", {
-  query: {
-    mode: version,
-    exclusive: exclusive,
-    type: props.type,
-    stat: props.stat
-  }
+const { data } = useFetch<StatExport>("/api/stats", {
+	query: {
+		mode: version,
+		exclusive: exclusive,
+		type: props.type,
+		stat: props.stat,
+	},
 });
 
-let downloadData = computed(() => {
-  if (data.value) {
-    return data.value
-  }
+const downloadData = computed(() => {
+	if (data.value) {
+		return data.value;
+	}
 
-  return {
-    labels: [],
-    data: []
-  }
-})
+	return {
+		labels: [],
+		data: [],
+	};
+});
 
 const chartData = computed(() => {
-  return {
-    labels: downloadData.value.labels,
-    datasets: downloadData.value.data.map((value) => {
-      return {
-        ...value,
-        borderRadius: 3
-      }
-    })
-  }
-})
+	return {
+		labels: downloadData.value.labels,
+		datasets: downloadData.value.data.map((value) => {
+			return {
+				...value,
+				borderRadius: 3,
+			};
+		}),
+	};
+});
 
 const chartOptions = ref({
-  responsive: true,
-  maintainAspectRatio: false,
-  scales: {
-    x: {
-      stacked: true,
-      grid: {
-        color: "#1b1a1e"
-      },
-      ticks: {
-        color: "#8a8a8c"
-      }
-    },
-    y: {
-      stacked: true,
-      grid: {
-        color: "#1b1a1e"
-      },
+	responsive: true,
+	maintainAspectRatio: false,
+	scales: {
+		x: {
+			stacked: true,
+			grid: {
+				color: "#1b1a1e",
+			},
+			ticks: {
+				color: "#8a8a8c",
+			},
+		},
+		y: {
+			stacked: true,
+			grid: {
+				color: "#1b1a1e",
+			},
 
-      ticks: {
-        color: "#8a8a8c"
-      }
-    }
-  },
-  plugins: {
-    legend: {
-      labels: {
-        color: "#8a8a8c",
-        useBorderRadius: true
-      }
-    }
-  },
-})
+			ticks: {
+				color: "#8a8a8c",
+			},
+		},
+	},
+	plugins: {
+		legend: {
+			labels: {
+				color: "#8a8a8c",
+				useBorderRadius: true,
+			},
+		},
+	},
+});
 </script>
 
 <template>

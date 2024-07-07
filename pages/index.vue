@@ -1,17 +1,16 @@
 <script setup lang="ts">
-
 useHead({
-  title: "Modrinth Statistics"
-})
+	title: "Modrinth Statistics",
+});
 
 type statistics = {
-  "projects": number,
-  "versions": number,
-  "files": number,
-  "authors": number
+	projects: number;
+	versions: number;
+	files: number;
+	authors: number;
 };
 
-const {data} = useModrinthFetch<statistics>("/statistics");
+const { data } = useModrinthFetch<statistics>("/statistics");
 </script>
 
 <template>

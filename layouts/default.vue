@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import Settings from "~/components/navigation/Settings.vue";
-import Links from "~/components/navigation/Links.vue";
 import ButtonLinks from "~/components/navigation/ButtonLinks.vue";
-
+import Links from "~/components/navigation/Links.vue";
+import Settings from "~/components/navigation/Settings.vue";
 </script>
 
 <template>

@@ -1,9 +1,9 @@
 <script setup lang="ts">
 defineProps<{
-  icon: string
-}>()
+	icon: string;
+}>();
 
-const open = ref(false)
+const open = ref(false);
 </script>
 
 <template>

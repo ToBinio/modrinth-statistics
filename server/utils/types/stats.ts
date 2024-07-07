@@ -1,9 +1,9 @@
 export type Stats = {
-    versions: string[]
-    data: {
-        name: string
-        values: StatsValue[]
-    }[]
-}
+	versions: string[];
+	data: {
+		name: string;
+		values: StatsValue[];
+	}[];
+};
 
-export type StatsValue = { downloads: number, versions: number, count: number }
+export type StatsValue = { downloads: number; versions: number; count: number };

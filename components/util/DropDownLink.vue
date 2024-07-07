@@ -1,29 +1,32 @@
 <script setup lang="ts">
+const props = defineProps<{
+	urls: { title: string; url: string }[];
+	title: string;
+}>();
 
-const props = defineProps<{ urls: { title: string, url: string }[], title: string }>();
-
-let currentUrl = ref(props.urls[0].url)
+const currentUrl = ref(props.urls[0].url);
 
 const route = useRoute();
 
-for (let url of props.urls) {
-  if (url.url == route.path) {
-    currentUrl.value = url.url
-  }
+for (const url of props.urls) {
+	if (url.url === route.path) {
+		currentUrl.value = url.url;
+	}
 }
 
 function onClick(event: Event) {
-  const tagName = (event.target! as HTMLElement).tagName;
+	if (!event.target) return;
 
-  if (tagName == "OPTION") {
-    navigateTo(currentUrl.value)
-  }
+	const tagName = (event.target as HTMLElement).tagName;
+
+	if (tagName === "OPTION") {
+		navigateTo(currentUrl.value);
+	}
 }
 
 watch(currentUrl, (url) => {
-  navigateTo(url)
-})
-
+	navigateTo(url);
+});
 </script>
 
 <template>

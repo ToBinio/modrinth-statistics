@@ -1,20 +1,22 @@
-import {exportStats, StatExport} from "~/server/utils/api/stats";
-import {ProjectTypes} from "~/utils/project";
+import { type StatExport, exportStats } from "~/server/utils/api/stats";
+import type { ProjectTypes } from "~/utils/project";
 
 export default defineEventHandler(async (event): Promise<StatExport> => {
-        let query = getQuery(event);
+	const query = getQuery(event);
 
-        let mode = query.mode as string;
-        let type = query.type as ProjectTypes;
-        let exclusive = query.exclusive === "true";
+	const mode = query.mode as string;
+	const type = query.type as ProjectTypes;
+	const exclusive = query.exclusive === "true";
 
-        //todo: switch
-        if (query.stat == "versions") {
-            return exportStats(mode, type, exclusive, value => value.versions)
-        } else if (query.stat == "count") {
-            return exportStats(mode, type, exclusive, value => value.count)
-        } else {
-            return exportStats(mode, type, exclusive, value => value.downloads)
-        }
-    }
-)
+	switch (query.stat) {
+		case "versions": {
+			return exportStats(mode, type, exclusive, (value) => value.versions);
+		}
+		case "count": {
+			return exportStats(mode, type, exclusive, (value) => value.count);
+		}
+		default: {
+			return exportStats(mode, type, exclusive, (value) => value.downloads);
+		}
+	}
+});
