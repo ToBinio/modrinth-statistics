@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import DropDownButton from "~/components/util/DropDownButton.vue";
 import { useSettings } from "~/composables/useSettings";
+import { useVersionRange } from "~/composables/useVersionRange";
 
-const { version, exclusive } = useSettings();
+const { version, exclusive, versionTo, versionFrom } = useSettings();
+const { from, to } = useVersionRange();
 </script>
 
 <template>
@@ -19,6 +21,26 @@ const { version, exclusive } = useSettings();
           </option>
           <option value="all">
             All
+          </option>
+        </select>
+      </div>
+      <div class="setting" title="What gameVersions should be shown">
+        <label for="from">from: </label>
+        <select id="from" v-model="versionFrom">
+          <option>
+          </option>
+          <option v-for="version of from">
+            {{ version}}
+          </option>
+        </select>
+      </div>
+      <div class="setting" title="What gameVersions should be shown">
+        <label for="to">to: </label>
+        <select id="to" v-model="versionTo">
+          <option>
+          </option>
+          <option v-for="version of to">
+            {{ version}}
           </option>
         </select>
       </div>

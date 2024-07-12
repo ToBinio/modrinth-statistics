@@ -79,8 +79,12 @@ async function getStatistics(type: ProjectTypes): Promise<AllStats> {
 		exclusive: { all: new Map(), major: new Map(), minor: new Map() },
 	};
 
-	const versions = await getGameVersions();
-	const gameVersions = splitGameVersions(versions);
+	const storage = useStorage("statistics");
+	const gameVersions = await storage.getItem<GameVersions>("gameVersions");
+
+	if (!gameVersions) {
+		throw "no gameVersions were initilized!";
+	}
 
 	let projectIndex = 0;
 	while (true) {
@@ -106,6 +110,10 @@ async function getStatistics(type: ProjectTypes): Promise<AllStats> {
 	}
 
 	function toVersions(data: StatsDataEntry): AllStatsEntry {
+		if (!gameVersions) {
+			throw "no gameVersions were initilized!";
+		}
+
 		return {
 			all: groupStatsToStats(StatsFromType(gameVersions.all, data.all)),
 			minor: groupStatsToStats(StatsFromType(gameVersions.minor, data.minor)),

@@ -7,6 +7,15 @@ export type GameVersions = {
 	minor: GameVersionData;
 };
 
+export async function updateGameVersions() {
+	const versions = await getGameVersions();
+	const gameVersions = splitGameVersions(versions);
+
+	const storage = useStorage("statistics");
+
+	storage.setItem("gameVersions", gameVersions);
+}
+
 export function splitGameVersions(versions: GameVersion[]): GameVersions {
 	const all = versions.map((value) => {
 		return { name: value.name, contains: [value.name] };

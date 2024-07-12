@@ -8,7 +8,7 @@ const props = defineProps<{
 	type: string;
 	explanation: string;
 }>();
-const { version, exclusive } = useSettings();
+const { version, exclusive, versionFrom, versionTo } = useSettings();
 
 const { data } = useFetch<StatExport>("/api/stats", {
 	query: {
@@ -21,7 +21,25 @@ const { data } = useFetch<StatExport>("/api/stats", {
 
 const downloadData = computed(() => {
 	if (data.value) {
-		return data.value;
+		const chartData: StatExport = JSON.parse(JSON.stringify(data.value));
+
+		let to = data.value.labels.length;
+		if (versionTo.value) {
+			to = chartData.labels.indexOf(versionTo.value) + 1;
+		}
+
+		let from = 0;
+		if (versionFrom.value) {
+			from = chartData.labels.indexOf(versionFrom.value);
+		}
+
+		chartData.labels = chartData.labels.slice(from, to);
+
+		for (let i = 0; i < chartData.data.length; i++) {
+			chartData.data[i].data = chartData.data[i].data.slice(from, to);
+		}
+
+		return chartData;
 	}
 
 	return {

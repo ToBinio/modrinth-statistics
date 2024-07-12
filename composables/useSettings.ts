@@ -15,6 +15,26 @@ export function useSettings() {
 			return false;
 		},
 	});
+	const versionTo = useCookie<string | undefined>("to", {
+		maxAge: 60 * 60 * 24 * 30,
+		sameSite: true,
+		default: () => {
+			return undefined;
+		},
+		decode(value) {
+		    return value
+		},
+	});
+	const versionFrom = useCookie<string | undefined>("from", {
+		maxAge: 60 * 60 * 24 * 30,
+		sameSite: true,
+		default: () => {
+			return undefined;
+		},
+		decode(value) {
+			return value
+		},
+	});
 
-	return { version, exclusive };
+	return { version, exclusive, versionTo, versionFrom };
 }

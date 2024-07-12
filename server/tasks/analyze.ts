@@ -1,4 +1,5 @@
 import consola from "consola";
+import { updateGameVersions } from "../utils/gameVersions";
 
 export default defineTask({
 	meta: {
@@ -9,6 +10,7 @@ export default defineTask({
 		consola.log("starting analyze");
 
 		console.time("finish analyze");
+		await updateGameVersions();
 		await updateStatistics();
 		console.timeEnd("finish analyze");
 
