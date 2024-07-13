@@ -13,7 +13,7 @@ export async function updateGameVersions() {
 
 	const storage = useStorage("statistics");
 
-	storage.setItem("gameVersions", gameVersions);
+	await storage.setItem("gameVersions", gameVersions);
 }
 
 export function splitGameVersions(versions: GameVersion[]): GameVersions {

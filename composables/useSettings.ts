@@ -22,7 +22,7 @@ export function useSettings() {
 			return undefined;
 		},
 		decode(value) {
-		    return value
+			return value;
 		},
 	});
 	const versionFrom = useCookie<string | undefined>("from", {
@@ -32,7 +32,7 @@ export function useSettings() {
 			return undefined;
 		},
 		decode(value) {
-			return value
+			return value;
 		},
 	});
 
