@@ -26,6 +26,6 @@
 		"@iconify-json/ion": "^1.1.18",
 		"@iconify-json/mdi": "^1.1.67",
 		"@iconify-json/ph": "^1.1.13",
-		"@nuxt/icon": "^1.0.0"
+		"@nuxt/icon": "^1.1.1"
 	}
 }
