@@ -1,6 +1,3 @@
-import { type StatExport, exportStats } from "~/server/utils/api/stats";
-import type { ProjectTypes } from "~/utils/project";
-
 export default defineEventHandler(async (event): Promise<StatExport> => {
 	const query = getQuery(event);
 

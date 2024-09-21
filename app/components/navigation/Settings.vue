@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import DropDownButton from "~/components/util/DropDownButton.vue";
-import { useSettings } from "~/composables/useSettings";
-import { useVersionRange } from "~/composables/useVersionRange";
 
 const { version, exclusive, versionTo, versionFrom } = useSettings();
 const { from, to } = useVersionRange();

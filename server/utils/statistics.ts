@@ -1,13 +1,4 @@
 import consola from "consola";
-import type { Version } from "~/server/utils/fetchData";
-import {
-	type GameVersionData,
-	type GameVersions,
-	getSupportedGameVersions,
-	splitGameVersions,
-} from "~/server/utils/gameVersions";
-import type { Stats } from "~/server/utils/types/stats";
-import { type ProjectTypes, projectTypeList } from "~/utils/project";
 
 type StatsDataType = Map<
 	string,

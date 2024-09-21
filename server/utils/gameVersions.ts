@@ -1,5 +1,3 @@
-import type { GameVersion, Version } from "~/server/utils/fetchData";
-
 export type GameVersionData = { name: string; contains: string[] }[];
 export type GameVersions = {
 	all: GameVersionData;

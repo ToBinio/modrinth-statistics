@@ -1,5 +1,3 @@
-import type { GameVersionData } from "../utils/gameVersions";
-
 export default defineEventHandler(async (event): Promise<GameVersionData> => {
 	const query = getQuery(event);
 

@@ -1,7 +1,4 @@
 import consola from "consola";
-import type { Stats, StatsValue } from "~/server/utils/types/stats";
-import type { ProjectTypes } from "~/utils/project";
-import { firstLetterUpperCase } from "~/utils/text";
 
 export type StatExport = {
 	labels: string[];

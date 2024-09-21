@@ -1,5 +1,3 @@
-import { $modrinthFetch } from "~/utils/modrinthFetch";
-
 export async function getProjectIds(
 	offset: number,
 	type: string,

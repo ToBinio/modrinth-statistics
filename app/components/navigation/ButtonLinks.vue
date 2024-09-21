@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Links from "~/components/navigation/Links.vue";
 import DropDownButton from "~/components/util/DropDownButton.vue";
+import Links from "~/components/navigation/Links.vue";
 </script>
 
 <template>

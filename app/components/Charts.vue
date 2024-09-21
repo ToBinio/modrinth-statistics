@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { Bar } from "vue-chartjs";
-import { useSettings } from "~/composables/useSettings";
-import type { StatExport } from "~/server/utils/api/stats";
 
 const props = defineProps<{
 	stat: string;

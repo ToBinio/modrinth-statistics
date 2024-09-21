@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import {firstLetterUpperCase} from "~~/utils/text";
+import {projectTypeList} from "~~/utils/project";
 import DropDownLink from "~/components/util/DropDownLink.vue";
-import { type ProjectTypes, projectTypeList } from "~/utils/project";
-import { firstLetterUpperCase } from "~/utils/text";
 
 const urls = new Map<ProjectTypes, { title: string; url: string }[]>();
 

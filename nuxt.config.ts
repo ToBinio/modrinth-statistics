@@ -1,6 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 	devtools: { enabled: true },
+	future: {
+		compatibilityVersion: 4,
+	},
 
 	app: {
 		head: {
@@ -38,6 +41,9 @@ export default defineNuxtConfig({
 		scheduledTasks: {
 			"0 0 * * *": ["analyze"],
 		},
+		imports: {
+			dirs: ["utils"]
+		}
 	},
 
 	modules: ["@nuxt/icon"],
