@@ -31,6 +31,15 @@ export default defineNuxtConfig({
 		// preset: "bun",
 		storage: {
 			statistics: {
+				driver: "mongodb",
+				connectionString:
+					"mongodb://server:noPass4tooDay!@localhost:27017/stats",
+				databaseName: "stats",
+				collectionName: "stats",
+			},
+		},
+		devStorage: {
+			statistics: {
 				driver: "fs",
 				base: "./.data/statistics",
 			},
@@ -42,8 +51,8 @@ export default defineNuxtConfig({
 			"0 0 * * *": ["analyze"],
 		},
 		imports: {
-			dirs: ["utils"]
-		}
+			dirs: ["utils"],
+		},
 	},
 
 	modules: ["@nuxt/icon"],

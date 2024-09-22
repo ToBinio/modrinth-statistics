@@ -13,7 +13,12 @@ RUN npm run build
 FROM node:latest
 WORKDIR /app
 
+# Add docker-compose-wait tool -------------------
+ENV WAIT_VERSION 2.7.2
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/$WAIT_VERSION/wait /wait
+RUN chmod +x /wait
+
 COPY --from=build /app/.output /app/.output
 
 EXPOSE 3000
-CMD [ "node", ".output/server/index.mjs" ]
+CMD [ "sh", "-c", "/wait && node .output/server/index.mjs" ]

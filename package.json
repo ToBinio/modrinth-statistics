@@ -15,6 +15,7 @@
 	},
 	"dependencies": {
 		"chart.js": "^4.4.4",
+		"mongodb": "^6.9.0",
 		"nuxt": "^3.13.2",
 		"vue": "^3.5.7",
 		"vue-chartjs": "^5.3.1",
