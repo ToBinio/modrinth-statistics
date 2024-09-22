@@ -1,4 +1,5 @@
 import consola from "consola";
+import { dateToKey } from "~~/server/utils/date";
 
 type StatsDataType = Map<
 	string,
@@ -47,12 +48,16 @@ async function updateStatistic(type: ProjectTypes) {
 
 async function saveStats(stats: AllStats, type: ProjectTypes) {
 	const storage = useStorage("statistics");
+	const dateKey = dateToKey(new Date());
 
-	await storage.setItem<Stats>(`${type}StatsAll`, stats.all.all);
-	await storage.setItem<Stats>(`${type}StatsMinor`, stats.all.minor);
-	await storage.setItem<Stats>(`${type}StatsMajor`, stats.all.major);
+	await storage.setItem<Stats>(`${type}StatsAll${dateKey}`, stats.all.all);
+	await storage.setItem<Stats>(`${type}StatsMinor${dateKey}`, stats.all.minor);
+	await storage.setItem<Stats>(`${type}StatsMajor${dateKey}`, stats.all.major);
 
-	await storage.setItem<Stats>(`${type}StatsAllExclusive`, stats.exclusive.all);
+	await storage.setItem<Stats>(
+		`${type}StatsAllExclusive${dateKey}`,
+		stats.exclusive.all,
+	);
 	await storage.setItem<Stats>(
 		`${type}StatsMinorExclusive`,
 		stats.exclusive.minor,
@@ -61,6 +66,8 @@ async function saveStats(stats: AllStats, type: ProjectTypes) {
 		`${type}StatsMajorExclusive`,
 		stats.exclusive.major,
 	);
+
+	await storage.setItem("latestDate", dateKey);
 }
 
 async function getStatistics(type: ProjectTypes): Promise<AllStats> {
