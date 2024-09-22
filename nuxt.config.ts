@@ -33,7 +33,7 @@ export default defineNuxtConfig({
 			statistics: {
 				driver: "mongodb",
 				connectionString:
-					"mongodb://server:noPass4tooDay!@localhost:27017/stats",
+					"mongodb://server:noPass4tooDay!@mongodb:27017/stats",
 				databaseName: "stats",
 				collectionName: "stats",
 			},
