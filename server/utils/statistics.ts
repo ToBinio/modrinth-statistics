@@ -59,11 +59,11 @@ async function saveStats(stats: AllStats, type: ProjectTypes) {
 		stats.exclusive.all,
 	);
 	await storage.setItem<Stats>(
-		`${type}StatsMinorExclusive`,
+		`${type}StatsMinorExclusive${dateKey}`,
 		stats.exclusive.minor,
 	);
 	await storage.setItem<Stats>(
-		`${type}StatsMajorExclusive`,
+		`${type}StatsMajorExclusive${dateKey}`,
 		stats.exclusive.major,
 	);
 
