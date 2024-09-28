@@ -15,16 +15,6 @@ export default defineNuxtConfig({
 		"/downloads": {
 			redirect: "/downloads/major",
 		},
-		// see - https://github.com/unjs/nitro/issues/889
-		// "/downloads/all": {
-		//     prerender: true
-		// },
-		// "/downloads/minor": {
-		//     prerender: true
-		// },
-		// "/downloads/major": {
-		//     prerender: true
-		// }
 	},
 
 	nitro: {
@@ -32,8 +22,7 @@ export default defineNuxtConfig({
 		storage: {
 			statistics: {
 				driver: "mongodb",
-				connectionString:
-					"mongodb://server:noPass4tooDay!@mongodb:27017/stats",
+				connectionString: `mongodb://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@mongodb:27017/stats`,
 				databaseName: "stats",
 				collectionName: "stats",
 			},

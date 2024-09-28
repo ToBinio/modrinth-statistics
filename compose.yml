@@ -1,9 +1,10 @@
-version: "3"
 services:
   my-app:
     build: .
     ports:
       - "3000:3000"
+    env_file:
+      - ./.env
     environment:
       - WAIT_HOSTS=mongodb:27017
       - WAIT_HOSTS_TIMEOUT=300
@@ -12,10 +13,12 @@ services:
   mongodb:
     image: mongo
     ports:
-      - '27017'
+      - ${MONGODB_PORT}:27017
+    env_file:
+      - ./.env
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=server
-      - MONGO_INITDB_ROOT_PASSWORD=noPass4tooDay
+      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_ADMIN_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_ADMIN_PASSWORD}
       - MONGO_INITDB_DATABASE=stats
     volumes:
       - /data/db
