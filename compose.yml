@@ -21,5 +21,5 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_ADMIN_PASSWORD}
       - MONGO_INITDB_DATABASE=stats
     volumes:
-      - /data/db
+      - ./data:/data/db
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
