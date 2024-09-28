@@ -13,19 +13,10 @@ export async function exportStats(
 	versionCategory: string,
 	type: ProjectTypes,
 	exclusive: boolean,
+	dateKey: string,
 	fn: (value: StatsValue) => number,
 ): Promise<StatExport> {
 	const storage = useStorage("statistics");
-	const dateString = await storage.getItem<string>("latestDate");
-
-	if (!dateString) {
-		consola.error("no latestDate set");
-
-		return {
-			labels: [],
-			data: [],
-		};
-	}
 
 	// key format: <projectType>Stats<versionCategory><?exclusive><date>
 	let key = `${type}Stats${firstLetterUpperCase(versionCategory)}`;
@@ -34,7 +25,7 @@ export async function exportStats(
 		key += "Exclusive";
 	}
 
-	key += dateString;
+	key += dateKey;
 
 	const stats = await storage.getItem<Stats>(key);
 

@@ -1,5 +1,4 @@
 import consola from "consola";
-import { dateToKey } from "~~/server/utils/date";
 
 type StatsDataType = Map<
 	string,

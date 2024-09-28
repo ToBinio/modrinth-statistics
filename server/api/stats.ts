@@ -1,3 +1,5 @@
+import consola from "consola";
+
 export default defineEventHandler(async (event): Promise<StatExport> => {
 	const query = getQuery(event);
 
@@ -5,15 +7,49 @@ export default defineEventHandler(async (event): Promise<StatExport> => {
 	const type = query.type as ProjectTypes;
 	const exclusive = query.exclusive === "true";
 
+	let dateKey: string | null = query.date as string;
+
+	if (!dateKey) {
+		const storage = useStorage("statistics");
+		dateKey = await storage.getItem<string>("latestDate");
+	}
+
+	if (!dateKey) {
+		consola.error("no latestDate set");
+
+		return {
+			labels: [],
+			data: [],
+		};
+	}
+
 	switch (query.stat) {
 		case "versions": {
-			return exportStats(mode, type, exclusive, (value) => value.versions);
+			return exportStats(
+				mode,
+				type,
+				exclusive,
+				dateKey,
+				(value) => value.versions,
+			);
 		}
 		case "count": {
-			return exportStats(mode, type, exclusive, (value) => value.count);
+			return exportStats(
+				mode,
+				type,
+				exclusive,
+				dateKey,
+				(value) => value.count,
+			);
 		}
 		default: {
-			return exportStats(mode, type, exclusive, (value) => value.downloads);
+			return exportStats(
+				mode,
+				type,
+				exclusive,
+				dateKey,
+				(value) => value.downloads,
+			);
 		}
 	}
 });
