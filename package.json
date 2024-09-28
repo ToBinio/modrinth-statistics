@@ -17,7 +17,7 @@
 		"chart.js": "^4.4.4",
 		"mongodb": "^6.9.0",
 		"nuxt": "^3.13.2",
-		"vue": "^3.5.7",
+		"vue": "^3.5.10",
 		"vue-chartjs": "^5.3.1",
 		"vue-router": "^4.4.5"
 	},
@@ -27,6 +27,6 @@
 		"@iconify-json/ion": "^1.2.0",
 		"@iconify-json/mdi": "^1.2.0",
 		"@iconify-json/ph": "^1.2.0",
-		"@nuxt/icon": "^1.5.1"
+		"@nuxt/icon": "^1.5.2"
 	}
 }
