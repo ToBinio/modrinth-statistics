@@ -1,11 +1,17 @@
 import consola from "consola";
 
-export default defineEventHandler(async (event): Promise<StatExport> => {
-	const query = getQuery(event);
+type QueryData = {
+	stat: "versions" | "count" | "downloads";
+	mode: string;
+	type: ProjectTypes;
+	exclusive: string;
+	date: string | null;
+	versionFrom: string | null;
+	versionTo: string | null;
+};
 
-	const mode = query.mode as string;
-	const type = query.type as ProjectTypes;
-	const exclusive = query.exclusive === "true";
+export default defineEventHandler(async (event): Promise<StatExport> => {
+	const query = getQuery<QueryData>(event);
 
 	let dateKey: string | null = query.date as string;
 
@@ -23,33 +29,30 @@ export default defineEventHandler(async (event): Promise<StatExport> => {
 		};
 	}
 
+	let typeFn: (value: StatsValue) => number;
+
 	switch (query.stat) {
 		case "versions": {
-			return exportStats(
-				mode,
-				type,
-				exclusive,
-				dateKey,
-				(value) => value.versions,
-			);
+			typeFn = (value) => value.versions;
+			break;
 		}
 		case "count": {
-			return exportStats(
-				mode,
-				type,
-				exclusive,
-				dateKey,
-				(value) => value.count,
-			);
+			typeFn = (value) => value.count;
+			break;
 		}
 		default: {
-			return exportStats(
-				mode,
-				type,
-				exclusive,
-				dateKey,
-				(value) => value.downloads,
-			);
+			typeFn = (value) => value.downloads;
+			break;
 		}
 	}
+
+	return exportStats(
+		query.mode,
+		query.type,
+		query.exclusive === "true",
+		dateKey,
+		typeFn,
+		query.versionTo,
+		query.versionFrom,
+	);
 });

@@ -14,42 +14,22 @@ const { data } = useFetch<StatExport>("/api/stats", {
 		exclusive: exclusive,
 		type: props.type,
 		stat: props.stat,
+		versionTo: versionTo,
+		versionFrom: versionFrom,
 	},
 });
 
-const downloadData = computed(() => {
-	if (data.value) {
-		const chartData: StatExport = JSON.parse(JSON.stringify(data.value));
-
-		let to = data.value.labels.length;
-		if (versionTo.value) {
-			to = chartData.labels.indexOf(versionTo.value) + 1;
-		}
-
-		let from = 0;
-		if (versionFrom.value) {
-			from = chartData.labels.indexOf(versionFrom.value);
-		}
-
-		chartData.labels = chartData.labels.slice(from, to);
-
-		for (let i = 0; i < chartData.data.length; i++) {
-			chartData.data[i].data = chartData.data[i].data.slice(from, to);
-		}
-
-		return chartData;
+const chartData = computed(() => {
+	if (!data.value) {
+		return {
+			labels: [],
+			datasets: [],
+		};
 	}
 
 	return {
-		labels: [],
-		data: [],
-	};
-});
-
-const chartData = computed(() => {
-	return {
-		labels: downloadData.value.labels,
-		datasets: downloadData.value.data.map((value) => {
+		labels: data.value.labels,
+		datasets: data.value.data.map((value) => {
 			return {
 				...value,
 				borderRadius: 3,
