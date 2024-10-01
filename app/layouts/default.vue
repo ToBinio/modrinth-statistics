@@ -10,8 +10,7 @@ import Settings from "~/components/navigation/Settings.vue";
       <NuxtLink id="header" href="/">
         Modrinth Statistics
       </NuxtLink>
-      <div id="fullLinks">
-        <Links/>
+      <div id="navBody">
       </div>
       <div id="icons">
         <ButtonLinks class="linksButton"/>
@@ -110,7 +109,7 @@ import Settings from "~/components/navigation/Settings.vue";
 }
 
 @media only screen and (max-width: 1220px) {
-  #fullLinks {
+  #navBody {
     display: none !important;
   }
 }

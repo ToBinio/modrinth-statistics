@@ -2,25 +2,11 @@
 import { Bar } from "vue-chartjs";
 
 const props = defineProps<{
-	stat: string;
-	type: string;
-	explanation: string;
+	data: StatExport | undefined;
 }>();
-const { version, exclusive, versionFrom, versionTo } = useSettings();
-
-const { data } = useFetch<StatExport>("/api/stats", {
-	query: {
-		mode: version,
-		exclusive: exclusive,
-		type: props.type,
-		stat: props.stat,
-		versionTo: versionTo,
-		versionFrom: versionFrom,
-	},
-});
 
 const chartData = computed(() => {
-	if (!data.value) {
+	if (!props.data) {
 		return {
 			labels: [],
 			datasets: [],
@@ -28,8 +14,8 @@ const chartData = computed(() => {
 	}
 
 	return {
-		labels: data.value.labels,
-		datasets: data.value.data.map((value) => {
+		labels: props.data.labels,
+		datasets: props.data.data.map((value) => {
 			return {
 				...value,
 				borderRadius: 3,
@@ -74,6 +60,7 @@ const chartOptions = ref({
 </script>
 
 <template>
+  {{props.type}}
   <div id="container">
     <Bar
         :data="chartData"
