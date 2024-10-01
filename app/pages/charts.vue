@@ -35,12 +35,14 @@ const explanation = computed(() => {
 
 <template>
   <Teleport to="#navBody">
-    <FilterItem v-model="projectType" :options="['mod', 'plugin', 'datapack', 'shader', 'resourcepack', 'modpack']"/>
-    <FilterItem v-model="stat" :options="['count', 'downloads', 'versions']"/>
-    <FilterItem v-model="versionGroup" :options="['major', 'minor', 'all']"/>
-    <FilterItem v-model="versionFrom" :can-clear="true" :options="from"/>
-    <FilterItem v-model="versionTo" :can-clear="true" :options="to"/>
-    <FilterItem v-model="exclusive" :options="['yes', 'no']"/>
+    <div id="links">
+      <FilterItem v-model="projectType" :options="['mod', 'plugin', 'datapack', 'shader', 'resourcepack', 'modpack']" title="Type"/>
+      <FilterItem v-model="stat" :options="['count', 'downloads', 'versions']" title="Stat"/>
+      <FilterItem v-model="versionGroup" :options="['major', 'minor', 'all']" title="Version Group"/>
+      <FilterItem v-model="versionFrom" :can-clear="true" :options="from" title="Version From"/>
+      <FilterItem v-model="versionTo" :can-clear="true" :options="to" title="Version To"/>
+      <FilterItem v-model="exclusive" :options="['yes', 'no']" title="Exclusive"/>
+    </div>
   </Teleport>
   <Charts :data="data" :type="projectType as string"/>
   <div id="tooltip">
@@ -51,6 +53,11 @@ const explanation = computed(() => {
 </template>
 
 <style scoped>
+#links{
+  display: flex;
+  gap: 20px;
+}
+
 #tooltip {
   position: absolute;
 
