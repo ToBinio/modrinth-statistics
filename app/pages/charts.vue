@@ -2,6 +2,8 @@
 import { useFilterItem } from "~/composables/useFilterItem";
 import FilterItem from "~/components/navigation/FilterItem.vue";
 import { useVersionRange } from "#imports";
+import { computed } from "vue";
+import { useExplanations } from "~/composables/useExplanations";
 
 const projectType = useFilterItem("projectType", "mod");
 const stat = useFilterItem("stat", "count");
@@ -25,6 +27,10 @@ const { data } = useFetch<StatExport>("/api/stats", {
 		versionFrom: versionFrom,
 	},
 });
+
+const explanation = computed(() => {
+	return useExplanations(stat.value);
+});
 </script>
 
 <template>
@@ -36,10 +42,45 @@ const { data } = useFetch<StatExport>("/api/stats", {
     <FilterItem v-model="versionTo" :can-clear="true" :options="to"/>
     <FilterItem v-model="exclusive" :options="['yes', 'no']"/>
   </Teleport>
-  <Charts :data="data" :type="projectType as string"
-          explanation=""/>
+  <Charts :data="data" :type="projectType as string"/>
+  <div id="tooltip">
+    <Icon name="ph:question" size="25" style="color: var(--white)"/>
+    <div id="explanation" v-html="explanation">
+    </div>
+  </div>
 </template>
 
 <style scoped>
+#tooltip {
+  position: absolute;
 
+  top: 0;
+  right: 10px;
+
+  &:not(:hover) {
+    #explanation {
+      display: none;
+    }
+  }
+
+  #explanation {
+    position: absolute;
+    right: 0;
+
+    background-color: var(--surface-200);
+    padding: 10px;
+    border-radius: 10px;
+
+    width: 400px;
+    max-width: 90vw;
+  }
+}
+</style>
+
+<style>
+#explanation {
+  h4 {
+    margin: 0;
+  }
+}
 </style>

@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import ButtonLinks from "~/components/navigation/ButtonLinks.vue";
-import Links from "~/components/navigation/Links.vue";
-import Settings from "~/components/navigation/Settings.vue";
 </script>
 
 <template>
@@ -13,8 +10,6 @@ import Settings from "~/components/navigation/Settings.vue";
       <div id="navBody">
       </div>
       <div id="icons">
-        <ButtonLinks class="linksButton"/>
-        <Settings/>
         <NuxtLink id="github" to="https://github.com/ToBinio/modrinth-statistics" target="_blank">
           <Icon name="mdi:github" size="40"/>
         </NuxtLink>

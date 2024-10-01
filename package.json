@@ -22,7 +22,7 @@
 		"vue-router": "^4.4.5"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "1.9.2",
+		"@biomejs/biome": "1.9.3",
 		"@iconify-json/akar-icons": "^1.2.0",
 		"@iconify-json/ion": "^1.2.0",
 		"@iconify-json/mdi": "^1.2.0",
