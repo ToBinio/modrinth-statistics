@@ -1,5 +1,5 @@
+import { $modrinthFetch } from "~~/utils/modrinthFetch";
 import type { UseFetchOptions } from "#app";
-import {$modrinthFetch} from "~~/utils/modrinthFetch";
 
 export function useModrinthFetch<T>(
 	url: string | (() => string),

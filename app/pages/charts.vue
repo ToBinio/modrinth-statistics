@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useFilterItem } from "~/composables/useFilterItem";
-import FilterItem from "~/components/navigation/FilterItem.vue";
-import { useVersionRange } from "#imports";
 import { computed } from "vue";
+import FilterItem from "~/components/navigation/FilterItem.vue";
 import { useExplanations } from "~/composables/useExplanations";
+import { useFilterItem } from "~/composables/useFilterItem";
+import { useVersionRange } from "#imports";
 
 const projectType = useFilterItem("projectType", "mod");
 const stat = useFilterItem("stat", "count");
