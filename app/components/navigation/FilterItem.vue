@@ -3,6 +3,7 @@ const model = defineModel();
 
 const { canClear = false } = defineProps<{
 	title: string;
+  explanation: string
 	options: string[];
 	canClear?: boolean;
 }>();
@@ -10,7 +11,7 @@ const { canClear = false } = defineProps<{
 
 <template>
   <div id="main">
-    <div id="title">{{ title }}</div>
+    <abbr :title="explanation" id="title">{{ title }}</abbr>
     <select v-model="model">
       <option v-if="canClear">
       </option>
@@ -29,6 +30,7 @@ const { canClear = false } = defineProps<{
 
   #title {
     font-size: small;
+    text-decoration: none;
   }
 
   select{

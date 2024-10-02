@@ -36,12 +36,12 @@ const explanation = computed(() => {
 <template>
   <Teleport to="#navBody">
     <div id="links">
-      <FilterItem v-model="projectType" :options="['mod', 'plugin', 'datapack', 'shader', 'resourcepack', 'modpack']" title="Type"/>
-      <FilterItem v-model="stat" :options="['count', 'downloads', 'versions']" title="Stat"/>
-      <FilterItem v-model="versionGroup" :options="['major', 'minor', 'all']" title="Version Group"/>
-      <FilterItem v-model="versionFrom" :can-clear="true" :options="from" title="Version From"/>
-      <FilterItem v-model="versionTo" :can-clear="true" :options="to" title="Version To"/>
-      <FilterItem v-model="exclusive" :options="['yes', 'no']" title="Exclusive"/>
+      <FilterItem v-model="projectType" :options="['mod', 'plugin', 'datapack', 'shader', 'resourcepack', 'modpack']" title="Type" explanation=""/>
+      <FilterItem v-model="stat" :options="['count', 'downloads', 'versions']" title="Stat" explanation=""/>
+      <FilterItem v-model="versionGroup" :options="['major', 'minor', 'all']" title="Version Group" explanation="What type of Minecraft versions should be displayed"/>
+      <FilterItem v-model="versionFrom" :can-clear="true" :options="from" title="Version From" explanation="Whats the first version that should be displayed"/>
+      <FilterItem v-model="versionTo" :can-clear="true" :options="to" title="Version To" explanation="Whats the last version that should be displayed"/>
+      <FilterItem v-model="exclusive" :options="['yes', 'no']" title="Exclusive" explanation="Only show Versions made for a single launcher"/>
     </div>
   </Teleport>
   <Charts :data="data" :type="projectType as string"/>
