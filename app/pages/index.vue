@@ -14,6 +14,11 @@ const { data } = useModrinthFetch<statistics>("/statistics");
 </script>
 
 <template>
+  <Teleport to="#navBody">
+    <NuxtLink href="/charts">
+      Charts
+    </NuxtLink>
+  </Teleport>
   <div id="page">
     <div id="header">
       The place for stats all about
