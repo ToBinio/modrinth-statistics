@@ -1,23 +1,11 @@
-import { useSettings } from "~/composables/useSettings";
+import {useGameVersions} from "~/composables/useGameVersions";
 
 export function useVersionRange(
 	versionGroup: Ref<string | undefined>,
 	versionTo: Ref<string | undefined>,
 	versionFrom: Ref<string | undefined>,
 ) {
-	const { data } = useFetch("/api/gameVersions", {
-		query: { mode: versionGroup },
-	});
-
-	const versionNames = computed(() => {
-		if (!data.value) {
-			return [];
-		}
-
-		return data.value.map((value) => {
-			return value.name;
-		});
-	});
+	const versionNames = useGameVersions(versionGroup)
 
 	const to = computed(() => {
 		if (!versionFrom.value) {

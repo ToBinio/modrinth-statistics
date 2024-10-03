@@ -1,4 +1,5 @@
 import consola from "consola";
+import { dateToKey, keyToDate } from "~~/utils/date";
 
 export type StatExport = {
 	labels: string[];
@@ -26,6 +27,7 @@ function getStorageKey(
 	return key;
 }
 
+// maps database data to a format usable by the frontend
 function mapStats(stats: Stats, fn: (value: StatsValue) => number) {
 	return {
 		labels: stats.versions,
@@ -41,6 +43,7 @@ function mapStats(stats: Stats, fn: (value: StatsValue) => number) {
 	};
 }
 
+// extract only versions in the given version range
 function filterVersions(
 	mappedStats: StatExport,
 	versionTo: string | null,
@@ -90,4 +93,54 @@ export async function exportStats(
 	filterVersions(mappedStats, versionTo, versionFrom);
 
 	return mappedStats;
+}
+
+export async function exportStatsOverTime(
+	versionCategory: string,
+	type: ProjectTypes,
+	exclusive: boolean,
+	firstDateKey: string,
+	version: string,
+	fn: (value: StatsValue) => number,
+): Promise<StatExport> {
+	const storage = useStorage("statistics");
+
+	const statsOverTime: Stats = {
+		versions: [],
+		data: [],
+	};
+
+	const date = keyToDate(firstDateKey);
+
+	while (true) {
+		const dateKey = dateToKey(date);
+		const key = getStorageKey(type, versionCategory, exclusive, dateKey);
+		const stats = await storage.getItem<Stats>(key);
+
+		if (!stats) {
+			break;
+		}
+
+		const index = stats.versions.indexOf(version);
+
+		statsOverTime.versions.splice(0, 0,dateKey);
+
+		outer: for (const data of stats.data) {
+			for (const dataOverTime of statsOverTime.data) {
+				if (dataOverTime.name === data.name) {
+					dataOverTime.values.splice(0, 0, data.values[index]);
+					continue outer;
+				}
+			}
+
+			statsOverTime.data.push({
+				name: data.name,
+				values: [data.values[index]],
+			});
+		}
+
+		date.setUTCDate(date.getUTCDate() - 1);
+	}
+
+	return mapStats(statsOverTime, fn);
 }

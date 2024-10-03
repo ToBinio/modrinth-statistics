@@ -1,12 +1,12 @@
 import consola from "consola";
+import { exportStatsOverTime } from "~~/server/utils/api/stats";
 
 type QueryData = {
 	stat: "versions" | "count" | "downloads";
 	mode: string;
 	type: ProjectTypes;
 	exclusive: string;
-	versionFrom: string | null;
-	versionTo: string | null;
+	version: string;
 };
 
 export default defineEventHandler(async (event): Promise<StatExport> => {
@@ -41,13 +41,12 @@ export default defineEventHandler(async (event): Promise<StatExport> => {
 		}
 	}
 
-	return exportStats(
+	return exportStatsOverTime(
 		query.mode,
 		query.type,
 		query.exclusive === "true",
 		dateKey,
+		query.version,
 		typeFn,
-		query.versionTo,
-		query.versionFrom,
 	);
 });

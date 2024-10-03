@@ -4,20 +4,30 @@ import FilterItem from "~/components/navigation/FilterItem.vue";
 import { useExplanations } from "~/composables/useExplanations";
 import { useFilterItem } from "~/composables/useFilterItem";
 import { useVersionRange } from "#imports";
+import { useGameVersions } from "~/composables/useGameVersions";
 
 const projectType = useFilterItem("projectType", "mod");
 const stat = useFilterItem("stat", "count");
 
 const versionGroup = useFilterItem("versionGroup", "major");
 
-const versionFrom = useFilterItem("versionFrom", undefined);
-const versionTo = useFilterItem("versionFrom", undefined);
-const { to, from } = useVersionRange(versionGroup, versionTo, versionFrom);
+const time = useFilterItem("time", "current");
 
 const exclusive = useFilterItem("exclusive", "yes");
 const exclusiveBool = computed(() => exclusive.value === "yes");
 
-const { data } = useFetch<StatExport>("/api/stats", {
+const versionFrom = useFilterItem("versionFrom", undefined);
+const versionTo = useFilterItem("versionFrom", undefined);
+const { to, from } = useVersionRange(versionGroup, versionTo, versionFrom);
+
+const gameVersions = useGameVersions(versionGroup);
+const version = useFilterItem("version", gameVersions.value[0]);
+
+const url = computed(() => {
+	return time.value === "current" ? "/api/stats" : "/api/statsTime";
+});
+
+const { data } = useFetch<StatExport>(url, {
 	query: {
 		mode: versionGroup,
 		exclusive: exclusiveBool,
@@ -25,6 +35,7 @@ const { data } = useFetch<StatExport>("/api/stats", {
 		stat: stat,
 		versionTo: versionTo,
 		versionFrom: versionFrom,
+		version: version,
 	},
 });
 
@@ -39,9 +50,13 @@ const explanation = computed(() => {
       <FilterItem v-model="projectType" :options="['mod', 'plugin', 'datapack', 'shader', 'resourcepack', 'modpack']" title="Type" explanation=""/>
       <FilterItem v-model="stat" :options="['count', 'downloads', 'versions']" title="Stat" explanation=""/>
       <FilterItem v-model="versionGroup" :options="['major', 'minor', 'all']" title="Version Group" explanation="What type of Minecraft versions should be displayed"/>
-      <FilterItem v-model="versionFrom" :can-clear="true" :options="from" title="Version From" explanation="Whats the first version that should be displayed"/>
-      <FilterItem v-model="versionTo" :can-clear="true" :options="to" title="Version To" explanation="Whats the last version that should be displayed"/>
       <FilterItem v-model="exclusive" :options="['yes', 'no']" title="Exclusive" explanation="Only show Versions made for a single launcher"/>
+      <FilterItem v-model="time" :options="['current', 'all']" title="Time" explanation=""/>
+
+      <FilterItem v-if="time == 'current'" v-model="versionFrom" :can-clear="true" :options="from" title="Version From" explanation="Whats the first version that should be displayed"/>
+      <FilterItem v-if="time == 'current'" v-model="versionTo" :can-clear="true" :options="to" title="Version To" explanation="Whats the last version that should be displayed"/>
+
+      <FilterItem v-if="time != 'current'" v-model="version" :options="gameVersions" title="Version" explanation=""/>
     </div>
   </Teleport>
   <Charts :data="data" :type="projectType as string"/>
