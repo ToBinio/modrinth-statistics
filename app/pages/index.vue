@@ -15,10 +15,12 @@ const { data } = useModrinthFetch<statistics>("/statistics");
 
 <template>
   <Teleport to="#navBody">
-    <NuxtLink href="/charts" id="chartsLink">
-      <Icon name="ph:chart-line" size="35"/>
-      Charts
-    </NuxtLink>
+    <div id="links">
+      <NuxtLink href="/charts" id="chartsLink">
+        <Icon name="ph:chart-line" size="35"/>
+        Charts
+      </NuxtLink>
+    </div>
   </Teleport>
   <div id="page">
     <div id="header">
@@ -76,19 +78,25 @@ const { data } = useModrinthFetch<statistics>("/statistics");
 </template>
 
 <style scoped>
-#chartsLink{
-  text-decoration: none;
-  font-size: xx-large;
-  font-weight: bold;
-
+#links{
   display: flex;
-  gap: 10px;
-  align-items: center;
+  justify-content: center;
 
-  &:hover{
-    color: var(--primary-500);
+  #chartsLink{
+    text-decoration: none;
+    font-size: xx-large;
+    font-weight: bold;
+
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    &:hover{
+      color: var(--primary-500);
+    }
   }
 }
+
 #page {
   flex: 1;
   background: linear-gradient(180deg, var(--surface-100) 0%, var(--surface-mixed-100) 150%);
