@@ -20,8 +20,8 @@ const versionFrom = useFilterItem("versionFrom", undefined);
 const versionTo = useFilterItem("versionFrom", undefined);
 const { to, from } = useVersionRange(versionGroup, versionTo, versionFrom);
 
-const gameVersions = useGameVersions(versionGroup);
-const version = useFilterItem("version", gameVersions.value[0]);
+const gameVersions = await useGameVersions(versionGroup);
+const version = useFilterItem("version", gameVersions.value[gameVersions.value.length - 1]);
 
 const url = computed(() => {
 	return time.value === "current" ? "/api/stats" : "/api/statsTime";

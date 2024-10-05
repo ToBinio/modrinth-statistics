@@ -1,5 +1,5 @@
-export function useGameVersions(versionGroup: Ref<string | undefined>) {
-	const { data } = useFetch("/api/gameVersions", {
+export async function useGameVersions(versionGroup: Ref<string | undefined>) {
+	const { data } = await useFetch("/api/gameVersions", {
 		query: { mode: versionGroup },
 	});
 
