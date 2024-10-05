@@ -4,12 +4,22 @@
 <template>
   <div id="page">
     <div id="nav">
-      <NuxtLink id="header" href="/">
+      <div class="compact">
+        <NuxtLink id="header" href="/">
+          Modrinth Statistics
+        </NuxtLink>
+        <div id="icons">
+          <NuxtLink id="github" to="https://github.com/ToBinio/modrinth-statistics" target="_blank">
+            <Icon name="mdi:github" size="40"/>
+          </NuxtLink>
+        </div>
+      </div>
+      <NuxtLink class="big" id="header" href="/">
         Modrinth Statistics
       </NuxtLink>
       <div id="navBody">
       </div>
-      <div id="icons">
+      <div class="big" id="icons">
         <NuxtLink id="github" to="https://github.com/ToBinio/modrinth-statistics" target="_blank">
           <Icon name="mdi:github" size="40"/>
         </NuxtLink>
@@ -31,6 +41,11 @@
   flex-direction: column;
 
   #nav {
+
+    .compact{
+      display: none;
+    }
+
     z-index: 10;
 
     padding: 10px;
@@ -48,11 +63,6 @@
     #header {
       font-weight: bold;
       font-size: xx-large;
-    }
-
-    #fullLinks {
-      display: flex;
-      gap: 25px;
     }
 
     #icons {
@@ -97,30 +107,41 @@
   }
 }
 
-@media only screen and (max-width: 1400px) {
+@media only screen and (max-width: 1610px) {
   #header {
     width: min-content !important;
   }
 }
 
-@media only screen and (max-width: 1220px) {
-  #navBody {
-    display: none !important;
+@media only screen and (max-width: 1470px) {
+  #navBody{
+    overflow: scroll;
+    width: 100%;
   }
 }
 
-@media only screen and (min-width: 1221px) {
-  .linksButton {
-    display: none !important;
-  }
-}
-
-@media only screen and (max-width: 450px) {
+@media only screen and (max-width: 700px) {
   #nav {
-    gap: 20px !important;
 
+    #header {
+      width: 100% !important;
+    }
+
+    .compact{
+      display: flex !important;
+      gap: 20px;
+    }
+
+    .big{
+      display: none !important;
+    }
+
+    gap: 20px !important;
+    flex-direction: column;
     #icons {
       gap: 10px !important;
+      display: flex;
+      align-items: center;
     }
   }
 }

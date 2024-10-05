@@ -3,7 +3,7 @@ const model = defineModel();
 
 const { canClear = false } = defineProps<{
 	title: string;
-  explanation: string
+	explanation: string;
 	options: string[];
 	canClear?: boolean;
 }>();
@@ -24,6 +24,7 @@ const { canClear = false } = defineProps<{
 
 <style scoped>
 #main{
+  min-width: max-content;
   background: var(--surface-200);
   padding: 5px 10px;
   border-radius: 5px;
