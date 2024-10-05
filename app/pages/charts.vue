@@ -5,6 +5,7 @@ import { useExplanations } from "~/composables/useExplanations";
 import { useFilterItem } from "~/composables/useFilterItem";
 import { useVersionRange } from "#imports";
 import { useGameVersions } from "~/composables/useGameVersions";
+import BarChart from "~/components/BarChart.vue";
 
 const projectType = useFilterItem("projectType", "mod");
 const stat = useFilterItem("stat", "count");
@@ -18,10 +19,13 @@ const exclusiveBool = computed(() => exclusive.value === "yes");
 
 const versionFrom = useFilterItem("versionFrom", undefined);
 const versionTo = useFilterItem("versionFrom", undefined);
-const { to, from } = useVersionRange(versionGroup, versionTo, versionFrom);
+const { to, from } = await useVersionRange(versionGroup, versionTo, versionFrom);
 
 const gameVersions = await useGameVersions(versionGroup);
-const version = useFilterItem("version", gameVersions.value[gameVersions.value.length - 1]);
+const version = useFilterItem(
+	"version",
+	gameVersions.value[gameVersions.value.length - 1],
+);
 
 const url = computed(() => {
 	return time.value === "current" ? "/api/stats" : "/api/statsTime";
@@ -59,7 +63,10 @@ const explanation = computed(() => {
       <FilterItem v-if="time != 'current'" v-model="version" :options="gameVersions" title="Version" explanation=""/>
     </div>
   </Teleport>
-  <Charts :data="data" :type="projectType as string"/>
+
+  <BarChart v-if="time == 'current'" :data="data" :type="projectType as string"/>
+  <LineChart v-else :data="data" :type="projectType as string"/>
+
   <div id="tooltip">
     <Icon name="ph:question" size="25" style="color: var(--white)"/>
     <div id="explanation" v-html="explanation">
