@@ -11,10 +11,6 @@ export default defineNuxtConfig({
 		},
 	},
 
-	routeRules: {
-		"/": { swr: 60 * 60 /* 1 hour */ },
-		"/charts": { swr: 60 * 60 /* 1 hour */ },
-	},
 
 	nitro: {
 		// preset: "bun",
