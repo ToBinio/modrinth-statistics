@@ -12,9 +12,8 @@ export default defineNuxtConfig({
 	},
 
 	routeRules: {
-		"/downloads": {
-			redirect: "/downloads/major",
-		},
+		"/": { swr: 60 * 60 /* 1 hour */ },
+		"/charts": { swr: 60 * 60 /* 1 hour */ },
 	},
 
 	nitro: {
@@ -32,6 +31,12 @@ export default defineNuxtConfig({
 				driver: "fs",
 				base: "./.data/statistics",
 			},
+			// statistics: {
+			// 	driver: "mongodb",
+			// 	connectionString: `mongodb://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@tobinio.at:27017/stats`,
+			// 	databaseName: "stats",
+			// 	collectionName: "stats",
+			// },
 		},
 		experimental: {
 			tasks: true,
