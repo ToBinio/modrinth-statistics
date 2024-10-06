@@ -13,7 +13,7 @@ const { canClear = false } = defineProps<{
   <div id="main">
     <abbr :title="explanation" id="title">{{ title }}</abbr>
     <select v-model="model">
-      <option v-if="canClear">
+      <option v-if="canClear" :value="undefined">
       </option>
       <option v-for="option in options" :value="option">
         {{ option }}

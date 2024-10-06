@@ -18,14 +18,18 @@ const exclusive = useFilterItem("exclusive", "yes");
 const exclusiveBool = computed(() => exclusive.value === "yes");
 
 const versionFrom = useFilterItem("versionFrom", undefined);
-const versionTo = useFilterItem("versionFrom", undefined);
-const { to, from } = await useVersionRange(versionGroup, versionTo, versionFrom);
+const versionTo = useFilterItem("versionTo", undefined);
+const { to, from } = await useVersionRange(
+	versionGroup,
+	versionTo,
+	versionFrom,
+);
 
 const gameVersions = await useGameVersions(versionGroup);
-const version = useFilterItem(
-	"version",
-	gameVersions.value[gameVersions.value.length - 1],
-);
+const defaultVersion = computed(() => {
+	return gameVersions.value[gameVersions.value.length - 1] as string;
+});
+const version = useFilterItem("version", defaultVersion);
 
 const url = computed(() => {
 	return time.value === "current" ? "/api/stats" : "/api/statsTime";
