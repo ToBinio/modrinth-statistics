@@ -11,7 +11,6 @@ export default defineNuxtConfig({
 		},
 	},
 
-
 	nitro: {
 		// preset: "bun",
 		storage: {
@@ -45,6 +44,6 @@ export default defineNuxtConfig({
 		},
 	},
 
-	modules: ["@nuxt/icon"],
+	modules: ["@nuxt/icon", "nuxt-posthog"],
 	compatibilityDate: "2024-07-05",
 });

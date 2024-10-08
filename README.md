@@ -17,4 +17,6 @@ MONGODB_ADMIN_USER=admin
 MONGODB_ADMIN_PASSWORD=admin
 MONGODB_USER=user
 MONGODB_PASSWORD=password
+POSTHOG_API_KEY=<your_key>
+POSTHOG_API_HOST=https://eu.posthog.com
 ```
