@@ -1,11 +1,11 @@
-import {useGameVersions} from "~/composables/useGameVersions";
+import { useGameVersions } from "~/composables/useGameVersions";
 
 export async function useVersionRange(
 	versionGroup: Ref<string | undefined>,
 	versionTo: Ref<string | undefined>,
 	versionFrom: Ref<string | undefined>,
 ) {
-	const versionNames = await useGameVersions(versionGroup)
+	const versionNames = await useGameVersions(versionGroup);
 
 	const to = computed(() => {
 		if (!versionFrom.value) {
