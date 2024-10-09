@@ -1,8 +1,7 @@
 import consola from "consola";
-import { exportGlobalStatsOverTime } from "~~/server/utils/api/stats";
 
 type QueryData = {
-	type: "projects" | "versions" | "files" | "authors";
+	type: GlobalStatCategory;
 };
 
 export default defineCachedEventHandler(

@@ -1,17 +1,12 @@
-type Data = {
-	projects: number;
-	versions: number;
-	files: number;
-	authors: number;
-};
-
-export default defineEventHandler(async (event): Promise<Data> => {
+export default defineEventHandler(async (event): Promise<GlobalStats> => {
 	const query = getQuery(event);
 
 	const storage = useStorage("statistics");
 
 	const dateKey = await storage.getItem<string>("latestDate");
-	const gameVersions = await storage.getItem<Data>(`globalStats${dateKey}`);
+	const gameVersions = await storage.getItem<GlobalStats>(
+		`globalStats${dateKey}`,
+	);
 
 	if (!gameVersions) {
 		setResponseStatus(event, 500);

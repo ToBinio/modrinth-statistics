@@ -18,7 +18,7 @@ type StatsDataEntry = {
 };
 type StatsData = { all: StatsDataEntry; exclusive: StatsDataEntry };
 
-type AllStatsEntry = { all: Stats; minor: Stats; major: Stats };
+type AllStatsEntry = { all: ProjectStats; minor: ProjectStats; major: ProjectStats };
 type AllStats = { all: AllStatsEntry; exclusive: AllStatsEntry };
 
 type GroupStats = {
@@ -67,19 +67,19 @@ async function saveStats(stats: AllStats, type: ProjectTypes) {
 	const storage = useStorage("statistics");
 	const dateKey = dateToKey(new Date());
 
-	await storage.setItem<Stats>(`${type}StatsAll${dateKey}`, stats.all.all);
-	await storage.setItem<Stats>(`${type}StatsMinor${dateKey}`, stats.all.minor);
-	await storage.setItem<Stats>(`${type}StatsMajor${dateKey}`, stats.all.major);
+	await storage.setItem<ProjectStats>(`${type}StatsAll${dateKey}`, stats.all.all);
+	await storage.setItem<ProjectStats>(`${type}StatsMinor${dateKey}`, stats.all.minor);
+	await storage.setItem<ProjectStats>(`${type}StatsMajor${dateKey}`, stats.all.major);
 
-	await storage.setItem<Stats>(
+	await storage.setItem<ProjectStats>(
 		`${type}StatsAllExclusive${dateKey}`,
 		stats.exclusive.all,
 	);
-	await storage.setItem<Stats>(
+	await storage.setItem<ProjectStats>(
 		`${type}StatsMinorExclusive${dateKey}`,
 		stats.exclusive.minor,
 	);
-	await storage.setItem<Stats>(
+	await storage.setItem<ProjectStats>(
 		`${type}StatsMajorExclusive${dateKey}`,
 		stats.exclusive.major,
 	);
@@ -142,7 +142,7 @@ async function getStatistics(type: ProjectTypes): Promise<AllStats> {
 	};
 }
 
-function groupStatsToStats(groupStats: GroupStats): Stats {
+function groupStatsToStats(groupStats: GroupStats): ProjectStats {
 	return {
 		versions: groupStats.versions,
 		data: groupStats.data.map((value) => {

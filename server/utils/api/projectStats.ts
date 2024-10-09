@@ -1,15 +1,6 @@
 import consola from "consola";
 import { dateToKey, keyToDate } from "~~/utils/date";
 
-export type StatExport = {
-	labels: string[];
-	data: {
-		label: string;
-		backgroundColor: string;
-		data: number[];
-	}[];
-};
-
 function getStorageKey(
 	type: ProjectTypes,
 	versionCategory: string,
@@ -28,7 +19,10 @@ function getStorageKey(
 }
 
 // maps database data to a format usable by the frontend
-function mapStats(stats: Stats, fn: (value: StatsValue) => number) {
+function mapStats(
+	stats: ProjectStats,
+	fn: (value: ProjectStatsValue) => number,
+) {
 	return {
 		labels: stats.versions,
 		data: stats.data.map((value) => {
@@ -71,14 +65,14 @@ export async function exportStats(
 	type: ProjectTypes,
 	exclusive: boolean,
 	dateKey: string,
-	fn: (value: StatsValue) => number,
+	fn: (value: ProjectStatsValue) => number,
 	versionTo: string | null,
 	versionFrom: string | null,
 ): Promise<StatExport> {
 	const key = getStorageKey(type, versionCategory, exclusive, dateKey);
 
 	const storage = useStorage("statistics");
-	const stats = await storage.getItem<Stats>(key);
+	const stats = await storage.getItem<ProjectStats>(key);
 
 	if (!stats) {
 		consola.error(`could not find stats for key - "${key}"`);
@@ -101,11 +95,11 @@ export async function exportStatsOverTime(
 	exclusive: boolean,
 	firstDateKey: string,
 	version: string,
-	fn: (value: StatsValue) => number,
+	fn: (value: ProjectStatsValue) => number,
 ): Promise<StatExport> {
 	const storage = useStorage("statistics");
 
-	const statsOverTime: Stats = {
+	const statsOverTime: ProjectStats = {
 		versions: [],
 		data: [],
 	};
@@ -115,7 +109,7 @@ export async function exportStatsOverTime(
 	while (true) {
 		const dateKey = dateToKey(date);
 		const key = getStorageKey(type, versionCategory, exclusive, dateKey);
-		const stats = await storage.getItem<Stats>(key);
+		const stats = await storage.getItem<ProjectStats>(key);
 
 		if (!stats) {
 			break;
@@ -143,52 +137,4 @@ export async function exportStatsOverTime(
 	}
 
 	return mapStats(statsOverTime, fn);
-}
-
-export async function exportGlobalStatsOverTime(
-	firstDateKey: string,
-	fn: (value: {
-		projects: number;
-		versions: number;
-		files: number;
-		authors: number;
-	}) => number,
-): Promise<StatExport> {
-	const storage = useStorage("statistics");
-
-	const statsOverTime: StatExport = {
-		labels: [],
-		data: [],
-	};
-
-	const date = keyToDate(firstDateKey);
-
-	type Data = {
-		projects: number;
-		versions: number;
-		files: number;
-		authors: number;
-	};
-
-	while (true) {
-		const dateKey = dateToKey(date);
-		const key = `globalStats${dateKey}`;
-		const stats = await storage.getItem<Data>(key);
-
-		if (!stats) {
-			break;
-		}
-
-		statsOverTime.labels.splice(0, 0, dateKey);
-
-		statsOverTime.data.push({
-			label: "data",
-			backgroundColor: "#7ab0ee",
-			data: [fn(stats)],
-		});
-
-		date.setUTCDate(date.getUTCDate() - 1);
-	}
-
-	return statsOverTime;
 }

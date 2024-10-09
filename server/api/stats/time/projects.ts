@@ -1,8 +1,7 @@
 import consola from "consola";
-import { exportGlobalStatsOverTime } from "~~/server/utils/api/stats";
 
 type QueryData = {
-	stat: "versions" | "count" | "downloads";
+	stat: ProjectStatCategory;
 	mode: string;
 	type: ProjectTypes;
 	exclusive: string;
@@ -25,7 +24,7 @@ export default defineCachedEventHandler(
 			};
 		}
 
-		let typeFn: (value: StatsValue) => number;
+		let typeFn: (value: ProjectStatsValue) => number;
 
 		switch (query.stat) {
 			case "versions": {
