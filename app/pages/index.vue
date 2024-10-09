@@ -3,14 +3,7 @@ useHead({
 	title: "Modrinth Statistics",
 });
 
-type statistics = {
-	projects: number;
-	versions: number;
-	files: number;
-	authors: number;
-};
-
-const { data } = useModrinthFetch<statistics>("/statistics");
+const { data } = useFetch("/api/stats/global");
 </script>
 
 <template>

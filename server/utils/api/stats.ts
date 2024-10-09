@@ -123,7 +123,7 @@ export async function exportStatsOverTime(
 
 		const index = stats.versions.indexOf(version);
 
-		statsOverTime.versions.splice(0, 0,dateKey);
+		statsOverTime.versions.splice(0, 0, dateKey);
 
 		outer: for (const data of stats.data) {
 			for (const dataOverTime of statsOverTime.data) {
@@ -143,4 +143,52 @@ export async function exportStatsOverTime(
 	}
 
 	return mapStats(statsOverTime, fn);
+}
+
+export async function exportGlobalStatsOverTime(
+	firstDateKey: string,
+	fn: (value: {
+		projects: number;
+		versions: number;
+		files: number;
+		authors: number;
+	}) => number,
+): Promise<StatExport> {
+	const storage = useStorage("statistics");
+
+	const statsOverTime: StatExport = {
+		labels: [],
+		data: [],
+	};
+
+	const date = keyToDate(firstDateKey);
+
+	type Data = {
+		projects: number;
+		versions: number;
+		files: number;
+		authors: number;
+	};
+
+	while (true) {
+		const dateKey = dateToKey(date);
+		const key = `globalStats${dateKey}`;
+		const stats = await storage.getItem<Data>(key);
+
+		if (!stats) {
+			break;
+		}
+
+		statsOverTime.labels.splice(0, 0, dateKey);
+
+		statsOverTime.data.push({
+			label: "data",
+			backgroundColor: "#7ab0ee",
+			data: [fn(stats)],
+		});
+
+		date.setUTCDate(date.getUTCDate() - 1);
+	}
+
+	return statsOverTime;
 }

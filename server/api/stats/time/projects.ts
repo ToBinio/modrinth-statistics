@@ -1,5 +1,5 @@
 import consola from "consola";
-import { exportStatsOverTime } from "~~/server/utils/api/stats";
+import { exportGlobalStatsOverTime } from "~~/server/utils/api/stats";
 
 type QueryData = {
 	stat: "versions" | "count" | "downloads";

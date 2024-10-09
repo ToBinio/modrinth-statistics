@@ -37,6 +37,24 @@ export async function updateStatistics() {
 	for (const type of projectTypeList) {
 		await updateStatistic(type);
 	}
+
+	await updateGlobalStats();
+}
+
+async function updateGlobalStats() {
+	consola.log("fetching globalStats");
+
+	const data = await $modrinthFetch<{
+		projects: number;
+		versions: number;
+		files: number;
+		authors: number;
+	}>("/statistics");
+
+	const storage = useStorage("statistics");
+	const dateKey = dateToKey(new Date());
+
+	await storage.setItem(`globalStats${dateKey}`, data);
 }
 
 async function updateStatistic(type: ProjectTypes) {
