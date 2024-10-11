@@ -9,7 +9,13 @@ export async function exportGlobalStatsOverTime(
 
 	const statsOverTime: StatExport = {
 		labels: [],
-		data: [],
+		data: [
+			{
+				label: "data",
+				backgroundColor: "#7ab0ee",
+				data: [],
+			},
+		],
 	};
 
 	const date = keyToDate(firstDateKey);
@@ -25,11 +31,7 @@ export async function exportGlobalStatsOverTime(
 
 		statsOverTime.labels.splice(0, 0, dateKey);
 
-		statsOverTime.data.push({
-			label: "data",
-			backgroundColor: "#7ab0ee",
-			data: [fn(stats)],
-		});
+		statsOverTime.data[0].data.splice(0, 0, fn(stats));
 
 		date.setUTCDate(date.getUTCDate() - 1);
 	}
