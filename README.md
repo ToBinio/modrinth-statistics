@@ -12,11 +12,8 @@ a Page to view some global statistics about [Modrinth](https://modrinth.com/)
 
 ```dotenv
 # example .env
-MONGODB_PORT=27017
-MONGODB_ADMIN_USER=admin
-MONGODB_ADMIN_PASSWORD=admin
-MONGODB_USER=user
-MONGODB_PASSWORD=password
+MONGODB_DB=modrinth-statistics
+MONGODB_CONNECTION=mongodb://<user>:<password>@<domain>:27017/<DB>
 POSTHOG_API_KEY=<your_key>
 POSTHOG_API_HOST=https://eu.posthog.com
-```
+``` 

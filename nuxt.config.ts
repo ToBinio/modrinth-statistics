@@ -16,22 +16,22 @@ export default defineNuxtConfig({
 		storage: {
 			statistics: {
 				driver: "mongodb",
-				connectionString: `mongodb://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@mongodb:27017/stats`,
-				databaseName: "stats",
+				connectionString: `${process.env.MONGODB_CONNECTION}`,
+				databaseName: `${process.env.MONGODB_DB}`,
 				collectionName: "stats",
 			},
 		},
 		devStorage: {
-			statistics: {
-				driver: "fs",
-				base: "./.data/statistics",
-			},
 			// statistics: {
-			// 	driver: "mongodb",
-			// 	connectionString: `mongodb://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@tobinio.at:27017/stats`,
-			// 	databaseName: "stats",
-			// 	collectionName: "stats",
+			// 	driver: "fs",
+			// 	base: "./.data/statistics",
 			// },
+			statistics: {
+				driver: "mongodb",
+				connectionString: `${process.env.MONGODB_CONNECTION}`,
+				databaseName: `${process.env.MONGODB_DB}`,
+				collectionName: "stats",
+			},
 		},
 		experimental: {
 			tasks: true,
