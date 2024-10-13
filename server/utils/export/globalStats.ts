@@ -1,5 +1,5 @@
+import type { GlobalStats } from "~~/server/utils/processing/global/types";
 import { dateToKey, keyToDate } from "~~/utils/date";
-import type {GlobalStats} from "~~/server/utils/processing/global/types";
 
 export async function exportGlobalStatsOverTime(
 	firstDateKey: string,

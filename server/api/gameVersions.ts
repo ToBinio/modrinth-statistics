@@ -1,4 +1,7 @@
-import type {GameVersionData, GameVersions} from "~~/server/utils/processing/gameVersions/types";
+import type {
+	GameVersionData,
+	GameVersions,
+} from "~~/server/utils/processing/gameVersions/types";
 
 export default defineEventHandler(async (event): Promise<GameVersionData> => {
 	const query = getQuery(event);

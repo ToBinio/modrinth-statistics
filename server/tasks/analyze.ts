@@ -1,7 +1,7 @@
 import consola from "consola";
-import {updateGameVersions} from "~~/server/utils/processing/gameVersions/processing";
-import {updateStatistics} from "~~/server/utils/processing/projects/processing";
-import {updateGlobalStats} from "~~/server/utils/processing/global/processing";
+import { updateGameVersions } from "~~/server/utils/processing/gameVersions/processing";
+import { updateGlobalStats } from "~~/server/utils/processing/global/processing";
+import { updateStatistics } from "~~/server/utils/processing/projects/processing";
 
 export default defineTask({
 	meta: {

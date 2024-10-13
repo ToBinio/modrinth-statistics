@@ -1,4 +1,5 @@
 import consola from "consola";
+import { getSupportedGameVersions } from "~~/server/utils/processing/gameVersions/processing";
 import type {
 	GameVersionData,
 	GameVersions,
@@ -12,7 +13,6 @@ import type {
 	ProjectStats,
 	Version,
 } from "~~/server/utils/processing/projects/types";
-import { getSupportedGameVersions } from "~~/server/utils/processing/gameVersions/processing";
 
 type StatsDataType = Map<
 	string,
