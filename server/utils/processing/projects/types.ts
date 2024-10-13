@@ -1,3 +1,10 @@
+export type Version = {
+	project_id: string;
+	loaders: string[];
+	game_versions: string[];
+	downloads: number;
+};
+
 export type ProjectStats = {
 	versions: string[];
 	data: {

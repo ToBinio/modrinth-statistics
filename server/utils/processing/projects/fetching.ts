@@ -1,9 +1,15 @@
+import type { Version } from "~~/server/utils/processing/projects/types";
+
 export async function getProjectIds(
 	offset: number,
 	type: string,
 	limit: number,
 ): Promise<string[]> {
-	const data = await $modrinthFetch<SimpleProjects>("/search", {
+	type Project = {
+		hits: { project_id: string }[];
+	};
+
+	const data = await $modrinthFetch<Project>("/search", {
 		query: {
 			limit: limit,
 			offset: offset,
@@ -15,11 +21,11 @@ export async function getProjectIds(
 	return data.hits.map((value) => value.project_id);
 }
 
-type SimpleProjects = {
-	hits: { project_id: string }[];
-};
-
 export async function getVersionIds(projectIds: string[]): Promise<string[]> {
+	type Project = {
+		versions: string[];
+	};
+
 	const data = await $modrinthFetch<Project[]>("/projects", {
 		query: {
 			ids: `["${projectIds.join('","')}"]`,
@@ -28,10 +34,6 @@ export async function getVersionIds(projectIds: string[]): Promise<string[]> {
 
 	return data.flatMap((value) => value.versions);
 }
-
-type Project = {
-	versions: string[];
-};
 
 export async function getVersions(versionIds: string[]): Promise<Version[]> {
 	const data = await $modrinthFetch<Version[]>("/versions", {
@@ -50,34 +52,3 @@ export async function getVersions(versionIds: string[]): Promise<Version[]> {
 		};
 	});
 }
-
-export type Version = {
-	project_id: string;
-	loaders: string[];
-	game_versions: string[];
-	downloads: number;
-};
-
-export async function getGameVersions(): Promise<GameVersion[]> {
-	const data =
-		await $modrinthFetch<
-			{
-				version: string;
-				version_type: string;
-			}[]
-		>("/tag/game_version");
-
-	return data
-		.map((value) => {
-			return {
-				name: value.version,
-				fullVersion: value.version_type === "release",
-			};
-		})
-		.toReversed();
-}
-
-export type GameVersion = {
-	name: string;
-	fullVersion: boolean;
-};

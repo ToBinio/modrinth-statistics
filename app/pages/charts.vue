@@ -1,12 +1,4 @@
 <script setup lang="ts">
-import { computed } from "vue";
-import BarChart from "~/components/BarChart.vue";
-import FilterItem from "~/components/navigation/FilterItem.vue";
-import { useExplanations } from "~/composables/useExplanations";
-import { useFilterItem } from "~/composables/useFilterItem";
-import { useGameVersions } from "~/composables/useGameVersions";
-import { useVersionRange } from "#imports";
-
 const projectType = useFilterItem("projectType", "mod");
 const stat = useFilterItem("stat", "count");
 

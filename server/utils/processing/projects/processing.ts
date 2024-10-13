@@ -1,4 +1,18 @@
 import consola from "consola";
+import type {
+	GameVersionData,
+	GameVersions,
+} from "~~/server/utils/processing/gameVersions/types";
+import {
+	getProjectIds,
+	getVersionIds,
+	getVersions,
+} from "~~/server/utils/processing/projects/fetching";
+import type {
+	ProjectStats,
+	Version,
+} from "~~/server/utils/processing/projects/types";
+import { getSupportedGameVersions } from "~~/server/utils/processing/gameVersions/processing";
 
 type StatsDataType = Map<
 	string,
@@ -11,11 +25,13 @@ type StatsDataType = Map<
 		}
 	>
 >;
+
 type StatsDataEntry = {
 	all: StatsDataType;
 	minor: StatsDataType;
 	major: StatsDataType;
 };
+
 type StatsData = { all: StatsDataEntry; exclusive: StatsDataEntry };
 
 type AllStatsEntry = {
@@ -23,6 +39,7 @@ type AllStatsEntry = {
 	minor: ProjectStats;
 	major: ProjectStats;
 };
+
 type AllStats = { all: AllStatsEntry; exclusive: AllStatsEntry };
 
 type GroupStats = {
@@ -41,24 +58,6 @@ export async function updateStatistics() {
 	for (const type of projectTypeList) {
 		await updateStatistic(type);
 	}
-
-	await updateGlobalStats();
-}
-
-async function updateGlobalStats() {
-	consola.log("fetching globalStats");
-
-	const data = await $modrinthFetch<{
-		projects: number;
-		versions: number;
-		files: number;
-		authors: number;
-	}>("/statistics");
-
-	const storage = useStorage("statistics");
-	const dateKey = dateToKey(new Date());
-
-	await storage.setItem(`globalStats${dateKey}`, data);
 }
 
 async function updateStatistic(type: ProjectTypes) {

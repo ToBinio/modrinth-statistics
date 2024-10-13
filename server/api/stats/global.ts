@@ -1,3 +1,5 @@
+import type {GlobalStats} from "~~/server/utils/processing/global/types";
+
 export default defineEventHandler(async (event): Promise<GlobalStats> => {
 	const query = getQuery(event);
 

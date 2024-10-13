@@ -1,4 +1,8 @@
 import consola from "consola";
+import type {
+	ProjectStatCategory,
+	ProjectStatsValue,
+} from "~~/server/utils/processing/projects/types";
 
 type QueryData = {
 	stat: ProjectStatCategory;

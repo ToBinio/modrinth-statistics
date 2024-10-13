@@ -1,4 +1,5 @@
 import consola from "consola";
+import type { GlobalStatCategory } from "~~/server/utils/processing/global/types";
 
 type QueryData = {
 	type: GlobalStatCategory;

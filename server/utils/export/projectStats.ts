@@ -1,5 +1,6 @@
 import consola from "consola";
 import { dateToKey, keyToDate } from "~~/utils/date";
+import type { ProjectStats, ProjectStatsValue} from "~~/server/utils/processing/projects/types";
 
 function getStorageKey(
 	type: ProjectTypes,
