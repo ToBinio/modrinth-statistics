@@ -9,7 +9,7 @@
           Modrinth Statistics
         </NuxtLink>
         <div id="icons">
-          <NuxtLink id="github" to="https://github.com/ToBinio/modrinth-statistics" target="_blank">
+          <NuxtLink id="github" to="https://github.com/ToBinio/modrinth-statistics" target="_blank" aria-label="Github of this Project">
             <Icon name="mdi:github" size="40"/>
           </NuxtLink>
         </div>
@@ -20,7 +20,7 @@
       <div id="navBody">
       </div>
       <div class="big" id="icons">
-        <NuxtLink id="github" to="https://github.com/ToBinio/modrinth-statistics" target="_blank">
+        <NuxtLink id="github" to="https://github.com/ToBinio/modrinth-statistics" target="_blank" aria-label="Github of this Project">
           <Icon name="mdi:github" size="40"/>
         </NuxtLink>
       </div>

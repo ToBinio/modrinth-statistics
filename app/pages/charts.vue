@@ -1,4 +1,8 @@
 <script setup lang="ts">
+useHead({
+  title: "Modrinth Statistics",
+});
+
 const projectType = useFilterItem("projectType", "mod");
 const stat = useFilterItem("stat", "count");
 
