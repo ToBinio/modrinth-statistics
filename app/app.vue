@@ -6,10 +6,9 @@ useHead({
 });
 
 useSeoMeta({
-  description: "The site for stats all about Modrinth.com",
-  ogDescription: "The site for stats all about Modrinth.com"
-})
-
+	description: "The site for stats all about Modrinth.com",
+	ogDescription: "The site for stats all about Modrinth.com",
+});
 </script>
 
 <template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 useHead({
-  title: "Modrinth Statistics",
+	title: "Modrinth Statistics",
 });
 
 const projectType = useFilterItem("projectType", "mod");
