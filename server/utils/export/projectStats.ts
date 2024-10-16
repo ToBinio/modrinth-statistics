@@ -34,6 +34,8 @@ function mapStats(
 				label: value.name,
 				backgroundColor: getColorForLauncher(value.name),
 				data: value.values.map((stat) => {
+					if (stat === undefined) return 0;
+
 					return fn(stat);
 				}),
 			};
