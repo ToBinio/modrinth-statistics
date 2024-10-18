@@ -61,9 +61,9 @@ const explanation = computed(() => {
 </script>
 
 <template>
-  <ClientOnly>
-    <Teleport to="#navBody">
-      <div id="links">
+  <div class="flex flex-1">
+    <div class="w-48 flex">
+      <div class="flex-1 flex flex-col gap-6 px-2">
         <FilterItem v-model="projectType" :options="['mod', 'plugin', 'datapack', 'shader', 'resourcepack', 'modpack', 'projects', 'versions', 'authors', 'files']" title="Type" explanation=""/>
         <If :state="!isGlobalStats">
           <FilterItem v-model="stat" :options="['count', 'downloads', 'versions']" title="Stat" explanation=""/>
@@ -77,55 +77,13 @@ const explanation = computed(() => {
           <FilterItem v-if="time != 'current'" v-model="version" :options="gameVersions" title="Version" explanation=""/>
         </If>
       </div>
-    </Teleport>
-  </ClientOnly>
+      <div class="border border-neutral-800 w-0.5 mb-2"></div>
+    </div>
 
-  <BarChart v-if="time == 'current' && !isGlobalStats" :data="data" :type="projectType as string"/>
-  <LineChart v-else :data="data" :type="projectType as string"/>
-
-  <div id="tooltip">
-    <Icon name="ph:question" size="25" style="color: var(--white)"/>
-    <div id="explanation" v-html="explanation">
+    <div class="flex flex-1">
+      <ChartBarChart v-if="time == 'current' && !isGlobalStats" :data="data" :type="projectType as string"/>
+      <ChartLineChart v-else :data="data" :type="projectType as string"/>
+      <Explanation :explanation="explanation"/>
     </div>
   </div>
 </template>
-
-<style scoped>
-#links{
-  display: flex;
-  gap: 20px;
-}
-
-#tooltip {
-  position: absolute;
-
-  top: 0;
-  right: 10px;
-
-  &:not(:hover) {
-    #explanation {
-      display: none;
-    }
-  }
-
-  #explanation {
-    position: absolute;
-    right: 0;
-
-    background-color: var(--surface-200);
-    padding: 10px;
-    border-radius: 10px;
-
-    width: 400px;
-    max-width: 90vw;
-  }
-}
-</style>
-
-<style>
-#explanation {
-  h4 {
-    margin: 0;
-  }
-}
-</style>
