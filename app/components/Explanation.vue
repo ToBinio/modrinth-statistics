@@ -27,7 +27,8 @@ defineProps<{ explanation: string | undefined }>();
     position: absolute;
     right: 0;
 
-    background-color: var(--surface-200);
+    @apply bg-neutral-800;
+
     padding: 10px;
     border-radius: 10px;
 

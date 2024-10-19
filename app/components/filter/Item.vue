@@ -9,6 +9,14 @@ const { canClear = false, options } = defineProps<{
 }>();
 
 const open = ref(false);
+
+function onSelect(option: string) {
+	if (canClear && model.value === option) {
+		model.value = undefined;
+	} else {
+		model.value = option;
+	}
+}
 </script>
 
 <template>
@@ -18,11 +26,11 @@ const open = ref(false);
       <icon name="ep:arrow-down-bold" :class="{'rotate-180': open}" size="15"/>
     </button>
     <div class="min-h-4">
-      <div class="absolute z-0">
+      <button class="absolute z-0 font-bold content-between justify-between" @click="model = undefined" :disabled="!canClear">
         {{ model }}
-      </div>
-      <div class="bg-black z-10 relative flex flex-col max-h-48 overflow-scroll transition-all" :class="{'max-h-0': !open}">
-        <button class="text-left" v-for="option in options" @click="model = option">
+      </button>
+      <div class="bg-neutral-900 z-10 relative flex flex-col max-h-48 overflow-scroll transition-all" :class="{'!max-h-0': !open}">
+        <button class="text-left" :class="{'font-bold': option == model}" v-for="option in options" @click="onSelect(option)">
           {{ option }}
         </button>
       </div>

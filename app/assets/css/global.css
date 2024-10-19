@@ -1,60 +1,15 @@
 * {
+	@apply text-neutral-100;
 	font-family:
 		Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Oxygen, Ubuntu, Roboto, Cantarell, Fira Sans, Droid, Helvetica Neue, sans-serif;
-	color: var(--white);
-}
-
-html {
-	--white: #ecf9fb;
-
-	/** generated via https://colorffy.com/dark-theme-generator */
-	/** CSS DARK THEME PRIMARY COLORS */
-	--primary-100: #0ebbcf;
-	--primary-200: #49c3d4;
-	--primary-300: #68cada;
-	--primary-400: #82d2df;
-	--primary-500: #99dae4;
-	--primary-600: #afe1ea;
-
-	/** CSS DARK THEME SURFACE COLORS */
-	--surface-100: #100f14;
-	--surface-200: #262629;
-	--surface-300: #3d3d40;
-	--surface-400: #565558;
-	--surface-500: #706f72;
-	--surface-600: #8a8a8c;
-
-	/** CSS DARK THEME MIXED SURFACE COLORS */
-	--surface-mixed-100: #171f24;
-	--surface-mixed-200: #2c3438;
-	--surface-mixed-300: #434a4e;
-	--surface-mixed-400: #5b6165;
-	--surface-mixed-500: #74797d;
-	--surface-mixed-600: #8e9395;
 }
 
 body {
-	background-color: var(--surface-100);
+	@apply bg-neutral-900;
+
 	box-sizing: border-box;
-
 	min-height: 100dvh;
-
 	margin: 0;
-}
-
-select {
-	background: transparent;
-	border: none;
-
-	padding: 0;
-	position: relative;
-
-	width: min-content;
-
-	option {
-		color: unset;
-		background-color: var(--surface-100);
-	}
 }
 
 /* improve scrollbar on chrome... */

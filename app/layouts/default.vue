@@ -3,22 +3,20 @@
 
 <template>
   <div id="page">
-    <div id="nav">
+    <div id="nav" class="border-b-2 border-b-neutral-800">
       <div class="compact">
-        <NuxtLink id="header" href="/">
-          Modrinth Statistics
-        </NuxtLink>
+        <ModrinthLink/>
         <div id="icons">
           <NuxtLink id="github" to="https://github.com/ToBinio/modrinth-statistics" target="_blank" aria-label="Github of this Project">
             <Icon name="mdi:github" size="40"/>
           </NuxtLink>
         </div>
       </div>
-      <NuxtLink class="big" id="header" href="/">
-        Modrinth Statistics
+      <ModrinthLink class="big"/>
+      <NuxtLink href="/charts" class="font-bold flex items-center gap-2 text-3xl text-transparent from-white to-white bg-gradient-to-br bg-clip-text hover:!from-cyan-200 hover:!to-cyan-600">
+        <Icon name="ph:chart-line" size="35" class="bg-gradient-to-br hover:!from-cyan-200 hover:!to-cyan-600"/>
+        Charts
       </NuxtLink>
-      <div id="navBody">
-      </div>
       <div class="big" id="icons">
         <NuxtLink id="github" to="https://github.com/ToBinio/modrinth-statistics" target="_blank" aria-label="Github of this Project">
           <Icon name="mdi:github" size="40"/>
@@ -32,6 +30,10 @@
 </template>
 
 <style scoped>
+.router-link-active {
+  @apply !to-cyan-500;
+}
+
 #page {
   min-height: 100vh;
 
@@ -41,7 +43,6 @@
   flex-direction: column;
 
   #nav {
-
     .compact{
       display: none;
     }
@@ -50,8 +51,6 @@
 
     padding: 10px;
     margin: 10px;
-
-    border-bottom: 2px solid var(--surface-200);
 
     display: flex;
 
@@ -82,20 +81,6 @@
     button {
       color: black;
     }
-
-    a {
-      text-decoration: none;
-
-      &:hover {
-        color: var(--primary-600);
-      }
-
-      &.router-link-active {
-        color: transparent;
-        background: linear-gradient(10deg, var(--primary-100) 30%, var(--primary-600) 100%);
-        background-clip: text;
-      }
-    }
   }
 
   #main {
@@ -107,26 +92,8 @@
   }
 }
 
-@media only screen and (max-width: 1610px) {
-  #header {
-    width: min-content !important;
-  }
-}
-
-@media only screen and (max-width: 1470px) {
-  #navBody{
-    overflow: scroll;
-    width: 100%;
-  }
-}
-
 @media only screen and (max-width: 700px) {
   #nav {
-
-    #header {
-      width: 100% !important;
-    }
-
     .compact{
       display: flex !important;
       gap: 20px;

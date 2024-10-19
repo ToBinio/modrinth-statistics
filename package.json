@@ -15,7 +15,7 @@
 		"lint:summary": "biome check --reporter summary"
 	},
 	"dependencies": {
-		"chart.js": "^4.4.4",
+		"chart.js": "^4.4.5",
 		"mongodb": "^6.9.0",
 		"nuxt": "^3.13.2",
 		"vue": "^3.5.12",
@@ -23,7 +23,7 @@
 		"vue-router": "^4.4.5"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "1.9.3",
+		"@biomejs/biome": "1.9.4",
 		"@iconify-json/akar-icons": "^1.2.1",
 		"@iconify-json/ion": "^1.2.1",
 		"@iconify-json/mdi": "^1.2.1",
