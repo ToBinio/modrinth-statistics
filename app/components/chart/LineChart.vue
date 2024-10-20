@@ -75,5 +75,4 @@ const chartOptions = ref({
     margin: 10px;
   }
 }
-
 </style>

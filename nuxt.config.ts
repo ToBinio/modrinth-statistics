@@ -22,16 +22,16 @@ export default defineNuxtConfig({
 			},
 		},
 		devStorage: {
-			statistics: {
-				driver: "fs",
-				base: "./.data/statistics",
-			},
 			// statistics: {
-			// 	driver: "mongodb",
-			// 	connectionString: `${process.env.MONGODB_CONNECTION}`,
-			// 	databaseName: `${process.env.MONGODB_DB}`,
-			// 	collectionName: "stats",
+			// 	driver: "fs",
+			// 	base: "./.data/statistics",
 			// },
+			statistics: {
+				driver: "mongodb",
+				connectionString: `${process.env.MONGODB_CONNECTION}`,
+				databaseName: `${process.env.MONGODB_DB}`,
+				collectionName: "stats",
+			},
 		},
 		experimental: {
 			tasks: true,
@@ -44,6 +44,11 @@ export default defineNuxtConfig({
 		},
 	},
 
-	modules: ["@nuxt/icon", "nuxt-posthog"],
+	modules: [
+		"@nuxt/icon",
+		"nuxt-posthog",
+		"@nuxtjs/tailwindcss",
+		"@vueuse/nuxt",
+	],
 	compatibilityDate: "2024-07-05",
 });
