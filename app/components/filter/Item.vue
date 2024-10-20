@@ -26,11 +26,13 @@ function onSelect(option: string) {
       <icon name="ep:arrow-down-bold" :class="{'rotate-180': open}" size="15"/>
     </button>
     <div class="min-h-4">
-      <button class="absolute z-0 font-bold content-between justify-between" @click="model = undefined" :disabled="!canClear">
-        {{ model }}
-      </button>
+      <div>
+        <button class="absolute z-0 font-bold content-between justify-between" :class="{'hover:text-neutral-400': canClear}" @click="model = undefined" :disabled="!canClear">
+          {{ model }}
+        </button>
+      </div>
       <div class="bg-neutral-900 z-10 relative flex flex-col max-h-48 overflow-scroll transition-all" :class="{'!max-h-0': !open}">
-        <button class="text-left" :class="{'font-bold': option == model}" v-for="option in options" @click="onSelect(option)">
+        <button class="text-left hover:bg-neutral-800 p-0.5 rounded" :class="{'font-bold': option == model}" v-for="option in options" @click="onSelect(option)">
           {{ option }}
         </button>
       </div>

@@ -58,12 +58,25 @@ const { data } = useFetch<StatExport>(url, {
 const explanation = computed(() => {
 	return useExplanations(stat.value);
 });
+
+const sidebarVisible = ref(false);
+
+onMounted(() => {
+	const isMediumScreen = useMediaQuery("(min-width: 768px)");
+
+	if (isMediumScreen.value) {
+		sidebarVisible.value = true;
+	}
+});
 </script>
 
 <template>
   <div class="flex flex-1">
-    <div class="w-48 flex">
-      <div class="flex-1 flex flex-col gap-6 px-2">
+    <button class="absolute z-20 px-2 w-48 flex justify-end transition-all" @click="sidebarVisible = !sidebarVisible" :class="{'w-10': !sidebarVisible}">
+      <icon name="ic:round-menu" size="24"/>
+    </button>
+    <div class="w-48 flex h-full bg-neutral-900 z-10 absolute overflow-scroll transition-all" :class="{'-translate-x-48': !sidebarVisible}">
+      <div class="flex-1 flex flex-col gap-6 px-2 pt-8">
         <FilterItem v-model="projectType" :options="['mod', 'plugin', 'datapack', 'shader', 'resourcepack', 'modpack', 'projects', 'versions', 'authors', 'files']" title="Type" explanation=""/>
         <If :state="!isGlobalStats">
           <FilterItem v-model="stat" :options="['count', 'downloads', 'versions']" title="Stat" explanation=""/>
@@ -80,7 +93,7 @@ const explanation = computed(() => {
       <div class="border border-neutral-800 w-0.5 mb-2"></div>
     </div>
 
-    <div class="flex flex-1">
+    <div class="flex pl-0 w-full transition-all md:pl-48" :class="{'!pl-0': !sidebarVisible}">
       <ChartBarChart v-if="time == 'current' && !isGlobalStats" :data="data" :type="projectType as string"/>
       <ChartLineChart v-else :data="data" :type="projectType as string"/>
       <Explanation :explanation="explanation"/>
