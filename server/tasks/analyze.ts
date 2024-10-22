@@ -9,7 +9,6 @@ export default defineTask({
 		description: "Update all the statistics",
 	},
 	async run() {
-		return {};
 		consola.log("starting analyze");
 
 		console.time("finish analyze");
