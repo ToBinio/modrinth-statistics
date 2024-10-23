@@ -1,4 +1,3 @@
-import consola from "consola";
 import type {
 	ProjectStatCategory,
 	ProjectStatsValue,
@@ -16,18 +15,6 @@ type QueryData = {
 export default defineCachedEventHandler(
 	async (event): Promise<StatExport> => {
 		const query = getQuery<QueryData>(event);
-
-		const storage = useStorage("statistics");
-		const dateKey = await storage.getItem<string>("latestDate");
-
-		if (!dateKey) {
-			consola.error("no latestDate set");
-
-			return {
-				labels: [],
-				data: [],
-			};
-		}
 
 		let typeFn: (value: ProjectStatsValue) => number;
 
@@ -47,10 +34,9 @@ export default defineCachedEventHandler(
 		}
 
 		return exportStats(
-			query.mode,
+			query.mode as "all" | "major" | "minor",
 			query.type,
 			query.exclusive === "true",
-			dateKey,
 			typeFn,
 			query.versionTo,
 			query.versionFrom,

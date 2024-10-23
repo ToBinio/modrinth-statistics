@@ -1,15 +1,12 @@
-import type {
-	GameVersionData,
-	GameVersions,
-} from "~~/server/utils/processing/gameVersions/types";
+import type { GameVersionData } from "~~/server/utils/processing/gameVersions/types";
+import { getGameVersions } from "~~/server/utils/storage";
 
 export default defineEventHandler(async (event): Promise<GameVersionData> => {
 	const query = getQuery(event);
 
-	const storage = useStorage("statistics");
-	const gameVersions = await storage.getItem<GameVersions>("gameVersions");
+	const gameVersions = await getGameVersions();
 
-	if (!gameVersions) {
+	if (gameVersions instanceof Error) {
 		setResponseStatus(event, 500);
 		return [];
 	}

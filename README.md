@@ -14,6 +14,8 @@ a Page to view some global statistics about [Modrinth](https://modrinth.com/)
 # example .env
 MONGODB_DB=modrinth-statistics
 MONGODB_CONNECTION=mongodb://<user>:<password>@<domain>:27017/<DB>
+MONGODB_DEV_DB=modrinth-statistics-dev
+MONGODB_DEV_CONNECTION=mongodb://<user>:<password>@<domain>:27017/<DB>
 POSTHOG_API_KEY=<your_key>
 POSTHOG_API_HOST=https://eu.posthog.com
 ``` 
