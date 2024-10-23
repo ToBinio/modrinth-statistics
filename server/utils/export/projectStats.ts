@@ -3,11 +3,11 @@ import type {
 	ProjectStats,
 	ProjectStatsValue,
 } from "~~/server/utils/processing/projects/types";
-import { dateToFormatted } from "~~/utils/date";
 import {
 	getLatestProjectStats,
 	getProjectStats,
 } from "~~/server/utils/storage";
+import { dateToFormatted } from "~~/utils/date";
 
 // maps database data to a format usable by the frontend
 function mapStats(

@@ -33,7 +33,7 @@ export default defineCachedEventHandler(
 		}
 
 		return exportStatsOverTime(
-			query.mode as  "all" | "major" | "minor",
+			query.mode as "all" | "major" | "minor",
 			query.type,
 			query.exclusive === "true",
 			new Date(),

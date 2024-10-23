@@ -1,6 +1,6 @@
 import type { GlobalStats } from "~~/server/utils/processing/global/types";
-import { dateToFormatted, keyToDate } from "~~/utils/date";
 import { getGlobalStats } from "~~/server/utils/storage";
+import { dateToFormatted, keyToDate } from "~~/utils/date";
 
 export async function exportGlobalStatsOverTime(
 	firstDateKey: string,

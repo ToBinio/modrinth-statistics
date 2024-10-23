@@ -1,6 +1,6 @@
+import consola from "consola";
 import type { GlobalStats } from "~~/server/utils/processing/global/types";
 import { getLatestGlobalStats } from "~~/server/utils/storage";
-import consola from "consola";
 
 export default defineCachedEventHandler(
 	async (event): Promise<GlobalStats> => {
