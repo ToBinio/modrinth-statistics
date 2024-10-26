@@ -33,10 +33,24 @@ const isGlobalStats = computed(() => {
 	);
 });
 
+const isRevenueStats = computed(() => {
+  return ["revenue"].includes(
+      projectType.value,
+  );
+});
+
+const isGroupData = computed(() => {
+  return time.value === 'current' && !isGlobalStats.value && !isRevenueStats.value;
+})
+
 const url = computed(() => {
 	if (isGlobalStats.value) {
 		return "/api/stats/time/global";
 	}
+
+  if (isRevenueStats.value) {
+    return "/api/stats/time/revenue";
+  }
 
 	return time.value === "current"
 		? "/api/stats/projects"
@@ -77,8 +91,8 @@ onMounted(() => {
     </button>
     <div class="w-48 flex h-full bg-neutral-900 z-10 absolute overflow-scroll transition-all" :class="{'-translate-x-48': !sidebarVisible}">
       <div class="flex-1 flex flex-col gap-6 px-2 pt-8">
-        <FilterItem v-model="projectType" :options="['mod', 'plugin', 'datapack', 'shader', 'resourcepack', 'modpack', 'projects', 'versions', 'authors', 'files']" title="Type" explanation=""/>
-        <If :state="!isGlobalStats">
+        <FilterItem v-model="projectType" :options="['mod', 'plugin', 'datapack', 'shader', 'resourcepack', 'modpack', 'projects', 'versions', 'authors', 'files', 'revenue']" title="Type" explanation=""/>
+        <If :state="!isGlobalStats && !isRevenueStats">
           <FilterItem v-model="stat" :options="['count', 'downloads', 'versions']" title="Stat" explanation=""/>
           <FilterItem v-model="versionGroup" :options="['major', 'minor', 'all']" title="Version Group" explanation="What type of Minecraft versions should be displayed"/>
           <FilterItem v-model="exclusive" :options="['yes', 'no']" title="Exclusive" explanation="Only show Versions made for a single launcher"/>
@@ -94,7 +108,7 @@ onMounted(() => {
     </div>
 
     <div class="flex pl-0 w-full transition-all md:pl-48" :class="{'!pl-0': !sidebarVisible}">
-      <ChartBarChart v-if="time == 'current' && !isGlobalStats" :data="data" :type="projectType as string"/>
+      <ChartBarChart v-if="isGroupData" :data="data" :type="projectType as string"/>
       <ChartLineChart v-else :data="data" :type="projectType as string"/>
       <Explanation :explanation="explanation"/>
     </div>
