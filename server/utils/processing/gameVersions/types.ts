@@ -5,14 +5,7 @@ export type GameVersion = {
 
 export type GameVersionData = { name: string; contains: string[] }[];
 
-export type GameVersions = {
-	all: GameVersionData;
-	major: GameVersionData;
-	minor: GameVersionData;
-};
+export type VersionCategories = "all" | "major" | "minor";
 
-export type SupportedVersions = {
-	all: string[];
-	major: string[];
-	minor: string[];
-};
+export type GameVersions = Record<VersionCategories, GameVersionData>;
+export type SupportedVersions = Record<VersionCategories, string[]>;

@@ -1,12 +1,11 @@
 import type { GlobalStats } from "~~/server/utils/processing/global/types";
-import { dateToKey, keyToDate } from "~~/utils/date";
+import { getGlobalStats } from "~~/server/utils/storage";
+import { dateToFormatted, keyToDate } from "~~/utils/date";
 
 export async function exportGlobalStatsOverTime(
 	firstDateKey: string,
 	fn: (value: GlobalStats) => number,
 ): Promise<StatExport> {
-	const storage = useStorage("statistics");
-
 	const statsOverTime: StatExport = {
 		labels: [],
 		data: [
@@ -21,16 +20,13 @@ export async function exportGlobalStatsOverTime(
 	const date = keyToDate(firstDateKey);
 
 	while (true) {
-		const dateKey = dateToKey(date);
-		const key = `globalStats${dateKey}`;
-		const stats = await storage.getItem<GlobalStats>(key);
+		const stats = await getGlobalStats(date);
 
-		if (!stats) {
+		if (stats instanceof Error) {
 			break;
 		}
 
-		statsOverTime.labels.splice(0, 0, dateKey);
-
+		statsOverTime.labels.splice(0, 0, dateToFormatted(date));
 		statsOverTime.data[0].data.splice(0, 0, fn(stats));
 
 		date.setUTCDate(date.getUTCDate() - 1);

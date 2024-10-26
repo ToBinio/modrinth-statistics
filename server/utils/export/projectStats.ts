@@ -1,26 +1,14 @@
 import consola from "consola";
+import type { VersionCategories } from "~~/server/utils/processing/gameVersions/types";
 import type {
 	ProjectStats,
 	ProjectStatsValue,
 } from "~~/server/utils/processing/projects/types";
-import { dateToKey, keyToDate } from "~~/utils/date";
-
-function getStorageKey(
-	type: ProjectTypes,
-	versionCategory: string,
-	exclusive: boolean,
-	dateKey: string,
-) {
-	// key format: <projectType>Stats<versionCategory><?exclusive><date>
-	let key = `${type}Stats${firstLetterUpperCase(versionCategory)}`;
-
-	if (exclusive) {
-		key += "Exclusive";
-	}
-
-	key += dateKey;
-	return key;
-}
+import {
+	getLatestProjectStats,
+	getProjectStats,
+} from "~~/server/utils/storage";
+import { dateToFormatted } from "~~/utils/date";
 
 // maps database data to a format usable by the frontend
 function mapStats(
@@ -67,27 +55,24 @@ function filterVersions(
 }
 
 export async function exportStats(
-	versionCategory: string,
+	versionCategory: VersionCategories,
 	type: ProjectTypes,
 	exclusive: boolean,
-	dateKey: string,
 	fn: (value: ProjectStatsValue) => number,
 	versionTo: string | null,
 	versionFrom: string | null,
 ): Promise<StatExport> {
-	const key = getStorageKey(type, versionCategory, exclusive, dateKey);
+	const stats = await getLatestProjectStats(type, versionCategory, exclusive);
 
-	const storage = useStorage("statistics");
-	const stats = await storage.getItem<ProjectStats>(key);
-
-	if (!stats) {
-		consola.error(`could not find stats for key - "${key}"`);
+	if (stats instanceof Error) {
+		consola.error(stats.message);
 
 		return {
 			labels: [],
 			data: [],
 		};
 	}
+
 	const mappedStats = mapStats(stats, fn);
 
 	filterVersions(mappedStats, versionTo, versionFrom);
@@ -96,34 +81,30 @@ export async function exportStats(
 }
 
 export async function exportStatsOverTime(
-	versionCategory: string,
+	versionCategory: VersionCategories,
 	type: ProjectTypes,
 	exclusive: boolean,
-	firstDateKey: string,
+	firstDate: Date,
 	version: string,
 	fn: (value: ProjectStatsValue) => number,
 ): Promise<StatExport> {
-	const storage = useStorage("statistics");
-
 	const statsOverTime: ProjectStats = {
 		versions: [],
 		data: [],
 	};
 
-	const date = keyToDate(firstDateKey);
+	const date = firstDate;
 
 	while (true) {
-		const dateKey = dateToKey(date);
-		const key = getStorageKey(type, versionCategory, exclusive, dateKey);
-		const stats = await storage.getItem<ProjectStats>(key);
+		const stats = await getProjectStats(date, type, versionCategory, exclusive);
 
-		if (!stats) {
+		if (stats instanceof Error) {
 			break;
 		}
 
 		const index = stats.versions.indexOf(version);
 
-		statsOverTime.versions.splice(0, 0, dateKey);
+		statsOverTime.versions.splice(0, 0, dateToFormatted(date));
 
 		outer: for (const data of stats.data) {
 			for (const dataOverTime of statsOverTime.data) {

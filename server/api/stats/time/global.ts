@@ -1,5 +1,6 @@
 import consola from "consola";
 import type { GlobalStatCategory } from "~~/server/utils/processing/global/types";
+import { getLatestDate } from "~~/server/utils/storage";
 
 type QueryData = {
 	type: GlobalStatCategory;
@@ -9,10 +10,9 @@ export default defineCachedEventHandler(
 	async (event): Promise<StatExport> => {
 		const query = getQuery<QueryData>(event);
 
-		const storage = useStorage("statistics");
-		const dateKey = await storage.getItem<string>("latestDate");
+		const dateKey = await getLatestDate();
 
-		if (!dateKey) {
+		if (dateKey instanceof Error) {
 			consola.error("no latestDate set");
 
 			return {

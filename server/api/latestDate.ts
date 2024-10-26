@@ -1,8 +1,9 @@
-export default defineEventHandler(async (event): Promise<string | null> => {
-	const storage = useStorage("statistics");
-	const gameVersions = await storage.getItem<string>("latestDate");
+import { getLatestDate } from "~~/server/utils/storage";
 
-	if (!gameVersions) {
+export default defineEventHandler(async (event): Promise<string | null> => {
+	const gameVersions = await getLatestDate();
+
+	if (gameVersions instanceof Error) {
 		setResponseStatus(event, 500);
 		return null;
 	}

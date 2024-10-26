@@ -14,24 +14,44 @@ export default defineNuxtConfig({
 	nitro: {
 		// preset: "bun",
 		storage: {
-			statistics: {
+			globalStatistics: {
 				driver: "mongodb",
 				connectionString: `${process.env.MONGODB_CONNECTION}`,
 				databaseName: `${process.env.MONGODB_DB}`,
-				collectionName: "stats",
+				collectionName: "globalStatistics",
+			},
+			projectStatistics: {
+				driver: "mongodb",
+				connectionString: `${process.env.MONGODB_CONNECTION}`,
+				databaseName: `${process.env.MONGODB_DB}`,
+				collectionName: "projectStatistics",
+			},
+			metadata: {
+				driver: "mongodb",
+				connectionString: `${process.env.MONGODB_CONNECTION}`,
+				databaseName: `${process.env.MONGODB_DB}`,
+				collectionName: "metadata",
 			},
 		},
 		devStorage: {
-			statistics: {
-				driver: "fs",
-				base: "./.data/statistics",
+			globalStatistics: {
+				driver: "mongodb",
+				connectionString: `${process.env.MONGODB_DEV_CONNECTION}`,
+				databaseName: `${process.env.MONGODB_DEV_DB}`,
+				collectionName: "globalStatistics",
 			},
-			// statistics: {
-			// 	driver: "mongodb",
-			// 	connectionString: `${process.env.MONGODB_CONNECTION}`,
-			// 	databaseName: `${process.env.MONGODB_DB}`,
-			// 	collectionName: "stats",
-			// },
+			projectStatistics: {
+				driver: "mongodb",
+				connectionString: `${process.env.MONGODB_DEV_CONNECTION}`,
+				databaseName: `${process.env.MONGODB_DEV_DB}`,
+				collectionName: "projectStatistics",
+			},
+			metadata: {
+				driver: "mongodb",
+				connectionString: `${process.env.MONGODB_DEV_CONNECTION}`,
+				databaseName: `${process.env.MONGODB_DEV_DB}`,
+				collectionName: "metadata",
+			},
 		},
 		experimental: {
 			tasks: true,

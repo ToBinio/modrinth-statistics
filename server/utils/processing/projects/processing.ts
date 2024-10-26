@@ -13,6 +13,11 @@ import type {
 	ProjectStats,
 	Version,
 } from "~~/server/utils/processing/projects/types";
+import {
+	getGameVersions,
+	setLatestDate,
+	setProjectStats,
+} from "~~/server/utils/storage";
 
 type StatsDataType = Map<
 	string,
@@ -63,54 +68,38 @@ export async function updateStatistics() {
 async function updateStatistic(type: ProjectTypes) {
 	consola.log(`analyzing - ${type}`);
 	const stats = await getStatistics(type);
+
+	if (stats instanceof Error) {
+		consola.error(stats.message);
+		return;
+	}
+
 	await saveStats(stats, type);
 }
 
 async function saveStats(stats: AllStats, type: ProjectTypes) {
-	const storage = useStorage("statistics");
-	const dateKey = dateToKey(new Date());
+	await setProjectStats(stats.all.all, type, "all", false);
+	await setProjectStats(stats.all.minor, type, "minor", false);
+	await setProjectStats(stats.all.major, type, "major", false);
 
-	await storage.setItem<ProjectStats>(
-		`${type}StatsAll${dateKey}`,
-		stats.all.all,
-	);
-	await storage.setItem<ProjectStats>(
-		`${type}StatsMinor${dateKey}`,
-		stats.all.minor,
-	);
-	await storage.setItem<ProjectStats>(
-		`${type}StatsMajor${dateKey}`,
-		stats.all.major,
-	);
+	await setProjectStats(stats.exclusive.all, type, "all", true);
+	await setProjectStats(stats.exclusive.minor, type, "minor", true);
+	await setProjectStats(stats.exclusive.major, type, "major", true);
 
-	await storage.setItem<ProjectStats>(
-		`${type}StatsAllExclusive${dateKey}`,
-		stats.exclusive.all,
-	);
-	await storage.setItem<ProjectStats>(
-		`${type}StatsMinorExclusive${dateKey}`,
-		stats.exclusive.minor,
-	);
-	await storage.setItem<ProjectStats>(
-		`${type}StatsMajorExclusive${dateKey}`,
-		stats.exclusive.major,
-	);
-
-	await storage.setItem("latestDate", dateKey);
+	await setLatestDate(new Date());
 }
 
-async function getStatistics(type: ProjectTypes): Promise<AllStats> {
+async function getStatistics(type: ProjectTypes): Promise<AllStats | Error> {
 	const BATCH_COUNT = import.meta.dev ? 1 : 10;
 	const data: StatsData = {
 		all: { all: new Map(), major: new Map(), minor: new Map() },
 		exclusive: { all: new Map(), major: new Map(), minor: new Map() },
 	};
 
-	const storage = useStorage("statistics");
-	const gameVersions = await storage.getItem<GameVersions>("gameVersions");
+	const gameVersions = await getGameVersions();
 
-	if (!gameVersions) {
-		throw "no gameVersions were initilized!";
+	if (gameVersions instanceof Error) {
+		return gameVersions;
 	}
 
 	let projectIndex = 0;
@@ -136,11 +125,10 @@ async function getStatistics(type: ProjectTypes): Promise<AllStats> {
 		if (done || import.meta.dev) break;
 	}
 
-	function toVersions(data: StatsDataEntry): AllStatsEntry {
-		if (!gameVersions) {
-			throw "no gameVersions were initilized!";
-		}
-
+	function toVersions(
+		gameVersions: GameVersions,
+		data: StatsDataEntry,
+	): AllStatsEntry {
 		return {
 			all: groupStatsToStats(StatsFromType(gameVersions.all, data.all)),
 			minor: groupStatsToStats(StatsFromType(gameVersions.minor, data.minor)),
@@ -149,8 +137,8 @@ async function getStatistics(type: ProjectTypes): Promise<AllStats> {
 	}
 
 	return {
-		all: toVersions(data.all),
-		exclusive: toVersions(data.exclusive),
+		all: toVersions(gameVersions, data.all),
+		exclusive: toVersions(gameVersions, data.exclusive),
 	};
 }
 
