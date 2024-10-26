@@ -1,4 +1,5 @@
 import consola from "consola";
+import type { VersionCategories } from "~~/server/utils/processing/gameVersions/types";
 import type {
 	ProjectStats,
 	ProjectStatsValue,
@@ -54,7 +55,7 @@ function filterVersions(
 }
 
 export async function exportStats(
-	versionCategory: "all" | "major" | "minor",
+	versionCategory: VersionCategories,
 	type: ProjectTypes,
 	exclusive: boolean,
 	fn: (value: ProjectStatsValue) => number,
@@ -80,7 +81,7 @@ export async function exportStats(
 }
 
 export async function exportStatsOverTime(
-	versionCategory: "all" | "major" | "minor",
+	versionCategory: VersionCategories,
 	type: ProjectTypes,
 	exclusive: boolean,
 	firstDate: Date,

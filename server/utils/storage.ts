@@ -1,4 +1,7 @@
-import type { GameVersions } from "~~/server/utils/processing/gameVersions/types";
+import type {
+	GameVersions,
+	VersionCategories,
+} from "~~/server/utils/processing/gameVersions/types";
 import type { GlobalStats } from "~~/server/utils/processing/global/types";
 import type { ProjectStats } from "~~/server/utils/processing/projects/types";
 
@@ -27,13 +30,6 @@ export async function setGlobalStats(data: GlobalStats, date: Date) {
 	await storage.setItem(`globalStats${dateKey}`, data);
 }
 
-export async function getLatestGlobalStats(): Promise<GlobalStats | Error> {
-	const dateKey = await getLatestDate();
-	const key = `globalStats${dateKey}`;
-
-	return getFromStorage("globalStatistics", key);
-}
-
 export async function getGlobalStats(date: Date): Promise<GlobalStats | Error> {
 	const dateKey = dateToKey(date);
 	const key = `globalStats${dateKey}`;
@@ -41,9 +37,17 @@ export async function getGlobalStats(date: Date): Promise<GlobalStats | Error> {
 	return getFromStorage("globalStatistics", key);
 }
 
+export async function getLatestGlobalStats(): Promise<GlobalStats | Error> {
+	const dateKey = await getLatestDate();
+	if (dateKey instanceof Error) return dateKey;
+
+	const key = `globalStats${dateKey}`;
+	return getFromStorage("globalStatistics", key);
+}
+
 function getProjectStorageKey(
 	type: ProjectTypes,
-	versionCategory: "all" | "major" | "minor",
+	versionCategory: VersionCategories,
 	exclusive: boolean,
 	dateKey: string,
 ) {
@@ -61,7 +65,7 @@ function getProjectStorageKey(
 export async function setProjectStats(
 	data: ProjectStats,
 	type: ProjectTypes,
-	versionCategory: "all" | "major" | "minor",
+	versionCategory: VersionCategories,
 	exclusive: boolean,
 ) {
 	const storage = useStorage("projectStatistics");
@@ -75,7 +79,7 @@ export async function setProjectStats(
 export async function getProjectStats(
 	date: Date,
 	type: ProjectTypes,
-	versionCategory: "all" | "major" | "minor",
+	versionCategory: VersionCategories,
 	exclusive: boolean,
 ): Promise<ProjectStats | Error> {
 	const dateKey = dateToKey(date);
@@ -86,15 +90,13 @@ export async function getProjectStats(
 
 export async function getLatestProjectStats(
 	type: ProjectTypes,
-	versionCategory: "all" | "major" | "minor",
+	versionCategory: VersionCategories,
 	exclusive: boolean,
 ): Promise<ProjectStats | Error> {
 	const dateKey = await getLatestDate();
-
 	if (dateKey instanceof Error) return dateKey;
 
 	const key = getProjectStorageKey(type, versionCategory, exclusive, dateKey);
-
 	return getFromStorage("projectStatistics", key);
 }
 
