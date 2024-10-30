@@ -1,6 +1,6 @@
 {
 	"name": "nuxt-app",
-	"version": "0.1.2",
+	"version": "0.2.0",
 	"private": true,
 	"type": "module",
 	"scripts": {
@@ -15,8 +15,8 @@
 		"lint:summary": "biome check --reporter summary"
 	},
 	"dependencies": {
-		"chart.js": "^4.4.5",
-		"mongodb": "^6.9.0",
+		"chart.js": "^4.4.6",
+		"mongodb": "^6.10.0",
 		"nuxt": "^3.13.2",
 		"vue": "^3.5.12",
 		"vue-chartjs": "^5.3.1",
@@ -28,7 +28,7 @@
 		"@iconify-json/ic": "^1.2.1",
 		"@iconify-json/mdi": "^1.2.1",
 		"@iconify-json/ph": "^1.2.1",
-		"@nuxt/icon": "^1.5.6",
+		"@nuxt/icon": "^1.6.1",
 		"@nuxtjs/tailwindcss": "^6.12.2",
 		"@vueuse/nuxt": "^11.1.0",
 		"nuxt-posthog": "^1.5.4"

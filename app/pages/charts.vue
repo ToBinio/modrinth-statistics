@@ -34,23 +34,23 @@ const isGlobalStats = computed(() => {
 });
 
 const isRevenueStats = computed(() => {
-  return ["revenue"].includes(
-      projectType.value,
-  );
+	return ["revenue"].includes(projectType.value);
 });
 
 const isGroupData = computed(() => {
-  return time.value === 'current' && !isGlobalStats.value && !isRevenueStats.value;
-})
+	return (
+		time.value === "current" && !isGlobalStats.value && !isRevenueStats.value
+	);
+});
 
 const url = computed(() => {
 	if (isGlobalStats.value) {
 		return "/api/stats/time/global";
 	}
 
-  if (isRevenueStats.value) {
-    return "/api/stats/time/revenue";
-  }
+	if (isRevenueStats.value) {
+		return "/api/stats/time/revenue";
+	}
 
 	return time.value === "current"
 		? "/api/stats/projects"

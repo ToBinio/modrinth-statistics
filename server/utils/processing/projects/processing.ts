@@ -13,11 +13,7 @@ import type {
 	ProjectStats,
 	Version,
 } from "~~/server/utils/processing/projects/types";
-import {
-	getGameVersions,
-	setLatestDate,
-	setProjectStats,
-} from "~~/server/utils/storage";
+import { getGameVersions, setProjectStats } from "~~/server/utils/storage";
 
 type StatsDataType = Map<
 	string,
@@ -85,8 +81,6 @@ async function saveStats(stats: AllStats, type: ProjectTypes) {
 	await setProjectStats(stats.exclusive.all, type, "all", true);
 	await setProjectStats(stats.exclusive.minor, type, "minor", true);
 	await setProjectStats(stats.exclusive.major, type, "major", true);
-
-	await setLatestDate(new Date());
 }
 
 async function getStatistics(type: ProjectTypes): Promise<AllStats | Error> {
