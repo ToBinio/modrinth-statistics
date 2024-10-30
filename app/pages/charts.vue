@@ -68,23 +68,12 @@ const explanation = computed(() => {
 	return useExplanations(stat.value);
 });
 
-const sidebarVisible = ref(false);
-
-onMounted(() => {
-	const isMediumScreen = useMediaQuery("(min-width: 768px)");
-
-	if (isMediumScreen.value) {
-		sidebarVisible.value = true;
-	}
-});
+const sideBarOpen = ref(false);
 </script>
 
 <template>
   <div class="flex flex-1">
-    <button class="absolute z-20 px-2 w-48 flex justify-end transition-all" @click="sidebarVisible = !sidebarVisible" :class="{'!w-10': !sidebarVisible}">
-      <icon name="ic:round-menu" size="24"/>
-    </button>
-    <div class="w-48 flex h-full bg-neutral-900 z-10 absolute overflow-scroll transition-all" :class="{'-translate-x-48': !sidebarVisible}">
+    <SideBar :open="sideBarOpen">
       <div class="flex-1 flex flex-col gap-6 px-2 pt-8">
         <FilterItem v-model="projectType" :options="['mod', 'plugin', 'datapack', 'shader', 'resourcepack', 'modpack', 'projects', 'versions', 'authors', 'files', 'revenue']" title="Type" explanation=""/>
         <If :state="isProjectStats">
@@ -99,10 +88,9 @@ onMounted(() => {
           <FilterItem v-if="time != 'current'" v-model="version" :options="gameVersions" title="Version" explanation=""/>
         </If>
       </div>
-      <div class="border border-neutral-800 w-0.5 mb-2"></div>
-    </div>
+    </SideBar>
 
-    <div class="flex pl-0 w-full transition-all md:pl-48" :class="{'!pl-0': !sidebarVisible}">
+    <div class="flex pl-0 w-full transition-all md:pl-48" :class="{'!pl-0': !sideBarOpen}">
       <ChartBarChart v-if="isGroupData" :data="data" :type="projectType as string"/>
       <ChartLineChart v-else :data="data" :type="projectType as string"/>
       <Explanation :explanation="explanation"/>
