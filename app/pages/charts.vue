@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useTypeCategory } from "#imports";
-
 useHead({
 	title: "Modrinth Statistics",
 });
@@ -38,30 +36,14 @@ const isGroupData = computed(() => {
 	);
 });
 
-const url = computed(() => {
-	if (isGlobalStats.value) {
-		return "/api/stats/time/global";
-	}
-
-	if (isRevenueStats.value) {
-		return "/api/stats/time/revenue";
-	}
-
-	return time.value === "current"
-		? "/api/stats/projects"
-		: "/api/stats/time/projects";
-});
-
-const { data } = useFetch<StatExport>(url, {
-	query: {
-		mode: versionGroup,
-		exclusive: exclusiveBool,
-		type: projectType,
-		stat: stat,
-		versionTo: versionTo,
-		versionFrom: versionFrom,
-		version: version,
-	},
+const data = useStatData(isGlobalStats, isRevenueStats, time, {
+	mode: versionGroup,
+	exclusive: exclusiveBool,
+	type: projectType,
+	stat: stat,
+	versionTo: versionTo,
+	versionFrom: versionFrom,
+	version: version,
 });
 
 const explanation = computed(() => {
@@ -73,7 +55,7 @@ const sideBarOpen = ref(false);
 
 <template>
   <div class="flex flex-1">
-    <SideBar :open="sideBarOpen">
+    <SideBar v-model:open="sideBarOpen">
       <div class="flex-1 flex flex-col gap-6 px-2 pt-8">
         <FilterItem v-model="projectType" :options="['mod', 'plugin', 'datapack', 'shader', 'resourcepack', 'modpack', 'projects', 'versions', 'authors', 'files', 'revenue']" title="Type" explanation=""/>
         <If :state="isProjectStats">
