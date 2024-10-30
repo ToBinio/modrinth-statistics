@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useTypeCategory } from "#imports";
+
 useHead({
 	title: "Modrinth Statistics",
 });
@@ -27,15 +29,8 @@ const defaultVersion = computed(() => {
 });
 const version = useFilterItem("version", defaultVersion);
 
-const isGlobalStats = computed(() => {
-	return ["projects", "versions", "authors", "files"].includes(
-		projectType.value,
-	);
-});
-
-const isRevenueStats = computed(() => {
-	return ["revenue"].includes(projectType.value);
-});
+const { isGlobalStats, isProjectStats, isRevenueStats } =
+	useTypeCategory(projectType);
 
 const isGroupData = computed(() => {
 	return (
@@ -92,7 +87,7 @@ onMounted(() => {
     <div class="w-48 flex h-full bg-neutral-900 z-10 absolute overflow-scroll transition-all" :class="{'-translate-x-48': !sidebarVisible}">
       <div class="flex-1 flex flex-col gap-6 px-2 pt-8">
         <FilterItem v-model="projectType" :options="['mod', 'plugin', 'datapack', 'shader', 'resourcepack', 'modpack', 'projects', 'versions', 'authors', 'files', 'revenue']" title="Type" explanation=""/>
-        <If :state="!isGlobalStats && !isRevenueStats">
+        <If :state="isProjectStats">
           <FilterItem v-model="stat" :options="['count', 'downloads', 'versions']" title="Stat" explanation=""/>
           <FilterItem v-model="versionGroup" :options="['major', 'minor', 'all']" title="Version Group" explanation="What type of Minecraft versions should be displayed"/>
           <FilterItem v-model="exclusive" :options="['yes', 'no']" title="Exclusive" explanation="Only show Versions made for a single launcher"/>
