@@ -57,7 +57,7 @@ const sideBarOpen = ref(false);
   <div class="flex flex-1">
     <SideBar v-model:open="sideBarOpen">
       <div class="flex-1 flex flex-col gap-6 px-2 pt-8">
-        <FilterItem v-model="projectType" :options="['mod', 'plugin', 'datapack', 'shader', 'resourcepack', 'modpack', 'projects', 'versions', 'authors', 'files', 'revenue']" title="Type" explanation=""/>
+        <FilterItem v-model="projectType" :options="[{name: 'mod', icon: 'ep:arrow-down-bold'}, 'plugin', 'datapack', 'shader', 'resourcepack', 'modpack', 'projects', 'versions', 'authors', 'files', 'revenue']" title="Type" explanation=""/>
         <If :state="isProjectStats">
           <FilterItem v-model="stat" :options="['count', 'downloads', 'versions']" title="Stat" explanation=""/>
           <FilterItem v-model="versionGroup" :options="['major', 'minor', 'all']" title="Version Group" explanation="What type of Minecraft versions should be displayed"/>
