@@ -1,7 +1,4 @@
-import type { GlobalStats } from "~~/server/utils/processing/global/types";
 import { getRevenue } from "~~/server/utils/processing/revenue";
-import { getGlobalStats } from "~~/server/utils/storage";
-import { dateToFormatted, keyToDate } from "~~/utils/date";
 
 export async function exportRevenueStatsOverTime(): Promise<StatExport> {
 	const statsOverTime: StatExport = {

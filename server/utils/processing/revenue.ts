@@ -1,6 +1,3 @@
-import revenue from "~~/server/api/stats/time/revenue";
-import { $modrinthV3Fetch } from "~~/utils/modrinthFetch";
-
 export async function getRevenue(): Promise<Revenue[]> {
 	type RawRevenue = {
 		time: number;

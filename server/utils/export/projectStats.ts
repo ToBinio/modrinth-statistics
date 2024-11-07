@@ -8,7 +8,6 @@ import {
 	getLatestProjectStats,
 	getProjectStats,
 } from "~~/server/utils/storage";
-import { dateToFormatted } from "~~/utils/date";
 
 // maps database data to a format usable by the frontend
 function mapStats(
