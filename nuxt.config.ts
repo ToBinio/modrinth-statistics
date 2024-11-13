@@ -57,7 +57,7 @@ export default defineNuxtConfig({
 			tasks: true,
 		},
 		scheduledTasks: {
-			"0 0 * * *": ["analyze"],
+			"0 * * * *": ["analyze"],
 		},
 		imports: {
 			dirs: ["utils"],
