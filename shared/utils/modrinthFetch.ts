@@ -1,4 +1,4 @@
-import {ofetch} from "ofetch";
+import { ofetch } from "ofetch";
 
 export const $modrinthFetch = ofetch.create({
 	headers: { "User-Agent": "ToBinio/modrinth-statistics" },
