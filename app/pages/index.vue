@@ -1,9 +1,9 @@
 <script setup lang="ts">
 useHead({
-  title: "Modrinth Statistics",
+	title: "Modrinth Statistics",
 });
 
-const {data} = useFetch("/api/stats/global");
+const { data } = useFetch("/api/stats/global");
 </script>
 
 <template>

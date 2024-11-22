@@ -12,7 +12,7 @@ export default defineTask({
 	async run() {
 		const latestDate = await getLatestDate();
 		if (latestDate === dateToKey(new Date())) {
-			consola.debug("data already analyzed")
+			consola.debug("data already analyzed");
 			return { result: "Fail" };
 		}
 

@@ -10,6 +10,6 @@
 		}
 	},
 	"files": {
-		"ignore": [".nuxt/", ".output/", ".data"]
+		"ignore": [".nuxt/", ".output/", ".data", "db-fix.js"]
 	}
 }

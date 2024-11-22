@@ -8,5 +8,5 @@ export default defineCachedEventHandler(
 	async (event): Promise<StatExport> => {
 		return exportRevenueStatsOverTime();
 	},
-	{ maxAge: 60 * 60 /* 1 hour */ },
+	{ maxAge: 60 * 60 /* 1 hour */, swr: false },
 );

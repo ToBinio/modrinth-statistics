@@ -25,5 +25,5 @@ export default defineCachedEventHandler(
 			query.versionFrom,
 		);
 	},
-	{ maxAge: 60 * 60 /* 1 hour */ },
+	{ maxAge: 60 * 60 /* 1 hour */, swr: false },
 );

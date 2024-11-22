@@ -49,5 +49,5 @@ export default defineCachedEventHandler(
 
 		return exportGlobalStatsOverTime(dateKey, typeFn);
 	},
-	{ maxAge: 60 * 60 /* 1 hour */ },
+	{ maxAge: 60 * 60 /* 1 hour */, swr: false },
 );
