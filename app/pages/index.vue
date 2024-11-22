@@ -1,16 +1,27 @@
 <script setup lang="ts">
 useHead({
-	title: "Modrinth Statistics",
+  title: "Modrinth Statistics",
 });
 
-const { data } = useFetch("/api/stats/global");
+const {data} = useFetch("/api/stats/global");
 </script>
 
 <template>
   <div id="page" class="from-neutral-900 to-neutral-950 bg-gradient-to-b">
     <div id="header">
       The place for stats all about
-      <NuxtLink to="https://modrinth.com" id="modrinth" target="_blank" class="text-8xl text-transparent bg-clip-text from-cyan-200 to-cyan-600 bg-gradient-to-br transition hover:scale-110">Modrinth</NuxtLink>
+      <div class="transition hover:scale-110">
+        <div class="blur-2xl absolute">
+          <NuxtLink to="https://modrinth.com" id="modrinth" target="_blank"
+                    class="text-8xl opacity-70 text-transparent bg-clip-text from-cyan-400 to-cyan-700 bg-gradient-to-br">
+            Modrinth
+          </NuxtLink>
+        </div>
+        <NuxtLink to="https://modrinth.com" id="modrinth" target="_blank"
+                  class="text-8xl text-transparent bg-clip-text from-cyan-200 to-cyan-600 bg-gradient-to-br">
+          Modrinth
+        </NuxtLink>
+      </div>
       <div class="text-xl text-neutral-500">(unofficial)</div>
     </div>
     <div id="values">
