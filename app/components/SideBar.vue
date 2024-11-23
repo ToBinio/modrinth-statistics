@@ -16,7 +16,7 @@ onMounted(() => {
   </button>
   <div class="w-48 flex h-full bg-zinc-900 z-10 absolute overflow-scroll transition-all" :class="{'-translate-x-48': !sidebarVisible}">
     <slot/>
-    <div class="border border-neutral-800 w-0.5 mb-2"></div>
+    <div class="border border-zinc-800 w-0.5 mb-2"></div>
   </div>
 </template>
 

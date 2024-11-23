@@ -3,7 +3,7 @@
 
 <template>
   <div id="page">
-    <div id="nav" class="border-b-2 border-b-neutral-800">
+    <div id="nav" class="border-b-2 border-b-zinc-800">
       <div class="compact">
         <ModrinthLink/>
         <div id="icons">

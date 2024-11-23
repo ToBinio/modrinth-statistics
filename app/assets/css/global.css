@@ -1,31 +1,32 @@
 * {
-    @apply text-zinc-200;
-    font-family: Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Oxygen, Ubuntu, Roboto, Cantarell, Fira Sans, Droid, Helvetica Neue, sans-serif;
+	@apply text-zinc-200;
+	font-family:
+		Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Oxygen, Ubuntu, Roboto, Cantarell, Fira Sans, Droid, Helvetica Neue, sans-serif;
 }
 
 body {
-    @apply bg-zinc-900;
+	@apply bg-zinc-900;
 
-    box-sizing: border-box;
-    min-height: 100dvh;
-    margin: 0;
+	box-sizing: border-box;
+	min-height: 100dvh;
+	margin: 0;
 }
 
 /* improve scrollbar on chrome... */
 ::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
+	width: 4px;
+	height: 4px;
 }
 
 ::-webkit-scrollbar-track {
-    background: transparent;
+	background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 6px;
+	background: #888;
+	border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #555;
+	background: #555;
 }

@@ -75,7 +75,7 @@ const sideBarOpen = ref(false);
     <div class="flex pl-0 w-full transition-all md:pl-48" :class="{'!pl-0': !sideBarOpen}">
       <ChartBarChart v-if="isGroupData" :data="data" :type="projectType as string"/>
       <ChartLineChart v-else :data="data" :type="projectType as string"/>
-      <Explanation :explanation="explanation"/>
+      <Explanation v-if="isProjectStats" :explanation="explanation"/>
     </div>
   </div>
 </template>

@@ -4,7 +4,7 @@ defineProps<{ explanation: string | undefined }>();
 
 <template>
   <div id="tooltip">
-    <Icon name="ph:question" size="25" style="color: var(--white)"/>
+    <Icon name="ph:question" size="25"/>
     <div id="explanation" v-html="explanation">
     </div>
   </div>
@@ -19,15 +19,18 @@ defineProps<{ explanation: string | undefined }>();
 
   &:not(:hover) {
     #explanation {
-      display: none;
+      scale: 0;
+      translate: 50% -50%;
     }
   }
 
   #explanation {
     position: absolute;
     right: 0;
+    scale: 1;
 
-    @apply bg-neutral-800;
+    @apply bg-zinc-800 transition-all;
+    translate: 0 0;
 
     padding: 10px;
     border-radius: 10px;
