@@ -1,5 +1,5 @@
 
-FROM node:latest as build
+FROM node:latest AS build
 WORKDIR /app
 
 COPY package.json .
