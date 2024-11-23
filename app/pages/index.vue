@@ -1,19 +1,19 @@
 <script setup lang="ts">
 useHead({
-	title: "Modrinth Statistics",
+  title: "Modrinth Statistics",
 });
 
-const { data } = useFetch("/api/stats/global");
+const {data} = useFetch("/api/stats/global");
 </script>
 
 <template>
-  <div id="page" class="from-neutral-900 to-neutral-950 bg-gradient-to-b">
-    <div id="header">
+  <div class="dotted-background flex-1 flex flex-col justify-evenly gap-11">
+    <div class="text-center text-6xl font-semibold flex flex-col justify-center items-center">
       The place for stats all about
       <div class="transition hover:scale-110">
-        <div class="blur-2xl absolute">
+        <div class="blur-3xl absolute">
           <NuxtLink to="https://modrinth.com" id="modrinth" target="_blank"
-                    class="text-8xl opacity-70 text-transparent bg-clip-text from-cyan-400 to-cyan-700 bg-gradient-to-br">
+                    class="text-8xl opacity-80 text-transparent bg-clip-text from-cyan-400 to-cyan-600 bg-gradient-to-br">
             Modrinth
           </NuxtLink>
         </div>
@@ -24,7 +24,7 @@ const { data } = useFetch("/api/stats/global");
       </div>
       <div class="text-xl text-neutral-500">(unofficial)</div>
     </div>
-    <div id="values">
+    <div class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-y-16">
       <HomeStatItem name="Projects" :data="data?.projects" icon="akar-icons:game-controller"/>
       <HomeStatItem name="Versions" :data="data?.versions" icon="akar-icons:attach"/>
       <HomeStatItem name="Files" :data="data?.files" icon="akar-icons:file"/>
@@ -34,47 +34,8 @@ const { data } = useFetch("/api/stats/global");
 </template>
 
 <style scoped>
-#page {
-  flex: 1;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-
-  gap: 50px;
-
-  #header {
-    text-align: center;
-    font-size: 4rem;
-    font-weight: bold;
-
-    display: flex;
-    flex-direction: column;
-
-    justify-content: center;
-    align-items: center;
-  }
-
-  #values {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-
-
-    flex-wrap: wrap;
-
-    gap: 50px;
-  }
-}
-
-@media only screen and (max-width: 1500px) {
-  #values {
-    grid-template-columns: 1fr 1fr !important;
-  }
-}
-
-@media only screen and (max-width: 800px) {
-  #values {
-    grid-template-columns: 1fr !important;
-  }
+.dotted-background {
+  background-image: radial-gradient(#18181b 1px, transparent 1px), radial-gradient(#18181b 2px, transparent 2px), linear-gradient(to bottom, #18181b, #030712);
+  background-size: 10px 10px, 30px 30px, cover;
 }
 </style>

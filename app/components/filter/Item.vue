@@ -31,8 +31,8 @@ function onSelect(option: string) {
           {{ model }}
         </button>
       </div>
-      <div class="bg-neutral-900 z-10 relative flex flex-col max-h-48 overflow-scroll transition-all" :class="{'!max-h-0': !open}">
-        <button class="text-left hover:bg-neutral-800 p-0.5 rounded" :class="{'font-bold': option == model}" v-for="option in options" @click="onSelect(option)">
+      <div class="bg-zinc-900 z-10 relative flex flex-col max-h-48 overflow-scroll transition-all" :class="{'!max-h-0': !open}">
+        <button class="text-left hover:bg-zinc-800 p-0.5 rounded" :class="{'font-bold': option == model}" v-for="option in options" @click="onSelect(option)">
           {{ option }}
         </button>
       </div>
