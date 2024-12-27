@@ -63,7 +63,6 @@ export default defineNuxtConfig({
 
 	modules: [
 		"@nuxt/icon",
-		"nuxt-posthog",
 		"@nuxtjs/tailwindcss",
 		"@vueuse/nuxt",
 	],

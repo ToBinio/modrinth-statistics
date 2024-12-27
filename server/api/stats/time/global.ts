@@ -1,6 +1,7 @@
 import consola from "consola";
 import type { GlobalStatCategory } from "~~/server/utils/processing/global/types";
 import { getLatestDate } from "~~/server/utils/storage";
+import {exportGlobalStatsOverTime} from "~~/server/utils/export/globalStats";
 
 type QueryData = {
 	type: GlobalStatCategory;
