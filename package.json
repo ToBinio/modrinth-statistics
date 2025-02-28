@@ -15,9 +15,9 @@
 		"lint:summary": "biome check --reporter summary"
 	},
 	"dependencies": {
-		"chart.js": "^4.4.7",
-		"mongodb": "^6.12.0",
-		"nuxt": "^3.15.0",
+		"chart.js": "^4.4.8",
+		"mongodb": "^6.14.0",
+		"nuxt": "^3.15.4",
 		"vue": "^3.5.13",
 		"vue-chartjs": "^5.3.2",
 		"vue-router": "^4.5.0"
@@ -27,10 +27,10 @@
 		"@iconify-json/akar-icons": "^1.2.2",
 		"@iconify-json/ep": "^1.2.2",
 		"@iconify-json/ic": "^1.2.2",
-		"@iconify-json/mdi": "^1.2.2",
+		"@iconify-json/mdi": "^1.2.3",
 		"@iconify-json/ph": "^1.2.2",
 		"@nuxt/icon": "^1.10.3",
-		"@nuxtjs/tailwindcss": "^6.12.2",
-		"@vueuse/nuxt": "^12.2.0"
+		"@nuxtjs/tailwindcss": "^6.13.1",
+		"@vueuse/nuxt": "^12.7.0"
 	}
 }
