@@ -49,7 +49,11 @@ function filterVersions(
 	mappedStats.labels = mappedStats.labels.slice(from, to);
 
 	for (let i = 0; i < mappedStats.data.length; i++) {
-		mappedStats.data[i].data = mappedStats.data[i].data.slice(from, to);
+		const data = mappedStats.data[i];
+
+		if (!data) continue;
+
+		data.data = data.data.slice(from, to);
 	}
 }
 
@@ -101,21 +105,28 @@ export async function exportStatsOverTime(
 			break;
 		}
 
-		const index = stats.versions.indexOf(version);
+		const versionIndex = stats.versions.indexOf(version);
 
 		statsOverTime.versions.splice(0, 0, dateToFormatted(date));
 
 		outer: for (const data of stats.data) {
+			const versionData = data.values[versionIndex];
+
+			if (!versionData) {
+				consola.warn(`no version data - ${stats}`);
+				continue;
+			}
+
 			for (const dataOverTime of statsOverTime.data) {
 				if (dataOverTime.name === data.name) {
-					dataOverTime.values.splice(0, 0, data.values[index]);
+					dataOverTime.values.splice(0, 0, versionData);
 					continue outer;
 				}
 			}
 
 			statsOverTime.data.push({
 				name: data.name,
-				values: [data.values[index]],
+				values: [versionData],
 			});
 		}
 

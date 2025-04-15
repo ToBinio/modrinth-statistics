@@ -26,7 +26,7 @@ export async function exportGlobalStatsOverTime(
 		}
 
 		statsOverTime.labels.splice(0, 0, dateToFormatted(date));
-		statsOverTime.data[0].data.splice(0, 0, fn(stats));
+		statsOverTime.data[0]?.data.splice(0, 0, fn(stats));
 
 		date.setUTCDate(date.getUTCDate() - 1);
 	}

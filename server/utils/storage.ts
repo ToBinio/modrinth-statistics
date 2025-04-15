@@ -100,13 +100,9 @@ export async function getLatestProjectStats(
 	return getFromStorage("projectStatistics", key);
 }
 
-type StorageValue = null | string | number | boolean | object;
-async function getFromStorage<t extends StorageValue>(
-	storageName: string,
-	key: string,
-) {
+async function getFromStorage<t>(storageName: string, key: string) {
 	const storage = useStorage(storageName);
-	const data = await storage.getItem<t>(key);
+	const data = (await storage.getItem(key)) as t;
 
 	if (!data) {
 		return new Error(

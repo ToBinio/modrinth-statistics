@@ -61,10 +61,6 @@ export default defineNuxtConfig({
 		},
 	},
 
-	modules: [
-		"@nuxt/icon",
-		"@nuxtjs/tailwindcss",
-		"@vueuse/nuxt",
-	],
+	modules: ["@nuxt/icon", "@nuxtjs/tailwindcss", "@vueuse/nuxt"],
 	compatibilityDate: "2024-07-05",
 });

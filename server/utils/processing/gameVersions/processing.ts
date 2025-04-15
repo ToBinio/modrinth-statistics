@@ -75,7 +75,7 @@ function groupGameVersions(versions: GameVersion[]): GameVersions {
 
 		if (
 			major.length === 0 ||
-			major[major.length - 1].name !== gameVersionName
+			major[major.length - 1]?.name !== gameVersionName
 		) {
 			major.push({
 				name: gameVersionName,
@@ -84,7 +84,7 @@ function groupGameVersions(versions: GameVersion[]): GameVersions {
 			continue;
 		}
 
-		major[major.length - 1].contains.push(...version.contains);
+		major[major.length - 1]?.contains.push(...version.contains);
 	}
 
 	return {

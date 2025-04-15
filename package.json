@@ -11,6 +11,7 @@
 		"postinstall": "nuxt prepare",
 		"lint:fix": "biome check --write",
 		"lint": "biome check",
+		"lint:typecheck": "nuxi typecheck",
 		"lint:check": "biome check",
 		"lint:summary": "biome check --reporter summary"
 	},

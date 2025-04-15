@@ -20,8 +20,8 @@ export async function exportRevenueStatsOverTime(): Promise<StatExport> {
 	for (const revenue of await getRevenue()) {
 		statsOverTime.labels.splice(0, 0, dateToFormatted(revenue.time));
 
-		statsOverTime.data[0].data.splice(0, 0, revenue.creator_revenue);
-		statsOverTime.data[1].data.splice(0, 0, revenue.modrinth_revenue);
+		statsOverTime.data[0]?.data.splice(0, 0, revenue.creator_revenue);
+		statsOverTime.data[1]?.data.splice(0, 0, revenue.modrinth_revenue);
 	}
 
 	return statsOverTime;

@@ -1,7 +1,7 @@
 import { statStringToExtraction } from "~~/server/utils/api/project";
+import { exportStatsOverTime } from "~~/server/utils/export/projectStats";
 import type { VersionCategories } from "~~/server/utils/processing/gameVersions/types";
 import type { ProjectStatCategory } from "~~/server/utils/processing/projects/types";
-import {exportStatsOverTime} from "~~/server/utils/export/projectStats";
 
 type QueryData = {
 	stat: ProjectStatCategory;

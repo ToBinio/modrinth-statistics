@@ -14,7 +14,7 @@ import type {
 	Version,
 } from "~~/server/utils/processing/projects/types";
 import { getGameVersions, setProjectStats } from "~~/server/utils/storage";
-import {chunkArray} from "#shared/utils/array";
+import { chunkArray } from "#shared/utils/array";
 
 type StatsDataType = Map<
 	string,
@@ -113,11 +113,11 @@ async function getStatistics(type: ProjectTypes): Promise<AllStats | Error> {
 			}
 		}
 
-        const versionIds: string[] = []
-        for (const chunk of chunkArray(batchProjectIds, 200)) {
-            const versions = await getVersionIds(chunk);
-            versionIds.push(...versions);
-        }
+		const versionIds: string[] = [];
+		for (const chunk of chunkArray(batchProjectIds, 200)) {
+			const versions = await getVersionIds(chunk);
+			versionIds.push(...versions);
+		}
 
 		await analyzeVersionsFromIds(gameVersions, versionIds, data, type);
 
