@@ -22,9 +22,7 @@ const { to, from } = await useVersionRange(
 );
 
 const gameVersions = await useGameVersions(versionGroup);
-const defaultVersion = computed(() => {
-	return gameVersions.value[gameVersions.value.length - 1] as string;
-});
+const defaultVersion = computed(() => gameVersions.value[0] as string);
 const version = useFilterItem("version", defaultVersion);
 
 const { isGlobalStats, isProjectStats, isRevenueStats } =

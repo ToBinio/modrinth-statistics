@@ -8,8 +8,10 @@ export async function useGameVersions(versionGroup: Ref<string | undefined>) {
 			return [];
 		}
 
-		return data.value.map((value) => {
-			return value.name;
-		});
+		return data.value
+			.map((value) => {
+				return value.name;
+			})
+			.toReversed();
 	});
 }
