@@ -37,7 +37,7 @@ const isGroupData = computed(() => {
 	);
 });
 
-const data = useStatData(isGlobalStats, isRevenueStats, time, {
+const { data, isFetching } = useStatData(isGlobalStats, isRevenueStats, time, {
 	mode: versionGroup,
 	exclusive: exclusiveBool,
 	type: projectType,
@@ -90,10 +90,14 @@ const sideBarOpen = ref(false);
       </div>
     </SideBar>
 
-    <div class="flex pl-0 w-full transition-all md:pl-48" :class="{'!pl-0': !sideBarOpen}">
-      <ChartBarChart v-if="isGroupData" :data="data" :type="projectType as string"/>
-      <ChartLineChart v-else :data="data" :type="projectType as string"/>
-      <Explanation v-if="isProjectStats" :explanation="explanation"/>
+    <div class="relative flex ml-0 w-full transition-all md:ml-48" :class="{'!ml-0': !sideBarOpen}">
+        <div :data-fetching="isFetching" class="w-full flex  data-[fetching=true]:grayscale data-[fetching=true]:blur-[2px]">
+            <ChartBarChart v-if="isGroupData" :data="data" :type="projectType as string"/>
+            <ChartLineChart v-else :data="data" :type="projectType as string"/>
+        </div>
+        <Explanation v-if="isProjectStats" :explanation="explanation"/>
+
+        <Icon v-if="isFetching" class="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]" name="eos-icons:bubble-loading" size="48" />
     </div>
   </div>
 </template>

@@ -19,9 +19,11 @@ export function useStatData(
 			: "/api/stats/time/projects";
 	});
 
-	const { data } = useFetch<StatExport>(url, {
+	const { data, status } = useFetch<StatExport>(url, {
 		query: params,
 	});
 
-	return data;
+	const isFetching = computed(() => status.value === "pending");
+
+	return { data, isFetching };
 }
