@@ -1,10 +1,12 @@
 import consola from "consola";
 import { exportGlobalStatsOverTime } from "~~/server/utils/export/globalStats";
+import { fracture } from "~~/server/utils/processing/aggregate";
 import type { GlobalStatCategory } from "~~/server/utils/processing/global/types";
 import { getLatestDate } from "~~/server/utils/storage";
 
 type QueryData = {
 	type: GlobalStatCategory;
+	aggregate: string;
 };
 
 export default defineCachedEventHandler(
@@ -48,7 +50,12 @@ export default defineCachedEventHandler(
 			}
 		}
 
-		return exportGlobalStatsOverTime(dateKey, typeFn);
+		const data = await exportGlobalStatsOverTime(dateKey, typeFn);
+
+		if (query.aggregate === "false") {
+			return fracture(data);
+		}
+		return data;
 	},
 	{ maxAge: 60 * 60 /* 1 hour */, swr: false },
 );

@@ -9,6 +9,7 @@ type QueryData = {
 	type: ProjectTypes;
 	exclusive: string;
 	version: string;
+	aggregate: string;
 };
 
 export default defineCachedEventHandler(
@@ -16,7 +17,7 @@ export default defineCachedEventHandler(
 		const query = getQuery<QueryData>(event);
 		const typeFn = statStringToExtraction(query.stat);
 
-		return exportStatsOverTime(
+		const data = await exportStatsOverTime(
 			query.mode as VersionCategories,
 			query.type,
 			query.exclusive === "true",
@@ -24,6 +25,11 @@ export default defineCachedEventHandler(
 			query.version,
 			typeFn,
 		);
+
+		if (query.aggregate === "false") {
+			return fracture(data);
+		}
+		return data;
 	},
 	{ maxAge: 60 * 60 /* 1 hour */, swr: false },
 );

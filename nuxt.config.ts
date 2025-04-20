@@ -52,6 +52,9 @@ export default defineNuxtConfig({
 				databaseName: `${process.env.MONGODB_DEV_DB}`,
 				collectionName: "metadata",
 			},
+			cache: {
+				driver: "null",
+			},
 		},
 		experimental: {
 			tasks: true,

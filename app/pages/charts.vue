@@ -10,6 +10,9 @@ const versionGroup = useFilterItem("versionGroup", "major");
 
 const time = useFilterItem("time", "current");
 
+const aggregate = useFilterItem("aggregate", "yes");
+const aggregateBool = computed(() => aggregate.value === "yes");
+
 const exclusive = useFilterItem("exclusive", "yes");
 const exclusiveBool = computed(() => exclusive.value === "yes");
 
@@ -42,6 +45,7 @@ const data = useStatData(isGlobalStats, isRevenueStats, time, {
 	versionTo: versionTo,
 	versionFrom: versionFrom,
 	version: version,
+	aggregate: aggregateBool,
 });
 
 const explanation = computed(() => {
@@ -78,6 +82,10 @@ const sideBarOpen = ref(false);
 
         <FilterItem :should-display="isProjectStats" v-if="time != 'current'" v-model="version" :options="gameVersions"
                     title="Version"
+                    explanation=""/>
+
+        <FilterItem :should-display="true" v-if="((isProjectStats && time != 'current') || !isProjectStats) && projectType != 'revenue'" v-model="aggregate" :options="['yes', 'no']"
+                    title="Aggregate"
                     explanation=""/>
       </div>
     </SideBar>
