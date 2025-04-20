@@ -2,8 +2,6 @@ import { align } from "consola/utils";
 import type { StatExport } from "~~/shared/types/types";
 
 export function fracture(data: StatExport): StatExport {
-	data.labels.splice(0, 1);
-
 	data.data.map((value) => {
 		const data = [];
 

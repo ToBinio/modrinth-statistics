@@ -98,7 +98,9 @@ export async function exportStatsOverTime(
 
 	const date = firstDate;
 
-	while (true) {
+	let hasData = true;
+	while (hasData) {
+		hasData = false;
 		const stats = await getProjectStats(date, type, versionCategory, exclusive);
 
 		if (stats instanceof Error) {
@@ -109,19 +111,21 @@ export async function exportStatsOverTime(
 
 		statsOverTime.versions.splice(0, 0, dateToFormatted(date));
 
-		outer: for (const data of stats.data) {
-			const versionData = data.values[versionIndex];
+		for (const data of stats.data) {
+			let versionData = data.values[versionIndex];
 
+			if (versionData) hasData = true;
 			if (!versionData) {
-				consola.warn(`no version data - ${stats}`);
-				continue;
+				versionData = { versions: 0, downloads: 0, count: 0 };
 			}
 
-			for (const dataOverTime of statsOverTime.data) {
-				if (dataOverTime.name === data.name) {
-					dataOverTime.values.splice(0, 0, versionData);
-					continue outer;
-				}
+			const loaderIndex = statsOverTime.data.findIndex((loader) => {
+				return loader.name === data.name;
+			});
+
+			if (loaderIndex !== -1) {
+				statsOverTime.data[loaderIndex].values.splice(0, 0, versionData);
+				continue;
 			}
 
 			statsOverTime.data.push({
