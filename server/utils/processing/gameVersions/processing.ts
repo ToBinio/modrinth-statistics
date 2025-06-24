@@ -1,10 +1,8 @@
 import { getGameVersions } from "~~/server/utils/processing/gameVersions/fetching";
 import type {
+	GameVersion,
 	GameVersionData,
 	GameVersions,
-} from "~~/server/utils/processing/gameVersions/types";
-import type {
-	GameVersion,
 	SupportedVersions,
 } from "~~/server/utils/processing/gameVersions/types";
 import type { Version } from "~~/server/utils/processing/projects/types";

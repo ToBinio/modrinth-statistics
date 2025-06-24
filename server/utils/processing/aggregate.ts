@@ -1,4 +1,3 @@
-import { align } from "consola/utils";
 import type { StatExport } from "~~/shared/types/types";
 
 export function fracture(data: StatExport): StatExport {

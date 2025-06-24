@@ -1,4 +1,5 @@
 import consola from "consola";
+import { chunkArray } from "#shared/utils/array";
 import { getSupportedGameVersions } from "~~/server/utils/processing/gameVersions/processing";
 import type {
 	GameVersionData,
@@ -14,7 +15,6 @@ import type {
 	Version,
 } from "~~/server/utils/processing/projects/types";
 import { getGameVersions, setProjectStats } from "~~/server/utils/storage";
-import { chunkArray } from "#shared/utils/array";
 
 type StatsDataType = Map<
 	string,

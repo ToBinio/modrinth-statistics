@@ -2,7 +2,7 @@ export function useStatData(
 	isGlobalStats: Ref<boolean>,
 	isRevenueStats: Ref<boolean>,
 	time: Ref<string>,
-	// biome-ignore lint:
+	// biome-ignore lint: can be any
 	params: Record<string, any>,
 ) {
 	const url = computed(() => {
