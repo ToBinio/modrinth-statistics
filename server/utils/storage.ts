@@ -30,11 +30,15 @@ export async function setGlobalStats(data: GlobalStats, date: Date) {
 	await storage.setItem(`globalStats${dateKey}`, data);
 }
 
-export async function getGlobalStats(date: Date): Promise<GlobalStats | Error> {
-	const dateKey = dateToKey(date);
-	const key = `globalStats${dateKey}`;
+export async function getGlobalStatsBulk(
+	dates: Date[],
+): Promise<(GlobalStats | Error)[]> {
+	const keys = dates.map((date) => {
+		const dateKey = dateToKey(date);
+		return `globalStats${dateKey}`;
+	});
 
-	return getFromStorage("globalStatistics", key);
+	return getFromStorageBulk("globalStatistics", keys);
 }
 
 export async function getLatestGlobalStats(): Promise<GlobalStats | Error> {
@@ -88,6 +92,20 @@ export async function getProjectStats(
 	return getFromStorage("projectStatistics", key);
 }
 
+export async function getProjectStatsBulk(
+	dates: Date[],
+	type: ProjectTypes,
+	versionCategory: VersionCategories,
+	exclusive: boolean,
+): Promise<(ProjectStats | Error)[]> {
+	const keys = dates.map((date) => {
+		const dateKey = dateToKey(date);
+		return getProjectStorageKey(type, versionCategory, exclusive, dateKey);
+	});
+
+	return getFromStorageBulk("projectStatistics", keys);
+}
+
 export async function getLatestProjectStats(
 	type: ProjectTypes,
 	versionCategory: VersionCategories,
@@ -111,4 +129,21 @@ async function getFromStorage<t>(storageName: string, key: string) {
 	}
 
 	return data;
+}
+
+async function getFromStorageBulk<t>(storageName: string, keys: string[]) {
+	const storage = useStorage(storageName);
+	const data = await storage.getItems(keys);
+
+	const mapped_data = data.map((data) => {
+		if (!data.value) {
+			return new Error(
+				`could not find value in storage - storage: "${storageName}" key: "${data.key}"`,
+			);
+		}
+
+		return data.value as t;
+	});
+
+	return mapped_data;
 }

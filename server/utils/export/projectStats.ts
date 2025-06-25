@@ -6,7 +6,7 @@ import type {
 } from "~~/server/utils/processing/projects/types";
 import {
 	getLatestProjectStats,
-	getProjectStats,
+	getProjectStatsBulk,
 } from "~~/server/utils/storage";
 
 // maps database data to a format usable by the frontend
@@ -96,45 +96,60 @@ export async function exportStatsOverTime(
 		data: [],
 	};
 
-	const date = firstDate;
+	let date = firstDate;
 
-	let hasData = true;
-	while (hasData) {
-		hasData = false;
-		const stats = await getProjectStats(date, type, versionCategory, exclusive);
+	const BULK_COUNT = 25;
 
-		if (stats instanceof Error) {
-			break;
+	outer: while (true) {
+		const dates = [];
+		for (let i = 0; i < BULK_COUNT; i++) {
+			dates.push(date);
+
+			const new_date = new Date(date);
+			new_date.setUTCDate(date.getUTCDate() - 1);
+
+			date = new_date;
 		}
 
-		const versionIndex = stats.versions.indexOf(version);
+		const data = await getProjectStatsBulk(
+			dates,
+			type,
+			versionCategory,
+			exclusive,
+		);
 
-		statsOverTime.versions.splice(0, 0, dateToFormatted(date));
+		for (let i = 0; i < data.length; i++) {
+			const stats = data[i];
+			const date = dates[i];
 
-		for (const data of stats.data) {
-			let versionData = data.values[versionIndex];
-
-			if (versionData) hasData = true;
-			if (!versionData) {
-				versionData = { versions: 0, downloads: 0, count: 0 };
+			if (stats instanceof Error) {
+				break outer;
 			}
 
-			const loaderIndex = statsOverTime.data.findIndex((loader) => {
-				return loader.name === data.name;
-			});
+			const versionIndex = stats.versions.indexOf(version);
 
-			if (loaderIndex !== -1) {
-				statsOverTime.data[loaderIndex].values.splice(0, 0, versionData);
-				continue;
+			for (const data of stats.data) {
+				const versionData = data.values[versionIndex];
+
+				if (!versionData) break outer;
+
+				const loaderIndex = statsOverTime.data.findIndex((loader) => {
+					return loader.name === data.name;
+				});
+
+				if (loaderIndex !== -1) {
+					statsOverTime.data[loaderIndex].values.splice(0, 0, versionData);
+					continue;
+				}
+
+				statsOverTime.data.push({
+					name: data.name,
+					values: [versionData],
+				});
 			}
 
-			statsOverTime.data.push({
-				name: data.name,
-				values: [versionData],
-			});
+			statsOverTime.versions.splice(0, 0, dateToFormatted(date));
 		}
-
-		date.setUTCDate(date.getUTCDate() - 1);
 	}
 
 	return mapStats(statsOverTime, fn);

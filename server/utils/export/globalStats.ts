@@ -1,5 +1,5 @@
 import type { GlobalStats } from "~~/server/utils/processing/global/types";
-import { getGlobalStats } from "~~/server/utils/storage";
+import { getGlobalStatsBulk } from "~~/server/utils/storage";
 
 export async function exportGlobalStatsOverTime(
 	firstDateKey: string,
@@ -16,19 +16,34 @@ export async function exportGlobalStatsOverTime(
 		],
 	};
 
-	const date = keyToDate(firstDateKey);
+	let date = keyToDate(firstDateKey);
 
-	while (true) {
-		const stats = await getGlobalStats(date);
+	const BULK_COUNT = 25;
 
-		if (stats instanceof Error) {
-			break;
+	outer: while (true) {
+		const dates = [];
+		for (let i = 0; i < BULK_COUNT; i++) {
+			dates.push(date);
+
+			const new_date = new Date(date);
+			new_date.setUTCDate(date.getUTCDate() - 1);
+
+			date = new_date;
 		}
 
-		statsOverTime.labels.splice(0, 0, dateToFormatted(date));
-		statsOverTime.data[0]?.data.splice(0, 0, fn(stats));
+		const data = await getGlobalStatsBulk(dates);
 
-		date.setUTCDate(date.getUTCDate() - 1);
+		for (let i = 0; i < data.length; i++) {
+			const stats = data[i];
+			const date = dates[i];
+
+			if (stats instanceof Error) {
+				break outer;
+			}
+
+			statsOverTime.labels.splice(0, 0, dateToFormatted(date));
+			statsOverTime.data[0]?.data.splice(0, 0, fn(stats));
+		}
 	}
 
 	return statsOverTime;
