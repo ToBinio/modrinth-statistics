@@ -27,9 +27,9 @@ export default defineCachedEventHandler(
 		);
 
 		if (query.aggregate === "false") {
-			return fracture(data);
+			return summarize(fracture(data), 64, false);
 		}
-		return data;
+		return summarize(data, 64, true);
 	},
 	{ maxAge: 60 * 60 /* 1 hour */, swr: false },
 );
