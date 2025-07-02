@@ -12,7 +12,7 @@ export async function getRevenue(): Promise<Revenue[]> {
 	return data.data.map((value) => {
 		return {
 			time: new Date(value.time * 1000),
-			modrinth_revenue: Number(value.revenue) - Number(value.creator_revenue),
+			modrinth_revenue: Number(value.revenue),
 			creator_revenue: Number(value.creator_revenue),
 		};
 	});
