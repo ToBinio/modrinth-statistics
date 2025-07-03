@@ -6,7 +6,10 @@ export async function getRevenue(): Promise<Revenue[]> {
 	};
 
 	const data = await $modrinthV3Fetch<{ data: RawRevenue[] }>(
-		"/payout/platform_revenue",
+		"/payout/platform_revenue?start=" +
+			new Date("2024-02-20").toISOString() +
+			"&end=" +
+			new Date().toISOString(),
 	);
 
 	return data.data.map((value) => {
