@@ -9,6 +9,7 @@ type QueryData = {
 	type: ProjectTypes;
 	exclusive: string;
 	version: string;
+	days: number | undefined;
 	aggregate: string;
 };
 
@@ -24,12 +25,15 @@ export default defineCachedEventHandler(
 			new Date(),
 			query.version,
 			typeFn,
+			query.days,
 		);
 
+		const dataPoints = Math.min(64, query.days ?? 64);
+
 		if (query.aggregate === "false") {
-			return summarize(fracture(data), 64, false);
+			return summarize(fracture(data), dataPoints, false);
 		}
-		return summarize(data, 64, true);
+		return summarize(data, dataPoints, true);
 	},
 	{ maxAge: 60 * 60 /* 1 hour */, swr: false },
 );

@@ -90,6 +90,7 @@ export async function exportStatsOverTime(
 	firstDate: Date,
 	version: string,
 	fn: (value: ProjectStatsValue) => number,
+	max_days: number | undefined,
 ): Promise<StatExport> {
 	const statsOverTime: ProjectStats = {
 		versions: [],
@@ -99,10 +100,11 @@ export async function exportStatsOverTime(
 	let date = firstDate;
 
 	const BULK_COUNT = 25;
+	let days_to_fetch_left = max_days ?? Number.MAX_SAFE_INTEGER;
 
-	outer: while (true) {
+	outer: while (days_to_fetch_left > 0) {
 		const dates = [];
-		for (let i = 0; i < BULK_COUNT; i++) {
+		for (let i = 0; i < Math.min(BULK_COUNT, days_to_fetch_left); i++) {
 			dates.push(date);
 
 			const new_date = new Date(date);
@@ -117,6 +119,8 @@ export async function exportStatsOverTime(
 			versionCategory,
 			exclusive,
 		);
+
+		days_to_fetch_left -= data.length;
 
 		for (let i = 0; i < data.length; i++) {
 			const stats = data[i];

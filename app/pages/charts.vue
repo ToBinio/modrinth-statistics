@@ -37,6 +37,12 @@ const isGroupData = computed(() => {
 	);
 });
 
+const max_days = computed(() => {
+	if (isGroupData.value) return undefined;
+
+	return time.value === "all" ? undefined : 30;
+});
+
 const { data, isFetching } = useStatData(isGlobalStats, isRevenueStats, time, {
 	mode: versionGroup,
 	exclusive: exclusiveBool,
@@ -45,6 +51,7 @@ const { data, isFetching } = useStatData(isGlobalStats, isRevenueStats, time, {
 	versionTo: versionTo,
 	versionFrom: versionFrom,
 	version: version,
+	days: max_days,
 	aggregate: aggregateBool,
 });
 
@@ -103,7 +110,7 @@ const sideBarOpen = ref(false);
                 <FilterItem
                     :should-display="isProjectStats"
                     v-model="time"
-                    :options="['current', 'all']"
+                    :options="['current', 'all', 'last 30 days']"
                     title="Time"
                     explanation=""
                 />
