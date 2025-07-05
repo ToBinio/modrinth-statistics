@@ -1,0 +1,3 @@
+Sitemap: https://modrinth-statistics.tobinio.dev/sitemap.xml
+User-agent: *
+Disallow:
