@@ -1,4 +1,33 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+
+const simple_types = ["projects", "versions", "authors", "files", "revenue"];
+const project_types = [
+	"mod",
+	"plugin",
+	"datapack",
+	"shader",
+	"resourcepack",
+	"modpack",
+];
+
+var urls = [
+	"https://modrinth-statistics.tobinio.dev/charts?projectType=revenue",
+];
+
+for (const type of simple_types) {
+	urls.push(
+		`https://modrinth-statistics.tobinio.dev/charts?projectType=${type}`,
+	);
+}
+
+for (const type of project_types) {
+	urls.push(
+		`https://modrinth-statistics.tobinio.dev/charts?projectType=${type}&stat=count`,
+		`https://modrinth-statistics.tobinio.dev/charts?projectType=${type}&stat=downloads`,
+		`https://modrinth-statistics.tobinio.dev/charts?projectType=${type}&stat=versions`,
+	);
+}
+
 export default defineNuxtConfig({
 	devtools: { enabled: true },
 	future: {
@@ -10,7 +39,12 @@ export default defineNuxtConfig({
 			link: [{ rel: "icon", type: "image/svg+xml", href: "/favicon.svg" }],
 		},
 	},
-
+	site: {
+		url: "https://modrinth-statistics.tobinio.dev",
+	},
+	sitemap: {
+		urls: urls,
+	},
 	nitro: {
 		// preset: "bun",
 		storage: {
@@ -64,6 +98,11 @@ export default defineNuxtConfig({
 		},
 	},
 
-	modules: ["@nuxt/icon", "@nuxtjs/tailwindcss", "@vueuse/nuxt"],
+	modules: [
+		"@nuxt/icon",
+		"@nuxtjs/tailwindcss",
+		"@vueuse/nuxt",
+		"@nuxtjs/sitemap",
+	],
 	compatibilityDate: "2024-07-05",
 });

@@ -1,6 +1,6 @@
 {
 	"name": "nuxt-app",
-	"version": "0.3.6",
+	"version": "0.3.7",
 	"private": true,
 	"type": "module",
 	"scripts": {
@@ -16,6 +16,7 @@
 		"lint:summary": "biome check --reporter summary"
 	},
 	"dependencies": {
+		"@nuxtjs/sitemap": "7.4.3",
 		"chart.js": "^4.5.0",
 		"consola": "^3.4.2",
 		"mongodb": "^6.17.0",
