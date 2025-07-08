@@ -6,7 +6,7 @@ export function fracture(data: StatExport): StatExport {
 		const data = [];
 
 		for (let i = 0; i < value.data.length - 1; i++) {
-			data.push(value.data[i + 1] - value.data[i]);
+			data.push(value.data[i + 1]! - value.data[i]!);
 		}
 		value.data = data;
 
@@ -35,15 +35,15 @@ export function summarize(
 	}
 
 	for (let i = 0; i < indexes.length; i++) {
-		const from = indexes[i + 1] + 1 || 0;
-		const to = indexes[i];
+		const from = indexes[i + 1]! + 1 || 0;
+		const to = indexes[i]!;
 
 		for (const values of data.data) {
 			const to_avg = values.data;
 
 			let sum = 0;
 			for (let j = from; j <= to; j++) {
-				sum += to_avg[j];
+				sum += to_avg[j] ?? 0;
 			}
 
 			const value = should_avg ? Math.round(sum / (to - from + 1)) : sum;

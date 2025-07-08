@@ -123,8 +123,13 @@ export async function exportStatsOverTime(
 		days_to_fetch_left -= data.length;
 
 		for (let i = 0; i < data.length; i++) {
-			const stats = data[i];
+			const stats = data[i]!;
 			const date = dates[i];
+
+			if (!date) {
+				consola.error(`No date for '${stats}' found`);
+				break outer;
+			}
 
 			if (stats instanceof Error) {
 				break outer;
@@ -142,7 +147,7 @@ export async function exportStatsOverTime(
 				});
 
 				if (loaderIndex !== -1) {
-					statsOverTime.data[loaderIndex].values.splice(0, 0, versionData);
+					statsOverTime.data[loaderIndex]!.values.splice(0, 0, versionData);
 					continue;
 				}
 

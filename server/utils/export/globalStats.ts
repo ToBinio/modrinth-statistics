@@ -34,8 +34,8 @@ export async function exportGlobalStatsOverTime(
 		const data = await getGlobalStatsBulk(dates);
 
 		for (let i = 0; i < data.length; i++) {
-			const stats = data[i];
-			const date = dates[i];
+			const stats = data[i]!;
+			const date = dates[i]!;
 
 			if (stats instanceof Error) {
 				break outer;
