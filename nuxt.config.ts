@@ -33,7 +33,11 @@ export default defineNuxtConfig({
 	future: {
 		compatibilityVersion: 4,
 	},
-
+	runtimeConfig: {
+		public: {
+			umamiId: process.env.UMAMI_ID,
+		},
+	},
 	app: {
 		head: {
 			link: [{ rel: "icon", type: "image/svg+xml", href: "/favicon.svg" }],
@@ -103,6 +107,7 @@ export default defineNuxtConfig({
 		"@nuxtjs/tailwindcss",
 		"@vueuse/nuxt",
 		"@nuxtjs/sitemap",
+		"@nuxt/scripts",
 	],
 	compatibilityDate: "2024-07-05",
 });
