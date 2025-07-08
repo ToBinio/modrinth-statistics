@@ -1,10 +1,9 @@
 import consola from "consola";
 import type { GlobalStats } from "~~/server/utils/processing/global/types";
-import { getLatestGlobalStats } from "~~/server/utils/storage";
 
 export default defineCachedEventHandler(
 	async (event): Promise<GlobalStats> => {
-		const globalStats = await getLatestGlobalStats();
+		const globalStats = await DB.GlobalStats.getLatest();
 
 		if (globalStats instanceof Error) {
 			consola.error(globalStats.message);

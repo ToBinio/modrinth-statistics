@@ -1,7 +1,5 @@
-import { getLatestDate } from "~~/server/utils/storage";
-
 export default defineEventHandler(async (event): Promise<string | null> => {
-	const gameVersions = await getLatestDate();
+	const gameVersions = await DB.LatestDate.get();
 
 	if (gameVersions instanceof Error) {
 		setResponseStatus(event, 500);

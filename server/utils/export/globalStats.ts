@@ -1,5 +1,4 @@
 import type { GlobalStats } from "~~/server/utils/processing/global/types";
-import { getGlobalStatsBulk } from "~~/server/utils/storage";
 
 export async function exportGlobalStatsOverTime(
 	firstDateKey: string,
@@ -31,7 +30,7 @@ export async function exportGlobalStatsOverTime(
 			date = new_date;
 		}
 
-		const data = await getGlobalStatsBulk(dates);
+		const data = await DB.GlobalStats.getBulk(dates);
 
 		for (let i = 0; i < data.length; i++) {
 			const stats = data[i]!;

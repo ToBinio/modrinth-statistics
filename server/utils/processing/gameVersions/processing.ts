@@ -6,13 +6,12 @@ import type {
 	SupportedVersions,
 } from "~~/server/utils/processing/gameVersions/types";
 import type { Version } from "~~/server/utils/processing/projects/types";
-import { setGameVersions } from "~~/server/utils/storage";
 
 export async function updateGameVersions() {
 	const versions = await getGameVersions();
 	const gameVersions = groupGameVersions(versions);
 
-	await setGameVersions(gameVersions);
+	await DB.GameVersions.set(gameVersions);
 }
 
 // returns what versionGroup (all, minor, major) a specif projectVersion supports

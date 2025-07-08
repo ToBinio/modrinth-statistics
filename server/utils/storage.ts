@@ -5,49 +5,114 @@ import type {
 import type { GlobalStats } from "~~/server/utils/processing/global/types";
 import type { ProjectStats } from "~~/server/utils/processing/projects/types";
 
-export async function setGameVersions(gameVersions: GameVersions) {
-	const storage = useStorage("metadata");
-	await storage.setItem("gameVersions", gameVersions);
-}
+export const DB = {
+	GameVersions: {
+		async set(gameVersions: GameVersions) {
+			const storage = useStorage("metadata");
+			await storage.setItem("gameVersions", gameVersions);
+		},
+		async get(): Promise<GameVersions | Error> {
+			return getFromStorage("metadata", "gameVersions");
+		},
+	},
+	LatestDate: {
+		async set(date: Date) {
+			const storage = useStorage("metadata");
+			await storage.setItem("latestDate", dateToKey(date));
+		},
+		async get(): Promise<string | Error> {
+			return getFromStorage("metadata", "latestDate");
+		},
+	},
+	GlobalStats: {
+		async set(data: GlobalStats, date: Date) {
+			const storage = useStorage("metadata");
+			const dateKey = dateToKey(date);
 
-export async function getGameVersions(): Promise<GameVersions | Error> {
-	return getFromStorage("metadata", "gameVersions");
-}
+			await storage.setItem(`globalStats${dateKey}`, data);
+		},
+		async getBulk(dates: Date[]): Promise<(GlobalStats | Error)[]> {
+			const keys = dates.map((date) => {
+				const dateKey = dateToKey(date);
+				return `globalStats${dateKey}`;
+			});
 
-export async function setLatestDate(date: Date) {
-	const storage = useStorage("metadata");
-	await storage.setItem("latestDate", dateToKey(date));
-}
+			return getFromStorageBulk("globalStatistics", keys);
+		},
+		async getLatest(): Promise<GlobalStats | Error> {
+			const dateKey = await DB.LatestDate.get();
+			if (dateKey instanceof Error) return dateKey;
 
-export async function getLatestDate(): Promise<string | Error> {
-	return getFromStorage("metadata", "latestDate");
-}
+			const key = `globalStats${dateKey}`;
+			return getFromStorage("globalStatistics", key);
+		},
+	},
+	ProjectStats: {
+		async set(
+			data: ProjectStats,
+			type: ProjectTypes,
+			versionCategory: VersionCategories,
+			exclusive: boolean,
+		) {
+			const storage = useStorage("projectStatistics");
 
-export async function setGlobalStats(data: GlobalStats, date: Date) {
-	const storage = useStorage("globalStatistics");
-	const dateKey = dateToKey(date);
+			const dateKey = dateToKey(new Date());
+			const key = getProjectStorageKey(
+				type,
+				versionCategory,
+				exclusive,
+				dateKey,
+			);
 
-	await storage.setItem(`globalStats${dateKey}`, data);
-}
+			await storage.setItem<ProjectStats>(key, data);
+		},
+		async get(
+			date: Date,
+			type: ProjectTypes,
+			versionCategory: VersionCategories,
+			exclusive: boolean,
+		): Promise<ProjectStats | Error> {
+			const dateKey = dateToKey(date);
+			const key = getProjectStorageKey(
+				type,
+				versionCategory,
+				exclusive,
+				dateKey,
+			);
 
-export async function getGlobalStatsBulk(
-	dates: Date[],
-): Promise<(GlobalStats | Error)[]> {
-	const keys = dates.map((date) => {
-		const dateKey = dateToKey(date);
-		return `globalStats${dateKey}`;
-	});
+			return getFromStorage("projectStatistics", key);
+		},
+		async getBulk(
+			dates: Date[],
+			type: ProjectTypes,
+			versionCategory: VersionCategories,
+			exclusive: boolean,
+		): Promise<(ProjectStats | Error)[]> {
+			const keys = dates.map((date) => {
+				const dateKey = dateToKey(date);
+				return getProjectStorageKey(type, versionCategory, exclusive, dateKey);
+			});
 
-	return getFromStorageBulk("globalStatistics", keys);
-}
+			return getFromStorageBulk("projectStatistics", keys);
+		},
+		async getLatest(
+			type: ProjectTypes,
+			versionCategory: VersionCategories,
+			exclusive: boolean,
+		): Promise<ProjectStats | Error> {
+			const dateKey = await DB.LatestDate.get();
+			if (dateKey instanceof Error) return dateKey;
 
-export async function getLatestGlobalStats(): Promise<GlobalStats | Error> {
-	const dateKey = await getLatestDate();
-	if (dateKey instanceof Error) return dateKey;
-
-	const key = `globalStats${dateKey}`;
-	return getFromStorage("globalStatistics", key);
-}
+			const key = getProjectStorageKey(
+				type,
+				versionCategory,
+				exclusive,
+				dateKey,
+			);
+			return getFromStorage("projectStatistics", key);
+		},
+	},
+};
 
 function getProjectStorageKey(
 	type: ProjectTypes,
@@ -64,58 +129,6 @@ function getProjectStorageKey(
 
 	key += dateKey;
 	return key;
-}
-
-export async function setProjectStats(
-	data: ProjectStats,
-	type: ProjectTypes,
-	versionCategory: VersionCategories,
-	exclusive: boolean,
-) {
-	const storage = useStorage("projectStatistics");
-
-	const dateKey = dateToKey(new Date());
-	const key = getProjectStorageKey(type, versionCategory, exclusive, dateKey);
-
-	await storage.setItem<ProjectStats>(key, data);
-}
-
-export async function getProjectStats(
-	date: Date,
-	type: ProjectTypes,
-	versionCategory: VersionCategories,
-	exclusive: boolean,
-): Promise<ProjectStats | Error> {
-	const dateKey = dateToKey(date);
-	const key = getProjectStorageKey(type, versionCategory, exclusive, dateKey);
-
-	return getFromStorage("projectStatistics", key);
-}
-
-export async function getProjectStatsBulk(
-	dates: Date[],
-	type: ProjectTypes,
-	versionCategory: VersionCategories,
-	exclusive: boolean,
-): Promise<(ProjectStats | Error)[]> {
-	const keys = dates.map((date) => {
-		const dateKey = dateToKey(date);
-		return getProjectStorageKey(type, versionCategory, exclusive, dateKey);
-	});
-
-	return getFromStorageBulk("projectStatistics", keys);
-}
-
-export async function getLatestProjectStats(
-	type: ProjectTypes,
-	versionCategory: VersionCategories,
-	exclusive: boolean,
-): Promise<ProjectStats | Error> {
-	const dateKey = await getLatestDate();
-	if (dateKey instanceof Error) return dateKey;
-
-	const key = getProjectStorageKey(type, versionCategory, exclusive, dateKey);
-	return getFromStorage("projectStatistics", key);
 }
 
 async function getFromStorage<t>(storageName: string, key: string) {

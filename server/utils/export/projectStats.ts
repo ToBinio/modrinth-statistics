@@ -4,10 +4,6 @@ import type {
 	ProjectStats,
 	ProjectStatsValue,
 } from "~~/server/utils/processing/projects/types";
-import {
-	getLatestProjectStats,
-	getProjectStatsBulk,
-} from "~~/server/utils/storage";
 
 // maps database data to a format usable by the frontend
 function mapStats(
@@ -65,7 +61,11 @@ export async function exportStats(
 	versionTo: string | null,
 	versionFrom: string | null,
 ): Promise<StatExport> {
-	const stats = await getLatestProjectStats(type, versionCategory, exclusive);
+	const stats = await DB.ProjectStats.getLatest(
+		type,
+		versionCategory,
+		exclusive,
+	);
 
 	if (stats instanceof Error) {
 		consola.error(stats.message);
@@ -113,7 +113,7 @@ export async function exportStatsOverTime(
 			date = new_date;
 		}
 
-		const data = await getProjectStatsBulk(
+		const data = await DB.ProjectStats.getBulk(
 			dates,
 			type,
 			versionCategory,

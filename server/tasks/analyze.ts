@@ -2,7 +2,6 @@ import consola from "consola";
 import { updateGameVersions } from "~~/server/utils/processing/gameVersions/processing";
 import { updateGlobalStats } from "~~/server/utils/processing/global/processing";
 import { updateStatistics } from "~~/server/utils/processing/projects/processing";
-import { getLatestDate, setLatestDate } from "~~/server/utils/storage";
 
 export default defineTask({
 	meta: {
@@ -10,7 +9,7 @@ export default defineTask({
 		description: "Update all the statistics",
 	},
 	async run() {
-		const latestDate = await getLatestDate();
+		const latestDate = await DB.LatestDate.get();
 		if (latestDate === dateToKey(new Date())) {
 			consola.debug("data already analyzed");
 			return { result: "Fail" };
@@ -23,7 +22,7 @@ export default defineTask({
 			await updateGameVersions();
 			await updateStatistics();
 			await updateGlobalStats();
-			await setLatestDate(new Date());
+			await DB.LatestDate.set(new Date());
 		} catch (e) {
 			consola.fail(e);
 		}

@@ -1,10 +1,9 @@
 import type { GameVersionData } from "~~/server/utils/processing/gameVersions/types";
-import { getGameVersions } from "~~/server/utils/storage";
 
 export default defineEventHandler(async (event): Promise<GameVersionData> => {
 	const query = getQuery(event);
 
-	const gameVersions = await getGameVersions();
+	const gameVersions = await DB.GameVersions.get();
 
 	if (gameVersions instanceof Error) {
 		setResponseStatus(event, 500);

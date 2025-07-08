@@ -14,7 +14,6 @@ import type {
 	ProjectStats,
 	Version,
 } from "~~/server/utils/processing/projects/types";
-import { getGameVersions, setProjectStats } from "~~/server/utils/storage";
 
 type StatsDataType = Map<
 	string,
@@ -75,13 +74,13 @@ async function updateStatistic(type: ProjectTypes) {
 }
 
 async function saveStats(stats: AllStats, type: ProjectTypes) {
-	await setProjectStats(stats.all.all, type, "all", false);
-	await setProjectStats(stats.all.minor, type, "minor", false);
-	await setProjectStats(stats.all.major, type, "major", false);
+	await DB.ProjectStats.set(stats.all.all, type, "all", false);
+	await DB.ProjectStats.set(stats.all.minor, type, "minor", false);
+	await DB.ProjectStats.set(stats.all.major, type, "major", false);
 
-	await setProjectStats(stats.exclusive.all, type, "all", true);
-	await setProjectStats(stats.exclusive.minor, type, "minor", true);
-	await setProjectStats(stats.exclusive.major, type, "major", true);
+	await DB.ProjectStats.set(stats.exclusive.all, type, "all", true);
+	await DB.ProjectStats.set(stats.exclusive.minor, type, "minor", true);
+	await DB.ProjectStats.set(stats.exclusive.major, type, "major", true);
 }
 
 async function getStatistics(type: ProjectTypes): Promise<AllStats | Error> {
@@ -91,7 +90,7 @@ async function getStatistics(type: ProjectTypes): Promise<AllStats | Error> {
 		exclusive: { all: new Map(), major: new Map(), minor: new Map() },
 	};
 
-	const gameVersions = await getGameVersions();
+	const gameVersions = await DB.GameVersions.get();
 
 	if (gameVersions instanceof Error) {
 		return gameVersions;
