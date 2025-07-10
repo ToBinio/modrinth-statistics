@@ -26,7 +26,7 @@ export const DB = {
 	},
 	GlobalStats: {
 		async set(data: GlobalStats, date: Date) {
-			const storage = useStorage("metadata");
+			const storage = useStorage("globalStatistics");
 			const dateKey = dateToKey(date);
 
 			await storage.setItem(`globalStats${dateKey}`, data);
