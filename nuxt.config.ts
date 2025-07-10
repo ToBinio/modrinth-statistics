@@ -1,5 +1,3 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
-
 const simple_types = ["projects", "versions", "authors", "files", "revenue"];
 const project_types = [
 	"mod",
@@ -37,6 +35,13 @@ export default defineNuxtConfig({
 		public: {
 			umamiId: process.env.UMAMI_ID,
 		},
+	},
+	umami: {
+		id: process.env.UMAMI_ID,
+		host: "https://cloud.umami.is",
+		autoTrack: true,
+		ignoreLocalhost: true,
+		proxy: "cloak",
 	},
 	app: {
 		head: {
@@ -108,6 +113,7 @@ export default defineNuxtConfig({
 		"@vueuse/nuxt",
 		"@nuxtjs/sitemap",
 		"@nuxt/scripts",
+		"nuxt-umami",
 	],
 	compatibilityDate: "2024-07-05",
 });

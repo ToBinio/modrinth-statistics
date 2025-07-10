@@ -2,7 +2,6 @@
 useHead({
 	title: "Modrinth Statistics",
 });
-useTracking();
 
 const projectType = useFilterItem("projectType", "mod");
 const stat = useFilterItem("stat", "count");

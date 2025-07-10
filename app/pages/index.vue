@@ -2,7 +2,6 @@
 useHead({
 	title: "Modrinth Statistics",
 });
-useTracking();
 
 const { data } = useFetch("/api/stats/global");
 </script>
