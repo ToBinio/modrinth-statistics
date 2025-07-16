@@ -38,4 +38,4 @@ jobs:
           context: .
           platforms: linux/amd64
           push: true
-          tags: ghcr.io/${{ github.repository }}:${{ env.VERSION }}
+          tags: ghcr.io/tobinio/modrinth-statistics:${{ env.VERSION }}
