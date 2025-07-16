@@ -55,6 +55,11 @@ const { data, isFetching } = useStatData(isGlobalStats, isRevenueStats, time, {
 	aggregate: aggregateBool,
 });
 
+const lazyIsGroupData = ref(isGroupData.value);
+watch(isFetching, () => {
+	if (!isFetching.value) lazyIsGroupData.value = isGroupData.value;
+});
+
 const explanation = computed(() => {
 	return useExplanations(stat.value);
 });
@@ -167,7 +172,7 @@ const sideBarOpen = ref(false);
                 class="w-full flex data-[fetching=true]:grayscale data-[fetching=true]:blur-[2px]"
             >
                 <ChartBarChart
-                    v-if="isGroupData"
+                    v-if="lazyIsGroupData"
                     :data="data"
                     :type="projectType as string"
                 />
