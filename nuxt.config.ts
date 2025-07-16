@@ -55,7 +55,7 @@ export default defineNuxtConfig({
 		urls: urls,
 	},
 	nitro: {
-		// preset: "bun",
+		preset: "bun",
 		storage: {
 			globalStatistics: {
 				driver: "mongodb",
