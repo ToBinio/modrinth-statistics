@@ -76,5 +76,5 @@ export default defineNuxtConfig({
 		"@nuxt/scripts",
 		"nuxt-umami",
 	],
-	compatibilityDate: "2024-07-05",
+	compatibilityDate: "2025-07-16",
 });
