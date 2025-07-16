@@ -14,9 +14,9 @@ jobs:
       packages: write
 
     env:
-      MONGODB_DB: ${{ env.MONGODB_DB }}
-      MONGODB_CONNECTION: ${{ env.MONGODB_CONNECTION }}
-      UMAMI_ID: ${{ env.UMAMI_ID }}
+      MONGODB_DB: ${{ secrets.MONGODB_DB }}
+      MONGODB_CONNECTION: ${{ secrets.MONGODB_CONNECTION }}
+      UMAMI_ID: ${{ secrets.UMAMI_ID }}
 
     steps:
       - name: Checkout
