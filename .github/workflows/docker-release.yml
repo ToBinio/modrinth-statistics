@@ -13,11 +13,6 @@ jobs:
       contents: read
       packages: write
 
-    env:
-      MONGODB_DB: ${{ secrets.MONGODB_DB }}
-      MONGODB_CONNECTION: ${{ secrets.MONGODB_CONNECTION }}
-      UMAMI_ID: ${{ secrets.UMAMI_ID }}
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4

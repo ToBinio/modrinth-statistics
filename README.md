@@ -6,9 +6,8 @@ a Page to view some global statistics about [Modrinth](https://modrinth.com/)
 
 ```dotenv
 # example .env
-MONGODB_DB=modrinth-statistics
-MONGODB_CONNECTION=mongodb://<user>:<password>@<domain>:27017/<DB>
-MONGODB_DEV_DB=modrinth-statistics-dev
-MONGODB_DEV_CONNECTION=mongodb://<user>:<password>@<domain>:27017/<DB>
-UMAMI_ID=<id>
+NUXT_MONGODB_DATABASE_NAME=
+NUXT_MONGODB_CONNECTION_STRING=
+NUXT_UMAMI_HOST=
+NUXT_UMAMI_ID=
 ```

@@ -31,14 +31,7 @@ export default defineNuxtConfig({
 	future: {
 		compatibilityVersion: 4,
 	},
-	runtimeConfig: {
-		public: {
-			umamiId: process.env.UMAMI_ID,
-		},
-	},
 	umami: {
-		id: process.env.UMAMI_ID,
-		host: "https://cloud.umami.is",
 		autoTrack: true,
 		ignoreLocalhost: true,
 		proxy: "cloak",
@@ -54,47 +47,15 @@ export default defineNuxtConfig({
 	sitemap: {
 		urls: urls,
 	},
+	runtimeConfig: {
+		mongodb: {
+			databaseName: "",
+			connectionString: "",
+		},
+	},
 	nitro: {
 		preset: "bun",
-		storage: {
-			globalStatistics: {
-				driver: "mongodb",
-				connectionString: `${process.env.MONGODB_CONNECTION}`,
-				databaseName: `${process.env.MONGODB_DB}`,
-				collectionName: "globalStatistics",
-			},
-			projectStatistics: {
-				driver: "mongodb",
-				connectionString: `${process.env.MONGODB_CONNECTION}`,
-				databaseName: `${process.env.MONGODB_DB}`,
-				collectionName: "projectStatistics",
-			},
-			metadata: {
-				driver: "mongodb",
-				connectionString: `${process.env.MONGODB_CONNECTION}`,
-				databaseName: `${process.env.MONGODB_DB}`,
-				collectionName: "metadata",
-			},
-		},
 		devStorage: {
-			globalStatistics: {
-				driver: "mongodb",
-				connectionString: `${process.env.MONGODB_DEV_CONNECTION}`,
-				databaseName: `${process.env.MONGODB_DEV_DB}`,
-				collectionName: "globalStatistics",
-			},
-			projectStatistics: {
-				driver: "mongodb",
-				connectionString: `${process.env.MONGODB_DEV_CONNECTION}`,
-				databaseName: `${process.env.MONGODB_DEV_DB}`,
-				collectionName: "projectStatistics",
-			},
-			metadata: {
-				driver: "mongodb",
-				connectionString: `${process.env.MONGODB_DEV_CONNECTION}`,
-				databaseName: `${process.env.MONGODB_DEV_DB}`,
-				collectionName: "metadata",
-			},
 			cache: {
 				driver: "null",
 			},
