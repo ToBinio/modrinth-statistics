@@ -1,10 +1,5 @@
 name: Docker Release
 
-env:
-  MONGODB_DB: ${{ env.MONGODB_DB }}
-  MONGODB_CONNECTION: ${{ env.MONGODB_CONNECTION }}
-  UMAMI_ID: ${{ env.UMAMI_ID }}
-
 on:
   push:
     tags:
@@ -17,6 +12,11 @@ jobs:
     permissions:
       contents: read
       packages: write
+
+    env:
+      MONGODB_DB: ${{ env.MONGODB_DB }}
+      MONGODB_CONNECTION: ${{ env.MONGODB_CONNECTION }}
+      UMAMI_ID: ${{ env.UMAMI_ID }}
 
     steps:
       - name: Checkout
