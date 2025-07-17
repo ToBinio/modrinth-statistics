@@ -1,5 +1,5 @@
 
-FROM oven/bun:1 AS build
+FROM oven/bun:1-alpine AS build
 WORKDIR /app
 
 COPY package.json bun.lock ./
@@ -10,7 +10,7 @@ COPY . .
 RUN bun run build
 
 # Run
-FROM oven/bun:1
+FROM oven/bun:1-alpine
 WORKDIR /app
 
 COPY --from=build /app/.output /app/.output
