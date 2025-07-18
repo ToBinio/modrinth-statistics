@@ -1,10 +1,20 @@
 <script setup lang="ts">
+const title = ref("Modrinth Statistics");
+
 useHead({
-	title: "Modrinth Statistics",
+	title: title,
 });
 
 const projectType = useFilterItem("projectType", "mod");
 const stat = useFilterItem("stat", "count");
+
+watch(
+	[projectType, stat],
+	() => {
+		title.value = `Modrinth Statistics - ${firstLetterUpperCase(projectType.value)} ${firstLetterUpperCase(stat.value)}`;
+	},
+	{ immediate: true },
+);
 
 const versionGroup = useFilterItem("versionGroup", "major");
 
