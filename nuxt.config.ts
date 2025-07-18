@@ -80,7 +80,6 @@ export default defineNuxtConfig({
 		"@nuxtjs/tailwindcss",
 		"@vueuse/nuxt",
 		"@nuxtjs/sitemap",
-		"@nuxt/scripts",
 		"nuxt-umami",
 	],
 	compatibilityDate: "2025-07-16",
