@@ -31,11 +31,6 @@ export default defineNuxtConfig({
 	future: {
 		compatibilityVersion: 4,
 	},
-	umami: {
-		autoTrack: true,
-		ignoreLocalhost: true,
-		proxy: "cloak",
-	},
 	app: {
 		head: {
 			link: [
@@ -59,6 +54,9 @@ export default defineNuxtConfig({
 			databaseName: "",
 			connectionString: "",
 		},
+		public: {
+			umamiID: "",
+		},
 	},
 	nitro: {
 		preset: "bun",
@@ -80,7 +78,7 @@ export default defineNuxtConfig({
 		"@nuxtjs/tailwindcss",
 		"@vueuse/nuxt",
 		"@nuxtjs/sitemap",
-		"nuxt-umami",
+		"@nuxt/scripts",
 	],
 	compatibilityDate: "2025-07-16",
 });

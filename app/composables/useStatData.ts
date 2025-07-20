@@ -5,16 +5,6 @@ export function useStatData(
 	// biome-ignore lint: can be any
 	params: Record<string, any>,
 ) {
-	watch(
-		() => Object.values(params).map((ref) => ref.value),
-		() => {
-			const unwrapped = Object.fromEntries(
-				Object.entries(params).map(([key, ref]) => [key, ref.value]),
-			);
-			umTrackEvent("statsFilterChanged", unwrapped);
-		},
-	);
-
 	const url = computed(() => {
 		if (isGlobalStats.value) {
 			return "/api/stats/time/global";
