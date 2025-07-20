@@ -8,6 +8,5 @@ a Page to view some global statistics about [Modrinth](https://modrinth.com/)
 # example .env
 NUXT_MONGODB_DATABASE_NAME=
 NUXT_MONGODB_CONNECTION_STRING=
-NUXT_UMAMI_HOST=
-NUXT_UMAMI_ID=
+NUXT_PUBLIC_UMAMI_ID=
 ```
