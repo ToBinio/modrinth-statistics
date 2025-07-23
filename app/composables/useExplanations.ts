@@ -11,7 +11,7 @@ Each version will be counted separately for every loader or game-version it supp
 			return `
 <h4>Number of Mods Supporting Each Loader/Game-Version</h4>
 <br/>
-Each mod will only be counted once. This means if a mod has 10 versions supporting a single versions in will still only be counted once.
+Each mod will only be counted once. This means if a mod has 10 versions supporting a single game-version in will still only be counted once.
 `;
 		}
 		case "downloads": {

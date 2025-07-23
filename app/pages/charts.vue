@@ -183,15 +183,12 @@ const sideBarOpen = ref(false);
                 :data-fetching="isFetching"
                 class="w-full flex data-[fetching=true]:grayscale data-[fetching=true]:blur-[2px]"
             >
-                <ChartBarChart
-                    v-if="lazyIsGroupData"
+                <ChartBarChart v-if="lazyIsGroupData" :data="data" />
+                <ChartLineChart v-else :data="data" />
+                <ChartTable
+                    class="hidden"
                     :data="data"
-                    :type="projectType as string"
-                />
-                <ChartLineChart
-                    v-else
-                    :data="data"
-                    :type="projectType as string"
+                    :explanation="explanation"
                 />
             </div>
             <Explanation v-if="isProjectStats" :explanation="explanation" />
