@@ -16,7 +16,7 @@
 		"lint:summary": "biome check --reporter summary"
 	},
 	"dependencies": {
-		"@nuxtjs/sitemap": "7.4.3",
+		"@nuxtjs/sitemap": "^7.4.3",
 		"chart.js": "^4.5.0",
 		"consola": "^3.4.2",
 		"mongodb": "^6.17.0",
@@ -26,7 +26,7 @@
 		"vue-router": "^4.5.1"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.0.5",
+		"@biomejs/biome": "^2.1.0",
 		"@iconify-json/akar-icons": "^1.2.2",
 		"@iconify-json/eos-icons": "^1.2.2",
 		"@iconify-json/ep": "^1.2.2",
