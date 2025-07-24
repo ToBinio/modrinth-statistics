@@ -13,8 +13,8 @@
         </div>
       </div>
       <ModrinthLink class="big"/>
-      <NuxtLink href="/charts" class="font-bold flex items-center gap-2 text-3xl text-transparent from-white to-white bg-gradient-to-br bg-clip-text hover:!from-cyan-200 hover:!to-cyan-600">
-        <Icon name="ph:chart-line" size="35" class="bg-gradient-to-br hover:!from-cyan-200 hover:!to-cyan-600"/>
+      <NuxtLink href="/charts" active-class="active-link !to-cyan-500" class="group font-bold flex items-center gap-2 text-3xl text-transparent! from-white to-white bg-gradient-to-br bg-clip-text hover:!from-cyan-200 hover:!to-cyan-600">
+        <Icon name="ph:chart-line" size="35" class="bg-gradient-to-br from-white group-hover:from-cyan-200 group-hover:to-cyan-600 group-[.active-link]:!to-cyan-500"/>
         Charts
       </NuxtLink>
       <div class="big" id="icons">
@@ -30,10 +30,6 @@
 </template>
 
 <style scoped>
-.router-link-active {
-  @apply !to-cyan-500;
-}
-
 #page {
   min-height: 100vh;
 

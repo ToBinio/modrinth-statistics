@@ -52,7 +52,6 @@ const chartOptions = ref({
 		legend: {
 			labels: {
 				color: "#8a8a8c",
-				useBorderRadius: true,
 			},
 		},
 	},

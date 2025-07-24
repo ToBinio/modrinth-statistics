@@ -11,6 +11,8 @@ defineProps<{ explanation: string | undefined }>();
 </template>
 
 <style scoped>
+@reference "~/assets/css/main.css";
+
 #tooltip {
   position: absolute;
 

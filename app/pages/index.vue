@@ -15,12 +15,12 @@ const { data } = useFetch("/api/stats/global");
       <div class="transition hover:scale-110">
         <div class="blur-3xl absolute">
           <NuxtLink to="https://modrinth.com" id="modrinth" target="_blank"
-                    class="text-8xl opacity-80 text-transparent bg-clip-text from-cyan-400 to-cyan-600 bg-gradient-to-br">
+                    class="text-8xl opacity-80 text-transparent! bg-clip-text from-cyan-400 to-cyan-600 bg-gradient-to-br">
             Modrinth
           </NuxtLink>
         </div>
         <NuxtLink to="https://modrinth.com" id="modrinth" target="_blank"
-                  class="text-8xl text-transparent bg-clip-text from-cyan-200 to-cyan-600 bg-gradient-to-br">
+                  class="text-8xl text-transparent! bg-clip-text from-cyan-200 to-cyan-600 bg-gradient-to-br">
           Modrinth
         </NuxtLink>
       </div>
