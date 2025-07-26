@@ -11,7 +11,13 @@
 		}
 	},
 	"files": {
-		"includes": ["**", "!.nuxt/**", "!.output/**", "!.data", "!db-fix.js"]
+		"includes": [
+			"**",
+			"!.nuxt/**",
+			"!.output/**",
+			"!.data",
+			"!scripts/db-fix.ts"
+		]
 	},
 	"overrides": [
 		{

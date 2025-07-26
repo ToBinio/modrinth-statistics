@@ -1,0 +1,272 @@
+{
+	"lockfileVersion": 1,
+	"workspaces": {
+		"": {
+			"name": "scripts",
+			"dependencies": {
+				"unstorage": "^1.16.1"
+			},
+			"devDependencies": {
+				"@types/bun": "latest"
+			},
+			"peerDependencies": {
+				"typescript": "^5"
+			}
+		}
+	},
+	"packages": {
+		"@types/bun": [
+			"@types/bun@1.2.19",
+			"",
+			{ "dependencies": { "bun-types": "1.2.19" } },
+			"sha512-d9ZCmrH3CJ2uYKXQIUuZ/pUnTqIvLDS0SK7pFmbx8ma+ziH/FRMoAq5bYpRG7y+w1gl+HgyNZbtqgMq4W4e2Lg=="
+		],
+
+		"@types/node": [
+			"@types/node@24.1.0",
+			"",
+			{ "dependencies": { "undici-types": "~7.8.0" } },
+			"sha512-ut5FthK5moxFKH2T1CUOC6ctR67rQRvvHdFLCD2Ql6KXmMuCrjsSsRI9UsLCm9M18BMwClv4pn327UvB7eeO1w=="
+		],
+
+		"@types/react": [
+			"@types/react@19.1.8",
+			"",
+			{ "dependencies": { "csstype": "^3.0.2" } },
+			"sha512-AwAfQ2Wa5bCx9WP8nZL2uMZWod7J7/JSplxbTmBQ5ms6QpqNYm672H0Vu9ZVKVngQ+ii4R/byguVEUZQyeg44g=="
+		],
+
+		"anymatch": [
+			"anymatch@3.1.3",
+			"",
+			{ "dependencies": { "normalize-path": "^3.0.0", "picomatch": "^2.0.4" } },
+			"sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw=="
+		],
+
+		"bun-types": [
+			"bun-types@1.2.19",
+			"",
+			{
+				"dependencies": { "@types/node": "*" },
+				"peerDependencies": { "@types/react": "^19" }
+			},
+			"sha512-uAOTaZSPuYsWIXRpj7o56Let0g/wjihKCkeRqUBhlLVM/Bt+Fj9xTo+LhC1OV1XDaGkz4hNC80et5xgy+9KTHQ=="
+		],
+
+		"chokidar": [
+			"chokidar@4.0.3",
+			"",
+			{ "dependencies": { "readdirp": "^4.0.1" } },
+			"sha512-Qgzu8kfBvo+cA4962jnP1KkS6Dop5NS6g7R5LFYJr4b8Ub94PPQXUksCw9PvXoeXPRRddRNC5C1JQUR2SMGtnA=="
+		],
+
+		"cookie-es": [
+			"cookie-es@1.2.2",
+			"",
+			{},
+			"sha512-+W7VmiVINB+ywl1HGXJXmrqkOhpKrIiVZV6tQuV54ZyQC7MMuBt81Vc336GMLoHBq5hV/F9eXgt5Mnx0Rha5Fg=="
+		],
+
+		"crossws": [
+			"crossws@0.3.5",
+			"",
+			{ "dependencies": { "uncrypto": "^0.1.3" } },
+			"sha512-ojKiDvcmByhwa8YYqbQI/hg7MEU0NC03+pSdEq4ZUnZR9xXpwk7E43SMNGkn+JxJGPFtNvQ48+vV2p+P1ml5PA=="
+		],
+
+		"csstype": [
+			"csstype@3.1.3",
+			"",
+			{},
+			"sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw=="
+		],
+
+		"defu": [
+			"defu@6.1.4",
+			"",
+			{},
+			"sha512-mEQCMmwJu317oSz8CwdIOdwf3xMif1ttiM8LTufzc3g6kR+9Pe236twL8j3IYT1F7GfRgGcW6MWxzZjLIkuHIg=="
+		],
+
+		"destr": [
+			"destr@2.0.5",
+			"",
+			{},
+			"sha512-ugFTXCtDZunbzasqBxrK93Ik/DRYsO6S/fedkWEMKqt04xZ4csmnmwGDBAb07QWNaGMAmnTIemsYZCksjATwsA=="
+		],
+
+		"h3": [
+			"h3@1.15.3",
+			"",
+			{
+				"dependencies": {
+					"cookie-es": "^1.2.2",
+					"crossws": "^0.3.4",
+					"defu": "^6.1.4",
+					"destr": "^2.0.5",
+					"iron-webcrypto": "^1.2.1",
+					"node-mock-http": "^1.0.0",
+					"radix3": "^1.1.2",
+					"ufo": "^1.6.1",
+					"uncrypto": "^0.1.3"
+				}
+			},
+			"sha512-z6GknHqyX0h9aQaTx22VZDf6QyZn+0Nh+Ym8O/u0SGSkyF5cuTJYKlc8MkzW3Nzf9LE1ivcpmYC3FUGpywhuUQ=="
+		],
+
+		"iron-webcrypto": [
+			"iron-webcrypto@1.2.1",
+			"",
+			{},
+			"sha512-feOM6FaSr6rEABp/eDfVseKyTMDt+KGpeB35SkVn9Tyn0CqvVsY3EwI0v5i8nMHyJnzCIQf7nsy3p41TPkJZhg=="
+		],
+
+		"lru-cache": [
+			"lru-cache@10.4.3",
+			"",
+			{},
+			"sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ=="
+		],
+
+		"node-fetch-native": [
+			"node-fetch-native@1.6.6",
+			"",
+			{},
+			"sha512-8Mc2HhqPdlIfedsuZoc3yioPuzp6b+L5jRCRY1QzuWZh2EGJVQrGppC6V6cF0bLdbW0+O2YpqCA25aF/1lvipQ=="
+		],
+
+		"node-mock-http": [
+			"node-mock-http@1.0.1",
+			"",
+			{},
+			"sha512-0gJJgENizp4ghds/Ywu2FCmcRsgBTmRQzYPZm61wy+Em2sBarSka0OhQS5huLBg6od1zkNpnWMCZloQDFVvOMQ=="
+		],
+
+		"normalize-path": [
+			"normalize-path@3.0.0",
+			"",
+			{},
+			"sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA=="
+		],
+
+		"ofetch": [
+			"ofetch@1.4.1",
+			"",
+			{
+				"dependencies": {
+					"destr": "^2.0.3",
+					"node-fetch-native": "^1.6.4",
+					"ufo": "^1.5.4"
+				}
+			},
+			"sha512-QZj2DfGplQAr2oj9KzceK9Hwz6Whxazmn85yYeVuS3u9XTMOGMRx0kO95MQ+vLsj/S/NwBDMMLU5hpxvI6Tklw=="
+		],
+
+		"picomatch": [
+			"picomatch@2.3.1",
+			"",
+			{},
+			"sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA=="
+		],
+
+		"radix3": [
+			"radix3@1.1.2",
+			"",
+			{},
+			"sha512-b484I/7b8rDEdSDKckSSBA8knMpcdsXudlE/LNL639wFoHKwLbEkQFZHWEYwDC0wa0FKUcCY+GAF73Z7wxNVFA=="
+		],
+
+		"readdirp": [
+			"readdirp@4.1.2",
+			"",
+			{},
+			"sha512-GDhwkLfywWL2s6vEjyhri+eXmfH6j1L7JE27WhqLeYzoh/A3DBaYGEj2H/HFZCn/kMfim73FXxEJTw06WtxQwg=="
+		],
+
+		"typescript": [
+			"typescript@5.8.3",
+			"",
+			{ "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } },
+			"sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ=="
+		],
+
+		"ufo": [
+			"ufo@1.6.1",
+			"",
+			{},
+			"sha512-9a4/uxlTWJ4+a5i0ooc1rU7C7YOw3wT+UGqdeNNHWnOF9qcMBgLRS+4IYUqbczewFx4mLEig6gawh7X6mFlEkA=="
+		],
+
+		"uncrypto": [
+			"uncrypto@0.1.3",
+			"",
+			{},
+			"sha512-Ql87qFHB3s/De2ClA9e0gsnS6zXG27SkTiSJwjCc9MebbfapQfuPzumMIUMi38ezPZVNFcHI9sUIepeQfw8J8Q=="
+		],
+
+		"undici-types": [
+			"undici-types@7.8.0",
+			"",
+			{},
+			"sha512-9UJ2xGDvQ43tYyVMpuHlsgApydB8ZKfVYTsLDhXkFL/6gfkp+U8xTGdh8pMJv1SpZna0zxG1DwsKZsreLbXBxw=="
+		],
+
+		"unstorage": [
+			"unstorage@1.16.1",
+			"",
+			{
+				"dependencies": {
+					"anymatch": "^3.1.3",
+					"chokidar": "^4.0.3",
+					"destr": "^2.0.5",
+					"h3": "^1.15.3",
+					"lru-cache": "^10.4.3",
+					"node-fetch-native": "^1.6.6",
+					"ofetch": "^1.4.1",
+					"ufo": "^1.6.1"
+				},
+				"peerDependencies": {
+					"@azure/app-configuration": "^1.8.0",
+					"@azure/cosmos": "^4.2.0",
+					"@azure/data-tables": "^13.3.0",
+					"@azure/identity": "^4.6.0",
+					"@azure/keyvault-secrets": "^4.9.0",
+					"@azure/storage-blob": "^12.26.0",
+					"@capacitor/preferences": "^6.0.3 || ^7.0.0",
+					"@deno/kv": ">=0.9.0",
+					"@netlify/blobs": "^6.5.0 || ^7.0.0 || ^8.1.0 || ^9.0.0 || ^10.0.0",
+					"@planetscale/database": "^1.19.0",
+					"@upstash/redis": "^1.34.3",
+					"@vercel/blob": ">=0.27.1",
+					"@vercel/kv": "^1.0.1",
+					"aws4fetch": "^1.0.20",
+					"db0": ">=0.2.1",
+					"idb-keyval": "^6.2.1",
+					"ioredis": "^5.4.2",
+					"uploadthing": "^7.4.4"
+				},
+				"optionalPeers": [
+					"@azure/app-configuration",
+					"@azure/cosmos",
+					"@azure/data-tables",
+					"@azure/identity",
+					"@azure/keyvault-secrets",
+					"@azure/storage-blob",
+					"@capacitor/preferences",
+					"@deno/kv",
+					"@netlify/blobs",
+					"@planetscale/database",
+					"@upstash/redis",
+					"@vercel/blob",
+					"@vercel/kv",
+					"aws4fetch",
+					"db0",
+					"idb-keyval",
+					"ioredis",
+					"uploadthing"
+				]
+			},
+			"sha512-gdpZ3guLDhz+zWIlYP1UwQ259tG5T5vYRzDaHMkQ1bBY1SQPutvZnrRjTFaWUUpseErJIgAZS51h6NOcZVZiqQ=="
+		]
+	}
+}
