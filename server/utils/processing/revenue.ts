@@ -7,7 +7,7 @@ export async function getRevenue(): Promise<Revenue[]> {
 
 	const data = await $modrinthV3Fetch<{ data: RawRevenue[] }>(
 		"/payout/platform_revenue?start=" +
-			new Date("2024-02-20").toISOString() +
+			new Date("2024-09-06").toISOString() +
 			"&end=" +
 			new Date().toISOString(),
 	);
