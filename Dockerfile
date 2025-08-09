@@ -1,19 +1,21 @@
-
-FROM oven/bun:1-alpine AS build
+# Build stage
+FROM node:22-alpine AS build
 WORKDIR /app
 
-COPY package.json bun.lock ./
-RUN bun i --fronzen-lockfile
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
 
 COPY . .
 
-RUN bun run build
+RUN pnpm run build
 
-# Run
-FROM oven/bun:1-alpine
+# Run stage
+FROM node:22-alpine
 WORKDIR /app
 
 COPY --from=build /app/.output /app/.output
 
 EXPOSE 3000
-CMD [ "bun", ".output/server/index.mjs" ]
+CMD ["node", ".output/server/index.mjs"]

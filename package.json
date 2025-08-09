@@ -10,7 +10,7 @@
 		"postinstall": "nuxt prepare",
 		"lint:fix": "biome check --write",
 		"lint": "biome check",
-		"lint:full": "bun lint && bun lint:typecheck",
+		"lint:full": "npm run lint && npm run lint:typecheck",
 		"lint:typecheck": "nuxi typecheck",
 		"lint:check": "biome check",
 		"lint:summary": "biome check --reporter summary"
@@ -23,6 +23,7 @@
 		"mongodb": "^6.17.0",
 		"nuxt": "^4.0.0",
 		"tailwindcss": "^4.1.11",
+		"unstorage": "^1.16.1",
 		"vue": "^3.5.17",
 		"vue-chartjs": "^5.3.2",
 		"vue-router": "^4.5.1"

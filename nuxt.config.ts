@@ -61,7 +61,6 @@ export default defineNuxtConfig({
 		},
 	},
 	nitro: {
-		preset: "bun",
 		devStorage: {
 			cache: {
 				driver: "null",
