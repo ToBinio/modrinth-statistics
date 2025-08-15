@@ -14,7 +14,7 @@ export async function getProjectIds(
 			limit: limit,
 			offset: offset,
 			index: import.meta.dev ? "newest" : "downloads",
-			facets: `[[\"project_types:${type}\"]]`,
+			facets: `[["project_types:${type}"]]`,
 		},
 	});
 

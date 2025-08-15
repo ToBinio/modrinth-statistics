@@ -17,29 +17,29 @@
 	},
 	"dependencies": {
 		"@nuxtjs/sitemap": "^7.4.3",
-		"@tailwindcss/vite": "^4.1.11",
+		"@tailwindcss/vite": "^4.1.12",
 		"chart.js": "^4.5.0",
 		"consola": "^3.4.2",
-		"mongodb": "^6.17.0",
-		"nuxt": "^4.0.0",
-		"tailwindcss": "^4.1.11",
+		"mongodb": "^6.18.0",
+		"nuxt": "^4.0.3",
+		"tailwindcss": "^4.1.12",
 		"unstorage": "^1.16.1",
-		"vue": "^3.5.17",
+		"vue": "^3.5.18",
 		"vue-chartjs": "^5.3.2",
 		"vue-router": "^4.5.1"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.1.0",
-		"@iconify-json/akar-icons": "^1.2.2",
-		"@iconify-json/eos-icons": "^1.2.2",
-		"@iconify-json/ep": "^1.2.2",
-		"@iconify-json/ic": "^1.2.2",
+		"@biomejs/biome": "^2.2.0",
+		"@iconify-json/akar-icons": "^1.2.7",
+		"@iconify-json/eos-icons": "^1.2.4",
+		"@iconify-json/ep": "^1.2.3",
+		"@iconify-json/ic": "^1.2.4",
 		"@iconify-json/mdi": "^1.2.3",
 		"@iconify-json/ph": "^1.2.2",
-		"@nuxt/icon": "^1.15.0",
+		"@nuxt/icon": "^2.0.0",
 		"@nuxt/scripts": "^0.11.10",
-		"@nuxtjs/tailwindcss": "^7.0.0-beta.0",
-		"@vueuse/nuxt": "^13.5.0",
-		"vue-tsc": "^3.0.1"
+		"@nuxtjs/tailwindcss": "7.0.0-beta.0",
+		"@vueuse/nuxt": "^13.6.0",
+		"vue-tsc": "^3.0.5"
 	}
 }
