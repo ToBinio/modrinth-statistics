@@ -1,30 +1,30 @@
-import mongodbDriver from "unstorage/drivers/mongodb";
+import upstashDriver from "unstorage/drivers/upstash";
 
 export default defineNitroPlugin(() => {
 	const storage = useStorage();
 
 	storage.mount(
 		"globalStatistics",
-		mongodbDriver({
-			connectionString: useRuntimeConfig().mongodb.connectionString,
-			databaseName: useRuntimeConfig().mongodb.databaseName,
-			collectionName: "globalStatistics",
+		upstashDriver({
+			url: useRuntimeConfig().upstash.redis.restUrl,
+			token: useRuntimeConfig().upstash.redis.restToken,
+			base: "globalStatistics",
 		}),
 	);
 	storage.mount(
 		"projectStatistics",
-		mongodbDriver({
-			connectionString: useRuntimeConfig().mongodb.connectionString,
-			databaseName: useRuntimeConfig().mongodb.databaseName,
-			collectionName: "projectStatistics",
+		upstashDriver({
+			url: useRuntimeConfig().upstash.redis.restUrl,
+			token: useRuntimeConfig().upstash.redis.restToken,
+			base: "projectStatistics",
 		}),
 	);
 	storage.mount(
 		"metadata",
-		mongodbDriver({
-			connectionString: useRuntimeConfig().mongodb.connectionString,
-			databaseName: useRuntimeConfig().mongodb.databaseName,
-			collectionName: "metadata",
+		upstashDriver({
+			url: useRuntimeConfig().upstash.redis.restUrl,
+			token: useRuntimeConfig().upstash.redis.restToken,
+			base: "metadata",
 		}),
 	);
 });

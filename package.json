@@ -18,6 +18,7 @@
 	"dependencies": {
 		"@nuxtjs/sitemap": "^7.4.3",
 		"@tailwindcss/vite": "^4.1.12",
+		"@upstash/redis": "^1.35.3",
 		"chart.js": "^4.5.0",
 		"consola": "^3.4.2",
 		"mongodb": "^6.18.0",

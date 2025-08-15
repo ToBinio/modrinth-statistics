@@ -6,7 +6,7 @@ a Page to view some global statistics about [Modrinth](https://modrinth.com/)
 
 ```dotenv
 # example .env
-NUXT_MONGODB_DATABASE_NAME=
-NUXT_MONGODB_CONNECTION_STRING=
+NUXT_UPSTASH_REDIS_REST_URL=
+NUXT_UPSTASH_REDIS_REST_TOKEN=
 NUXT_PUBLIC_UMAMI_ID=
 ```

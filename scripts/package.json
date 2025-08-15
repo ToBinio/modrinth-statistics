@@ -5,10 +5,11 @@
 		"@types/node": "latest"
 	},
 	"dependencies": {
-		"unstorage": "^1.16.1"
+		"unstorage": "^1.16.1",
+		"@upstash/redis": "^1.35.3"
 	},
 	"scripts": {
-		"migrate": "node migrate.ts",
-		"db-fix": "node db-fix.ts"
+		"migrate": "node run migrate.ts",
+		"db-fix": "node run db-fix.ts"
 	}
 }

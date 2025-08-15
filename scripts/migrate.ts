@@ -1,5 +1,6 @@
 import { createStorage } from "unstorage";
 import mongodbDriver from "unstorage/drivers/mongodb";
+import upstashDriver from "unstorage/drivers/upstash";
 
 // globalStatistics
 const fromGlobalStatistics = createStorage({
@@ -11,10 +12,10 @@ const fromGlobalStatistics = createStorage({
 });
 
 const toGlobalStatistics = createStorage({
-	driver: mongodbDriver({
-		connectionString: process.env.connectionString!,
-		databaseName: process.env.databaseNameTo!,
-		collectionName: "globalStatistics",
+	driver: upstashDriver({
+		url: process.env.UPSTASH_REDIS_REST_URL!,
+		token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+		base: "globalStatistics",
 	}),
 });
 
@@ -28,10 +29,10 @@ const fromProjectStatistics = createStorage({
 });
 
 const toProjectStatistics = createStorage({
-	driver: mongodbDriver({
-		connectionString: process.env.connectionString!,
-		databaseName: process.env.databaseNameTo!,
-		collectionName: "projectStatistics",
+	driver: upstashDriver({
+		url: process.env.UPSTASH_REDIS_REST_URL!,
+		token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+		base: "projectStatistics",
 	}),
 });
 
@@ -45,10 +46,10 @@ const fromMetadata = createStorage({
 });
 
 const toMetadata = createStorage({
-	driver: mongodbDriver({
-		connectionString: process.env.connectionString!,
-		databaseName: process.env.databaseNameTo!,
-		collectionName: "metadata",
+	driver: upstashDriver({
+		url: process.env.UPSTASH_REDIS_REST_URL!,
+		token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+		base: "metadata",
 	}),
 });
 
@@ -58,6 +59,7 @@ function chunkArray<T>(array: T[], size: number): T[][] {
 	);
 }
 
+//todo dont use foreach since it is not awaitable
 chunkArray(await fromGlobalStatistics.getKeys(), 100).forEach(
 	async (keys, index) => {
 		const values = await fromGlobalStatistics.getItems(keys);

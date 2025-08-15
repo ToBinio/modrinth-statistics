@@ -52,12 +52,14 @@ export default defineNuxtConfig({
 		urls: urls,
 	},
 	runtimeConfig: {
-		mongodb: {
-			databaseName: "",
-			connectionString: "",
+		upstash: {
+			redis: {
+				restUrl: undefined,
+				restToken: undefined,
+			},
 		},
 		public: {
-			umamiID: "",
+			umamiID: undefined,
 		},
 	},
 	nitro: {
