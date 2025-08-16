@@ -8,18 +8,18 @@
         <ModrinthLink/>
         <div id="icons">
           <NuxtLink id="github" to="https://github.com/ToBinio/modrinth-statistics" target="_blank" aria-label="Github of this Project">
-            <Icon name="mdi:github" size="40"/>
+            <Icon name="akar-icons:github-fill" size="40"/>
           </NuxtLink>
         </div>
       </div>
       <ModrinthLink class="big"/>
       <NuxtLink href="/charts" active-class="active-link !to-cyan-500" class="group font-bold flex items-center gap-2 text-3xl text-transparent! from-white to-white bg-gradient-to-br bg-clip-text hover:!from-cyan-200 hover:!to-cyan-600">
-        <Icon name="ph:chart-line" size="35" class="bg-gradient-to-br from-white group-hover:from-cyan-200 group-hover:to-cyan-600 group-[.active-link]:!to-cyan-500"/>
+        <Icon name="akar-icons:statistic-up" size="35" class="bg-gradient-to-br from-white group-hover:from-cyan-200 group-hover:to-cyan-600 group-[.active-link]:!to-cyan-500"/>
         Charts
       </NuxtLink>
       <div class="big" id="icons">
         <NuxtLink id="github" to="https://github.com/ToBinio/modrinth-statistics" target="_blank" aria-label="Github of this Project">
-          <Icon name="mdi:github" size="40"/>
+          <Icon name="akar-icons:github-fill" size="40"/>
         </NuxtLink>
       </div>
     </div>

@@ -25,7 +25,7 @@ function onSelect(option: string) {
     <div v-if="shouldDisplay" id="main" class="flex flex-col transition-all">
       <button @click="open = !open" class="transition flex justify-between items-center">
         <abbr class="no-underline text-sm text-neutral-400" :title="explanation" id="title">{{ title }}</abbr>
-        <icon name="ep:arrow-down-bold" :class="{'rotate-180': open}" size="15"/>
+        <icon name="akar-icons:chevron-up" :class="{'rotate-180': !open}" size="15"/>
       </button>
       <div class="min-h-4 relative">
         <div>
