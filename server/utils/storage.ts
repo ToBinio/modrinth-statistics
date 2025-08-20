@@ -12,7 +12,7 @@ export const DB = {
 			await storage.setItem("gameVersions", gameVersions);
 		},
 		async get(): Promise<GameVersions | Error> {
-			return getFromStorage("metadata", "gameVersions");
+			return getFromStorageCached("metadata", "gameVersions");
 		},
 	},
 	LatestDate: {
@@ -21,7 +21,7 @@ export const DB = {
 			await storage.setItem("latestDate", dateToKey(date));
 		},
 		async get(): Promise<string | Error> {
-			return getFromStorage("metadata", "latestDate");
+			return getFromStorageCached("metadata", "latestDate");
 		},
 	},
 	GlobalStats: {
@@ -37,14 +37,14 @@ export const DB = {
 				return `globalStats${dateKey}`;
 			});
 
-			return getFromStorageBulk("globalStatistics", keys);
+			return getFromStorageCachedBulk("globalStatistics", keys);
 		},
 		async getLatest(): Promise<GlobalStats | Error> {
 			const dateKey = await DB.LatestDate.get();
 			if (dateKey instanceof Error) return dateKey;
 
 			const key = `globalStats${dateKey}`;
-			return getFromStorage("globalStatistics", key);
+			return getFromStorageCached("globalStatistics", key);
 		},
 	},
 	ProjectStats: {
@@ -80,7 +80,7 @@ export const DB = {
 				dateKey,
 			);
 
-			return getFromStorage("projectStatistics", key);
+			return await getFromStorageCached<ProjectStats>("projectStatistics", key);
 		},
 		async getBulk(
 			dates: Date[],
@@ -93,7 +93,7 @@ export const DB = {
 				return getProjectStorageKey(type, versionCategory, exclusive, dateKey);
 			});
 
-			return getFromStorageBulk("projectStatistics", keys);
+			return getFromStorageCachedBulk("projectStatistics", keys);
 		},
 		async getLatest(
 			type: ProjectTypes,
@@ -109,7 +109,7 @@ export const DB = {
 				exclusive,
 				dateKey,
 			);
-			return getFromStorage("projectStatistics", key);
+			return getFromStorageCached("projectStatistics", key);
 		},
 	},
 };
@@ -131,6 +131,17 @@ function getProjectStorageKey(
 	return key;
 }
 
+const getFromStorageCached = defineCachedFunction(
+	async <t>(storageName: string, key: string) => {
+		return await getFromStorage<t>(storageName, key);
+	},
+	{
+		maxAge: 60 * 60 * 2, // 2 hours
+		name: "getFromStorageCached",
+		getKey: (storageName: string, key: string) => `${storageName}-${key}`,
+	},
+) as <T>(storageName: string, key: string) => Promise<T>;
+
 async function getFromStorage<t>(storageName: string, key: string) {
 	const storage = useStorage(storageName);
 	const data = (await storage.getItem(key)) as t;
@@ -143,6 +154,18 @@ async function getFromStorage<t>(storageName: string, key: string) {
 
 	return data;
 }
+
+const getFromStorageCachedBulk = defineCachedFunction(
+	async <t>(storageName: string, keys: string[]) => {
+		return await getFromStorageBulk<t>(storageName, keys);
+	},
+	{
+		maxAge: 60 * 60 * 2, // 2 hours
+		name: "getFromStorageCachedBulk",
+		getKey: (storageName: string, keys: string[]) =>
+			`${storageName}-${keys[0]}-${keys[keys.length - 1]}`,
+	},
+) as <T>(storageName: string, keys: string[]) => Promise<T[]>;
 
 async function getFromStorageBulk<t>(storageName: string, keys: string[]) {
 	const storage = useStorage(storageName);

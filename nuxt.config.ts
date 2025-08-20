@@ -63,11 +63,7 @@ export default defineNuxtConfig({
 		},
 	},
 	nitro: {
-		devStorage: {
-			cache: {
-				driver: "null",
-			},
-		},
+		devStorage: {},
 		experimental: {
 			tasks: true,
 		},
