@@ -35,7 +35,7 @@
 		"@iconify-json/eos-icons": "^1.2.4",
 		"@nuxt/icon": "^2.0.0",
 		"@nuxt/scripts": "^0.11.10",
-		"@vueuse/nuxt": "^13.6.0",
-		"vue-tsc": "^3.0.5"
+		"@vueuse/nuxt": "^13.7.0",
+		"vue-tsc": "^3.0.6"
 	}
 }
