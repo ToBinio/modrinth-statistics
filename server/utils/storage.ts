@@ -23,6 +23,9 @@ export const DB = {
 		async get(): Promise<string | Error> {
 			return getFromStorageCached("metadata", "latestDate");
 		},
+		async getNotCached(): Promise<string | Error> {
+			return getFromStorage("metadata", "latestDate");
+		},
 	},
 	GlobalStats: {
 		async set(data: GlobalStats, date: Date) {
@@ -138,6 +141,7 @@ const getFromStorageCached = defineCachedFunction(
 	{
 		maxAge: 60 * 60 * 2, // 2 hours
 		name: "getFromStorageCached",
+		swr: false,
 		getKey: (storageName: string, key: string) => `${storageName}-${key}`,
 	},
 ) as <T>(storageName: string, key: string) => Promise<T>;
@@ -162,6 +166,7 @@ const getFromStorageCachedBulk = defineCachedFunction(
 	{
 		maxAge: 60 * 60 * 2, // 2 hours
 		name: "getFromStorageCachedBulk",
+		swr: false,
 		getKey: (storageName: string, keys: string[]) =>
 			`${storageName}-${keys[0]}-${keys[keys.length - 1]}`,
 	},

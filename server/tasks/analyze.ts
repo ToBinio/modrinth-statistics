@@ -9,7 +9,7 @@ export default defineTask({
 		description: "Update all the statistics",
 	},
 	async run() {
-		const latestDate = await DB.LatestDate.get();
+		const latestDate = await DB.LatestDate.getNotCached();
 		if (latestDate === dateToKey(new Date())) {
 			consola.debug("data already analyzed");
 			return { result: "Fail" };
