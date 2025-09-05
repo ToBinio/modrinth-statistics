@@ -8,7 +8,7 @@ const props = defineProps<{
 const displayValue = ref(0);
 
 const startCountUp = () => {
-	const duration = 1000 + Math.random() * 1000;
+	const duration = 3000 + Math.random() * 2000;
 	const startTime = performance.now();
 
 	function easeOutCubic(x: number): number {
@@ -35,8 +35,8 @@ onMounted(() => {
 
 <template>
   <div class="flex justify-center gap-2.5">
-    <div class="relative">
-      <div class="blur-2xl absolute left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4">
+    <div class="relative flex-1 flex justify-end">
+      <div class="blur-2xl absolute top-1/2 -translate-y-1/2">
         <Icon :name="icon" size="120" class="from-cyan-400 to-cyan-600 bg-gradient-to-tl"/>
       </div>
       <NuxtLink class="z-10" :to="'/charts?projectType=' + name.toLowerCase()">
@@ -44,7 +44,7 @@ onMounted(() => {
               class="hover:scale-105 transition ease-in-out from-cyan-200 to-cyan-600 bg-gradient-to-br"/>
       </NuxtLink>
     </div>
-    <div class="flex flex-col justify-center">
+    <div class="flex flex-col justify-center flex-1">
       <div class="text-5xl">
         {{ displayValue?.toLocaleString() }}
         <div class="h-0 overflow-hidden px-2">
