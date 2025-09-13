@@ -10,7 +10,7 @@ const { data } = useFetch("/api/stats/global");
 
 <template>
   <div class="dotted-background flex-1 flex flex-col justify-evenly gap-11">
-    <div class="text-center text-6xl font-semibold flex flex-col justify-center items-center">
+    <h1 class="text-center text-6xl font-semibold flex flex-col justify-center items-center">
       The place for stats all about
       <div class="transition hover:scale-110">
         <div class="blur-3xl absolute">
@@ -25,7 +25,7 @@ const { data } = useFetch("/api/stats/global");
         </NuxtLink>
       </div>
       <div class="text-xl text-neutral-500">(unofficial)</div>
-    </div>
+    </h1>
     <div class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-y-16">
       <HomeStatItem name="Projects" :data="data?.projects" icon="akar-icons:game-controller"/>
       <HomeStatItem name="Versions" :data="data?.versions" icon="akar-icons:attach"/>

@@ -191,7 +191,7 @@ const sideBarOpen = ref(false);
                     :explanation="explanation"
                 />
             </div>
-            <Explanation v-if="isProjectStats" :explanation="explanation" />
+            <Explanation v-if="explanation" :explanation="explanation" />
 
             <Icon
                 v-if="isFetching"

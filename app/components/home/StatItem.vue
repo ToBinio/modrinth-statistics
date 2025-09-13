@@ -45,11 +45,8 @@ onMounted(() => {
       </NuxtLink>
     </div>
     <div class="flex flex-col justify-center flex-1">
-      <div class="text-5xl">
+      <div :aria-label="`The number of ${name} on modrinth right now is ${displayValue?.toLocaleString()}`" class="text-5xl">
         {{ displayValue?.toLocaleString() }}
-        <div class="h-0 overflow-hidden px-2">
-          {{ data?.toLocaleString() }}
-        </div>
       </div>
       <div>
         {{ name }}
