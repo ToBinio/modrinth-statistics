@@ -73,7 +73,7 @@ watch(isFetching, () => {
 });
 
 const explanation = computed(() => {
-	return useExplanations(stat.value);
+    return useExplanations(projectType.value, stat.value);
 });
 
 const sideBarOpen = ref(false);
@@ -176,7 +176,7 @@ const sideBarOpen = ref(false);
         </SideBar>
 
         <div
-            class="relative flex ml-0 w-full transition-all md:ml-48"
+            class="relative flex ml-0 w-full transition-all md:ml-52"
             :class="{ '!ml-0': !sideBarOpen }"
         >
             <div
