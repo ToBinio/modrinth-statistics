@@ -73,7 +73,7 @@ watch(isFetching, () => {
 });
 
 const explanation = computed(() => {
-    return useExplanations(projectType.value, stat.value);
+	return useExplanations(projectType.value, stat.value);
 });
 
 const sideBarOpen = ref(false);
