@@ -21,7 +21,7 @@
 		"@upstash/redis": "^1.35.3",
 		"chart.js": "^4.5.0",
 		"consola": "^3.4.2",
-		"nuxt": "^4.1.2",
+		"nuxt": "=4.1.1",
 		"tailwindcss": "^4.1.13",
 		"unstorage": "^1.17.1",
 		"vue": "^3.5.21",
