@@ -10,21 +10,19 @@ const project_types = [
 	"modpack",
 ];
 
-var urls = [
-	"https://modrinth-statistics.tobinio.dev/charts?projectType=revenue",
-];
+var urls = [];
 
 for (const type of simple_types) {
 	urls.push(
-		`https://modrinth-statistics.tobinio.dev/charts?projectType=${type}`,
+		`https://modrinth-statistics.tobinio.dev/charts?project_type=${type}`,
 	);
 }
 
 for (const type of project_types) {
 	urls.push(
-		`https://modrinth-statistics.tobinio.dev/charts?projectType=${type}&stat=count`,
-		`https://modrinth-statistics.tobinio.dev/charts?projectType=${type}&stat=downloads`,
-		`https://modrinth-statistics.tobinio.dev/charts?projectType=${type}&stat=versions`,
+		`https://modrinth-statistics.tobinio.dev/charts?project_type=${type}&stat=count`,
+		`https://modrinth-statistics.tobinio.dev/charts?project_type=${type}&stat=downloads`,
+		`https://modrinth-statistics.tobinio.dev/charts?project_type=${type}&stat=versions`,
 	);
 }
 

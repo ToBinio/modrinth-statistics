@@ -7,7 +7,7 @@ useHead({
 
 useTracking();
 
-const projectType = useFilterItem("projectType", "mod");
+const projectType = useFilterItem("project_type", "mod");
 const stat = useFilterItem("stat", "count");
 
 watch(
@@ -18,7 +18,7 @@ watch(
 	{ immediate: true },
 );
 
-const versionGroup = useFilterItem("versionGroup", "major");
+const versionGroup = useFilterItem("version_group", "major");
 
 const time = useFilterItem("time", "current");
 
@@ -28,8 +28,8 @@ const aggregateBool = computed(() => aggregate.value === "yes");
 const exclusive = useFilterItem("exclusive", "yes");
 const exclusiveBool = computed(() => exclusive.value === "yes");
 
-const versionFrom = useFilterItem("versionFrom", undefined);
-const versionTo = useFilterItem("versionTo", undefined);
+const versionFrom = useFilterItem("version_from", undefined);
+const versionTo = useFilterItem("version_to", undefined);
 const { to, from } = await useVersionRange(
 	versionGroup,
 	versionTo,
