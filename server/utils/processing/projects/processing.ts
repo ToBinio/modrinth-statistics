@@ -1,5 +1,5 @@
-import consola from "consola";
 import { chunkArray } from "#shared/utils/array";
+import { LOGGER } from "~~/server/tasks/analyze";
 import { getSupportedGameVersions } from "~~/server/utils/processing/gameVersions/processing";
 import type {
 	GameVersionData,
@@ -62,11 +62,11 @@ export async function updateStatistics() {
 }
 
 async function updateStatistic(type: ProjectTypes) {
-	consola.log(`analyzing - ${type}`);
+	LOGGER.info(`analyzing - ${type}`);
 	const stats = await getStatistics(type);
 
 	if (stats instanceof Error) {
-		consola.error(stats.message);
+		LOGGER.error(stats.message);
 		return;
 	}
 

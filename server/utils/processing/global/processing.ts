@@ -1,8 +1,8 @@
-import consola from "consola";
+import { LOGGER } from "~~/server/tasks/analyze";
 import type { GlobalStats } from "~~/server/utils/processing/global/types";
 
 export async function updateGlobalStats() {
-	consola.log("fetching globalStats");
+	LOGGER.info("fetching globalStats");
 
 	const data = await $modrinthFetch<GlobalStats>("/statistics");
 
