@@ -31,6 +31,7 @@ type StatsDataEntry = {
 	all: StatsDataType;
 	minor: StatsDataType;
 	major: StatsDataType;
+	unified: StatsDataType;
 };
 
 type StatsData = { all: StatsDataEntry; exclusive: StatsDataEntry };
@@ -39,6 +40,7 @@ type AllStatsEntry = {
 	all: ProjectStats;
 	minor: ProjectStats;
 	major: ProjectStats;
+	unified: ProjectStats;
 };
 
 type AllStats = { all: AllStatsEntry; exclusive: AllStatsEntry };
@@ -77,17 +79,29 @@ async function saveStats(stats: AllStats, type: ProjectTypes) {
 	await DB.ProjectStats.set(stats.all.all, type, "all", false);
 	await DB.ProjectStats.set(stats.all.minor, type, "minor", false);
 	await DB.ProjectStats.set(stats.all.major, type, "major", false);
+	await DB.ProjectStats.set(stats.all.unified, type, "unified", false);
 
 	await DB.ProjectStats.set(stats.exclusive.all, type, "all", true);
 	await DB.ProjectStats.set(stats.exclusive.minor, type, "minor", true);
 	await DB.ProjectStats.set(stats.exclusive.major, type, "major", true);
+	await DB.ProjectStats.set(stats.exclusive.unified, type, "unified", true);
 }
 
 async function getStatistics(type: ProjectTypes): Promise<AllStats | Error> {
 	const BATCH_COUNT = import.meta.dev ? 1 : 10;
 	const data: StatsData = {
-		all: { all: new Map(), major: new Map(), minor: new Map() },
-		exclusive: { all: new Map(), major: new Map(), minor: new Map() },
+		all: {
+			all: new Map(),
+			major: new Map(),
+			minor: new Map(),
+			unified: new Map(),
+		},
+		exclusive: {
+			all: new Map(),
+			major: new Map(),
+			minor: new Map(),
+			unified: new Map(),
+		},
 	};
 
 	const gameVersions = await DB.GameVersions.get();
@@ -131,6 +145,9 @@ async function getStatistics(type: ProjectTypes): Promise<AllStats | Error> {
 			all: groupStatsToStats(StatsFromType(gameVersions.all, data.all)),
 			minor: groupStatsToStats(StatsFromType(gameVersions.minor, data.minor)),
 			major: groupStatsToStats(StatsFromType(gameVersions.major, data.major)),
+			unified: groupStatsToStats(
+				StatsFromType(gameVersions.unified, data.unified),
+			),
 		};
 	}
 
@@ -212,6 +229,13 @@ function analyzeVersions(
 			version.project_id,
 			version.downloads,
 		);
+		insertLauncherData(
+			data.all.unified,
+			supportedLaunchers,
+			supportedVersions.unified,
+			version.project_id,
+			version.downloads,
+		);
 
 		if (supportedLaunchers.length === 1) {
 			insertLauncherData(
@@ -232,6 +256,13 @@ function analyzeVersions(
 				data.exclusive.major,
 				supportedLaunchers,
 				supportedVersions.major,
+				version.project_id,
+				version.downloads,
+			);
+			insertLauncherData(
+				data.exclusive.unified,
+				supportedLaunchers,
+				supportedVersions.unified,
 				version.project_id,
 				version.downloads,
 			);

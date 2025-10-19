@@ -1,6 +1,15 @@
+import fsDriver from "unstorage/drivers/fs";
 import upstashDriver from "unstorage/drivers/upstash";
 
 export default defineNitroPlugin(() => {
+	if (import.meta.dev) {
+		defineDevelopmentStorage();
+	} else {
+		defnineProductionStorage();
+	}
+});
+
+function defnineProductionStorage() {
 	const storage = useStorage();
 
 	storage.mount(
@@ -27,4 +36,27 @@ export default defineNitroPlugin(() => {
 			base: "metadata",
 		}),
 	);
-});
+}
+
+function defineDevelopmentStorage() {
+	const storage = useStorage();
+
+	storage.mount(
+		"globalStatistics",
+		fsDriver({
+			base: "storage/globalStatistics",
+		}),
+	);
+	storage.mount(
+		"projectStatistics",
+		fsDriver({
+			base: "storage/projectStatistics",
+		}),
+	);
+	storage.mount(
+		"metadata",
+		fsDriver({
+			base: "storage/metadata",
+		}),
+	);
+}

@@ -113,7 +113,7 @@ const sideBarOpen = ref(false);
                 <FilterItem
                     :should-display="isProjectStats"
                     v-model="versionGroup"
-                    :options="['major', 'minor', 'all']"
+                    :options="['major', 'minor', 'all', 'unified']"
                     title="Version Group"
                     explanation="What type of Minecraft versions should be displayed"
                 />
@@ -134,7 +134,7 @@ const sideBarOpen = ref(false);
 
                 <FilterItem
                     :should-display="isProjectStats"
-                    v-if="time == 'current'"
+                    v-if="time == 'current' && versionGroup != 'unified'"
                     v-model="versionFrom"
                     :can-clear="true"
                     :options="from"
@@ -143,7 +143,7 @@ const sideBarOpen = ref(false);
                 />
                 <FilterItem
                     :should-display="isProjectStats"
-                    v-if="time == 'current'"
+                    v-if="time == 'current' && versionGroup != 'unified'"
                     v-model="versionTo"
                     :can-clear="true"
                     :options="to"
@@ -153,7 +153,7 @@ const sideBarOpen = ref(false);
 
                 <FilterItem
                     :should-display="isProjectStats"
-                    v-if="time != 'current'"
+                    v-if="time != 'current' && versionGroup != 'unified'"
                     v-model="version"
                     :options="gameVersions"
                     title="Version"

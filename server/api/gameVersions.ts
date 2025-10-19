@@ -17,8 +17,15 @@ export default defineEventHandler(async (event): Promise<GameVersionData> => {
 		case "major": {
 			return gameVersions.major;
 		}
-		default: {
+		case "minor": {
 			return gameVersions.minor;
+		}
+		case "unified": {
+			return gameVersions.unified;
+		}
+		default: {
+			setResponseStatus(event, 400);
+			return [];
 		}
 	}
 });

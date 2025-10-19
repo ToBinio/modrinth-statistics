@@ -23,6 +23,7 @@ export function getSupportedGameVersions(
 		all: new Set<string>(),
 		major: new Set<string>(),
 		minor: new Set<string>(),
+		unified: new Set<string>(),
 	};
 
 	for (const gameVersion of version.game_versions) {
@@ -39,12 +40,19 @@ export function getSupportedGameVersions(
 				data.minor.add(minorVersion.name);
 			}
 		}
+
+		for (const unifiedVersion of gameVersions.unified) {
+			if (unifiedVersion.contains.includes(gameVersion)) {
+				data.unified.add(unifiedVersion.name);
+			}
+		}
 	}
 
 	return {
 		all: Array.from(data.all),
 		major: Array.from(data.major),
 		minor: Array.from(data.minor),
+		unified: Array.from(data.unified),
 	};
 }
 
@@ -84,9 +92,16 @@ function groupGameVersions(versions: GameVersion[]): GameVersions {
 		major[major.length - 1]?.contains.push(...version.contains);
 	}
 
+	const unified: GameVersionData = [{ name: "unified", contains: [] }];
+
+	for (const version of major) {
+		unified[0].contains.push(...version.contains);
+	}
+
 	return {
 		all,
 		minor,
 		major,
+		unified,
 	};
 }
