@@ -59,21 +59,17 @@ const chartOptions = ref({
 </script>
 
 <template>
-  <div id="container">
-    <Bar
-        :data="chartData"
-        :options="chartOptions"
-    />
-  </div>
+	<div id="container">
+		<Bar :data="chartData" :options="chartOptions"/>
+	</div>
 </template>
 <style scoped>
 #container {
-  flex: 1;
+	flex: 1;
 
-  canvas {
-    position: absolute;
-    margin: 10px;
-  }
+	canvas {
+		position: absolute;
+		margin: 10px;
+	}
 }
-
 </style>
