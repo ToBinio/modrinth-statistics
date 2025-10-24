@@ -1,23 +1,23 @@
 <script setup lang="ts">
-const model = defineModel();
+	const model = defineModel();
 
-const { canClear = false, options } = defineProps<{
-	shouldDisplay: boolean;
-	title: string;
-	explanation: string;
-	options: string[];
-	canClear?: boolean;
-}>();
+	const { canClear = false, options } = defineProps<{
+		shouldDisplay: boolean;
+		title: string;
+		explanation: string;
+		options: string[];
+		canClear?: boolean;
+	}>();
 
-const open = ref(false);
+	const open = ref(false);
 
-function onSelect(option: string) {
-	if (canClear && model.value === option) {
-		model.value = undefined;
-	} else {
-		model.value = option;
+	function onSelect(option: string) {
+		if (canClear && model.value === option) {
+			model.value = undefined;
+		} else {
+			model.value = option;
+		}
 	}
-}
 </script>
 
 <template>
@@ -70,14 +70,14 @@ function onSelect(option: string) {
 </template>
 
 <style scoped>
-.v-enter-active,
-.v-leave-active {
-	transition: 0.4s ease;
-}
+	.v-enter-active,
+	.v-leave-active {
+		transition: 0.4s ease;
+	}
 
-.v-enter-from,
-.v-leave-to {
-	transform: translateX(-120%);
-	opacity: 0;
-}
+	.v-enter-from,
+	.v-leave-to {
+		transform: translateX(-120%);
+		opacity: 0;
+	}
 </style>

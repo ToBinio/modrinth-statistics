@@ -1,13 +1,13 @@
 <script setup lang="ts">
-const sidebarVisible = defineModel<boolean>("open");
+	const sidebarVisible = defineModel<boolean>("open");
 
-onMounted(() => {
-	const isMediumScreen = useMediaQuery("(min-width: 768px)");
+	onMounted(() => {
+		const isMediumScreen = useMediaQuery("(min-width: 768px)");
 
-	if (isMediumScreen.value) {
-		sidebarVisible.value = true;
-	}
-});
+		if (isMediumScreen.value) {
+			sidebarVisible.value = true;
+		}
+	});
 </script>
 
 <template>

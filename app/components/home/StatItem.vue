@@ -1,36 +1,38 @@
 <script setup lang="ts">
-const props = defineProps<{
-	icon: string;
-	name: string;
-	data: number | undefined;
-}>();
+	const props = defineProps<{
+		icon: string;
+		name: string;
+		data: number | undefined;
+	}>();
 
-const displayValue = ref(0);
+	const displayValue = ref(0);
 
-const startCountUp = () => {
-	const duration = 3000 + Math.random() * 2000;
-	const startTime = performance.now();
+	const startCountUp = () => {
+		const duration = 3000 + Math.random() * 2000;
+		const startTime = performance.now();
 
-	function easeOutCubic(x: number): number {
-		return 1 - (1 - x) ** 7;
-	}
-
-	function animate(currentTime: number) {
-		const elapsedTime = currentTime - startTime;
-		const progress = Math.min(elapsedTime / duration, 1);
-		displayValue.value = Math.floor(easeOutCubic(progress) * (props.data ?? 0));
-
-		if (progress < 1) {
-			requestAnimationFrame(animate);
+		function easeOutCubic(x: number): number {
+			return 1 - (1 - x) ** 7;
 		}
-	}
 
-	requestAnimationFrame(animate);
-};
+		function animate(currentTime: number) {
+			const elapsedTime = currentTime - startTime;
+			const progress = Math.min(elapsedTime / duration, 1);
+			displayValue.value = Math.floor(
+				easeOutCubic(progress) * (props.data ?? 0),
+			);
 
-onMounted(() => {
-	startCountUp();
-});
+			if (progress < 1) {
+				requestAnimationFrame(animate);
+			}
+		}
+
+		requestAnimationFrame(animate);
+	};
+
+	onMounted(() => {
+		startCountUp();
+	});
 </script>
 
 <template>

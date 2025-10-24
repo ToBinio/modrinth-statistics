@@ -11,9 +11,9 @@
 </template>
 
 <style scoped>
-@reference "~/assets/css/main.css";
+	@reference "~/assets/css/main.css";
 
-.router-link-exact-active {
-	@apply !to-cyan-500;
-}
+	.router-link-exact-active {
+		@apply !to-cyan-500;
+	}
 </style>

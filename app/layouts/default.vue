@@ -48,82 +48,82 @@
 </template>
 
 <style scoped>
-@media only screen and (max-width: 700px) {
-	#nav {
-		.compact {
-			display: flex !important;
-			gap: 20px;
-		}
+	@media only screen and (max-width: 700px) {
+		#nav {
+			.compact {
+				display: flex !important;
+				gap: 20px;
+			}
 
-		.big {
-			display: none !important;
-		}
+			.big {
+				display: none !important;
+			}
 
-		gap: 20px !important;
-		flex-direction: column;
-		#icons {
-			gap: 10px !important;
-			display: flex;
-			align-items: center;
+			gap: 20px !important;
+			flex-direction: column;
+			#icons {
+				gap: 10px !important;
+				display: flex;
+				align-items: center;
+			}
 		}
 	}
-}
 
-#page {
-	min-height: 100vh;
+	#page {
+		min-height: 100vh;
 
-	flex: 1;
-
-	display: flex;
-	flex-direction: column;
-
-	#nav {
-		.compact {
-			display: none;
-		}
-
-		z-index: 10;
-
-		padding: 10px;
-		margin: 10px;
+		flex: 1;
 
 		display: flex;
+		flex-direction: column;
 
-		justify-content: space-between;
-		align-items: center;
+		#nav {
+			.compact {
+				display: none;
+			}
 
-		gap: 50px;
+			z-index: 10;
 
-		#header {
-			font-weight: bold;
-			font-size: xx-large;
-		}
+			padding: 10px;
+			margin: 10px;
 
-		#icons {
 			display: flex;
-			gap: 25px;
 
-			#github {
-				display: block;
-				transition: 0.1s scale ease-in-out;
+			justify-content: space-between;
+			align-items: center;
 
-				&:hover {
-					scale: 1.05;
+			gap: 50px;
+
+			#header {
+				font-weight: bold;
+				font-size: xx-large;
+			}
+
+			#icons {
+				display: flex;
+				gap: 25px;
+
+				#github {
+					display: block;
+					transition: 0.1s scale ease-in-out;
+
+					&:hover {
+						scale: 1.05;
+					}
 				}
+			}
+
+			button {
+				color: black;
 			}
 		}
 
-		button {
-			color: black;
+		#main {
+			flex: 1;
+			position: relative;
+
+			display: flex;
+			flex-direction: column;
 		}
 	}
-
-	#main {
-		flex: 1;
-		position: relative;
-
-		display: flex;
-		flex-direction: column;
-	}
-}
 </style>

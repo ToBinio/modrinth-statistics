@@ -1,11 +1,11 @@
 <script setup lang="ts">
-useHead({
-	title: "Modrinth Statistics",
-});
+	useHead({
+		title: "Modrinth Statistics",
+	});
 
-useTracking();
+	useTracking();
 
-const { data } = useFetch("/api/stats/global");
+	const { data } = useFetch("/api/stats/global");
 </script>
 
 <template>
@@ -58,14 +58,14 @@ const { data } = useFetch("/api/stats/global");
 </template>
 
 <style scoped>
-.dotted-background {
-	background-image:
-		radial-gradient(#18181b 1px, transparent 1px),
-		radial-gradient(#18181b 2px, transparent 2px),
-		linear-gradient(to bottom, #18181b, #030712);
-	background-size:
-		10px 10px,
-		30px 30px,
-		cover;
-}
+	.dotted-background {
+		background-image:
+			radial-gradient(#18181b 1px, transparent 1px),
+			radial-gradient(#18181b 2px, transparent 2px),
+			linear-gradient(to bottom, #18181b, #030712);
+		background-size:
+			10px 10px,
+			30px 30px,
+			cover;
+	}
 </style>

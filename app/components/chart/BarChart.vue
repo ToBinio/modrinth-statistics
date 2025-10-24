@@ -1,61 +1,61 @@
 <script setup lang="ts">
-import { Bar } from "vue-chartjs";
+	import { Bar } from "vue-chartjs";
 
-const props = defineProps<{
-	data: StatExport | undefined;
-}>();
+	const props = defineProps<{
+		data: StatExport | undefined;
+	}>();
 
-const chartData = computed(() => {
-	if (!props.data) {
-		return {
-			labels: [],
-			datasets: [],
-		};
-	}
-
-	return {
-		labels: props.data.labels,
-		datasets: props.data.data.map((value) => {
+	const chartData = computed(() => {
+		if (!props.data) {
 			return {
-				...value,
-				borderRadius: 3,
+				labels: [],
+				datasets: [],
 			};
-		}),
-	};
-});
+		}
 
-const chartOptions = ref({
-	responsive: true,
-	maintainAspectRatio: false,
-	scales: {
-		x: {
-			stacked: true,
-			grid: {
-				color: "#1b1a1e",
-			},
-			ticks: {
-				color: "#8a8a8c",
-			},
-		},
-		y: {
-			stacked: true,
-			grid: {
-				color: "#1b1a1e",
-			},
+		return {
+			labels: props.data.labels,
+			datasets: props.data.data.map((value) => {
+				return {
+					...value,
+					borderRadius: 3,
+				};
+			}),
+		};
+	});
 
-			ticks: {
-				color: "#8a8a8c",
+	const chartOptions = ref({
+		responsive: true,
+		maintainAspectRatio: false,
+		scales: {
+			x: {
+				stacked: true,
+				grid: {
+					color: "#1b1a1e",
+				},
+				ticks: {
+					color: "#8a8a8c",
+				},
+			},
+			y: {
+				stacked: true,
+				grid: {
+					color: "#1b1a1e",
+				},
+
+				ticks: {
+					color: "#8a8a8c",
+				},
 			},
 		},
-	},
-	plugins: {
-		legend: {
-			labels: {
-				color: "#8a8a8c",
+		plugins: {
+			legend: {
+				labels: {
+					color: "#8a8a8c",
+				},
 			},
 		},
-	},
-});
+	});
 </script>
 
 <template>
@@ -64,12 +64,12 @@ const chartOptions = ref({
 	</div>
 </template>
 <style scoped>
-#container {
-	flex: 1;
+	#container {
+		flex: 1;
 
-	canvas {
-		position: absolute;
-		margin: 10px;
+		canvas {
+			position: absolute;
+			margin: 10px;
+		}
 	}
-}
 </style>

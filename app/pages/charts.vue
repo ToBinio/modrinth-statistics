@@ -1,82 +1,87 @@
 <script setup lang="ts">
-const title = ref("Modrinth Statistics");
+	const title = ref("Modrinth Statistics");
 
-useHead({
-	title: title,
-});
+	useHead({
+		title: title,
+	});
 
-useTracking();
+	useTracking();
 
-const projectType = useFilterItem("project_type", "mod");
-const stat = useFilterItem("stat", "count");
+	const projectType = useFilterItem("project_type", "mod");
+	const stat = useFilterItem("stat", "count");
 
-watch(
-	[projectType, stat],
-	() => {
-		title.value = `Modrinth Statistics - ${firstLetterUpperCase(projectType.value)} ${firstLetterUpperCase(stat.value)}`;
-	},
-	{ immediate: true },
-);
-
-const versionGroup = useFilterItem("version_group", "major");
-
-const time = useFilterItem("time", "current");
-
-const aggregate = useFilterItem("aggregate", "yes");
-const aggregateBool = computed(() => aggregate.value === "yes");
-
-const exclusive = useFilterItem("exclusive", "yes");
-const exclusiveBool = computed(() => exclusive.value === "yes");
-
-const versionFrom = useFilterItem("version_from", undefined);
-const versionTo = useFilterItem("version_to", undefined);
-const { to, from } = await useVersionRange(
-	versionGroup,
-	versionTo,
-	versionFrom,
-);
-
-const gameVersions = await useGameVersions(versionGroup);
-const defaultVersion = computed(() => gameVersions.value[0] as string);
-const version = useFilterItem("version", defaultVersion);
-
-const { isGlobalStats, isProjectStats, isRevenueStats } =
-	useTypeCategory(projectType);
-
-const isGroupData = computed(() => {
-	return (
-		time.value === "current" && !isGlobalStats.value && !isRevenueStats.value
+	watch(
+		[projectType, stat],
+		() => {
+			title.value = `Modrinth Statistics - ${firstLetterUpperCase(projectType.value)} ${firstLetterUpperCase(stat.value)}`;
+		},
+		{ immediate: true },
 	);
-});
 
-const max_days = computed(() => {
-	if (isGroupData.value) return undefined;
+	const versionGroup = useFilterItem("version_group", "major");
 
-	return time.value === "all" ? undefined : 30;
-});
+	const time = useFilterItem("time", "current");
 
-const { data, isFetching } = useStatData(isGlobalStats, isRevenueStats, time, {
-	mode: versionGroup,
-	exclusive: exclusiveBool,
-	type: projectType,
-	stat: stat,
-	versionTo: versionTo,
-	versionFrom: versionFrom,
-	version: version,
-	days: max_days,
-	aggregate: aggregateBool,
-});
+	const aggregate = useFilterItem("aggregate", "yes");
+	const aggregateBool = computed(() => aggregate.value === "yes");
 
-const lazyIsGroupData = ref(isGroupData.value);
-watch(isFetching, () => {
-	if (!isFetching.value) lazyIsGroupData.value = isGroupData.value;
-});
+	const exclusive = useFilterItem("exclusive", "yes");
+	const exclusiveBool = computed(() => exclusive.value === "yes");
 
-const explanation = computed(() => {
-	return useExplanations(projectType.value, stat.value);
-});
+	const versionFrom = useFilterItem("version_from", undefined);
+	const versionTo = useFilterItem("version_to", undefined);
+	const { to, from } = await useVersionRange(
+		versionGroup,
+		versionTo,
+		versionFrom,
+	);
 
-const sideBarOpen = ref(false);
+	const gameVersions = await useGameVersions(versionGroup);
+	const defaultVersion = computed(() => gameVersions.value[0] as string);
+	const version = useFilterItem("version", defaultVersion);
+
+	const { isGlobalStats, isProjectStats, isRevenueStats } =
+		useTypeCategory(projectType);
+
+	const isGroupData = computed(() => {
+		return (
+			time.value === "current" && !isGlobalStats.value && !isRevenueStats.value
+		);
+	});
+
+	const max_days = computed(() => {
+		if (isGroupData.value) return undefined;
+
+		return time.value === "all" ? undefined : 30;
+	});
+
+	const { data, isFetching } = useStatData(
+		isGlobalStats,
+		isRevenueStats,
+		time,
+		{
+			mode: versionGroup,
+			exclusive: exclusiveBool,
+			type: projectType,
+			stat: stat,
+			versionTo: versionTo,
+			versionFrom: versionFrom,
+			version: version,
+			days: max_days,
+			aggregate: aggregateBool,
+		},
+	);
+
+	const lazyIsGroupData = ref(isGroupData.value);
+	watch(isFetching, () => {
+		if (!isFetching.value) lazyIsGroupData.value = isGroupData.value;
+	});
+
+	const explanation = computed(() => {
+		return useExplanations(projectType.value, stat.value);
+	});
+
+	const sideBarOpen = ref(false);
 </script>
 
 <template>

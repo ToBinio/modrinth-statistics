@@ -1,13 +1,13 @@
 <script setup lang="ts">
-const props = defineProps<{
-	data: StatExport | undefined;
-	explanation: string | undefined;
-}>();
+	const props = defineProps<{
+		data: StatExport | undefined;
+		explanation: string | undefined;
+	}>();
 
-const groups = computed(() => {
-	if (!props.data) return [];
-	return props.data.data.map((item) => item.label);
-});
+	const groups = computed(() => {
+		if (!props.data) return [];
+		return props.data.data.map((item) => item.label);
+	});
 </script>
 
 <template>
