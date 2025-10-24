@@ -1,5 +1,8 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.2.5/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.3.0/schema.json",
+	"files": {
+		"includes": ["**", "!.nuxt", "!.output", "!scripts/db-fix.ts"]
+	},
 	"assist": { "actions": { "source": { "organizeImports": "on" } } },
 	"linter": {
 		"enabled": true,
@@ -10,11 +13,11 @@
 			},
 			"suspicious": {
 				"noUnknownAtRules": "off"
+			},
+			"complexity": {
+				"noImportantStyles": "off"
 			}
 		}
-	},
-	"files": {
-		"includes": ["**", "!.nuxt", "!.output", "!scripts/db-fix.ts"]
 	},
 	"overrides": [
 		{
@@ -28,5 +31,16 @@
 				}
 			}
 		}
-	]
+	],
+	"css": {
+		"parser": {
+			"tailwindDirectives": true
+		}
+	},
+	"html": {
+		"experimentalFullSupportEnabled": true,
+		"formatter": {
+			"enabled": true
+		}
+	}
 }
