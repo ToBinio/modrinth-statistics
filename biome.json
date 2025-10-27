@@ -1,7 +1,12 @@
 {
 	"$schema": "https://biomejs.dev/schemas/2.3.0/schema.json",
 	"files": {
-		"includes": ["**", "!.nuxt", "!.output", "!scripts/db-fix.ts"]
+		"includes": ["**", "!scripts/db-fix.ts"]
+	},
+	"vcs": {
+		"enabled": true,
+		"useIgnoreFile": true,
+		"clientKind": "git"
 	},
 	"assist": { "actions": { "source": { "organizeImports": "on" } } },
 	"linter": {
