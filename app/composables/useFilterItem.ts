@@ -8,7 +8,7 @@ export function useFilterNullableItem(
 	const defaultValueRef = toRef(defaultValue);
 
 	const item = ref(
-		(route.query[key] ? route.query[key] as string : defaultValueRef.value),
+		route.query[key] ? (route.query[key] as string) : defaultValueRef.value,
 	);
 
 	watch(defaultValueRef, () => {
@@ -34,6 +34,8 @@ export function useFilterItem(
 	const item = useFilterNullableItem(key, defaultValue);
 	return computed({
 		get: () => item.value as string,
-		set: (value) => (item.value = value),
+		set: (value) => {
+			item.value = value;
+		},
 	});
 }

@@ -3,6 +3,7 @@ import type { GlobalStats } from "~~/server/utils/processing/global/types";
 export async function exportGlobalStatsOverTime(
 	firstDateKey: string,
 	fn: (value: GlobalStats) => number,
+	max_days: number | undefined,
 ): Promise<StatExport> {
 	const statsOverTime: StatExport = {
 		labels: [],
@@ -18,10 +19,11 @@ export async function exportGlobalStatsOverTime(
 	let date = keyToDate(firstDateKey);
 
 	const BULK_COUNT = 25;
+	let days_to_fetch_left = max_days ?? Number.MAX_SAFE_INTEGER;
 
-	outer: while (true) {
+	outer: while (days_to_fetch_left > 0) {
 		const dates = [];
-		for (let i = 0; i < BULK_COUNT; i++) {
+		for (let i = 0; i < Math.min(BULK_COUNT, days_to_fetch_left); i++) {
 			dates.push(date);
 
 			const new_date = new Date(date);
@@ -31,6 +33,8 @@ export async function exportGlobalStatsOverTime(
 		}
 
 		const data = await DB.GlobalStats.getBulk(dates);
+
+		days_to_fetch_left -= data.length;
 
 		for (let i = 0; i < data.length; i++) {
 			const stats = data[i]!;

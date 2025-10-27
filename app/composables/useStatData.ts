@@ -14,7 +14,7 @@ export function useStatData(
 			return "/api/stats/time/revenue";
 		}
 
-		return time.value === "current"
+		return time.value === "today"
 			? "/api/stats/projects"
 			: "/api/stats/time/projects";
 	});

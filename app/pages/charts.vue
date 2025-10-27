@@ -10,6 +10,9 @@
 	const projectType = useFilterItem("project_type", "mod");
 	const stat = useFilterItem("stat", "count");
 
+	const { isGlobalStats, isProjectStats, isRevenueStats } =
+		useTypeCategory(projectType);
+
 	watch(
 		[projectType, stat],
 		() => {
@@ -20,7 +23,12 @@
 
 	const versionGroup = useFilterItem("version_group", "major");
 
-	const time = useFilterItem("time", "current");
+	const time = useFilterItem("time", "all");
+	const times = computed(() => {
+		return isProjectStats.value
+			? ["all", "last 30 days", "today"]
+			: ["all", "last 30 days"];
+	});
 
 	const aggregate = useFilterItem("aggregate", "yes");
 	const aggregateBool = computed(() => aggregate.value === "yes");
@@ -45,12 +53,9 @@
 	const defaultVersion = computed(() => gameVersions.value[0] as string);
 	const version = useFilterItem("version", defaultVersion);
 
-	const { isGlobalStats, isProjectStats, isRevenueStats } =
-		useTypeCategory(projectType);
-
 	const isGroupData = computed(() => {
 		return (
-			time.value === "current" && !isGlobalStats.value && !isRevenueStats.value
+			time.value === "today" && !isGlobalStats.value && !isRevenueStats.value
 		);
 	});
 
@@ -135,16 +140,16 @@
 					explanation="Only show Versions made for a single launcher"
 				/>
 				<FilterItem
-					:should-display="isProjectStats"
+					:should-display="!isRevenueStats"
 					v-model="time"
-					:options="['current', 'all', 'last 30 days']"
+					:options="times"
 					title="Time"
 					explanation=""
 				/>
 
 				<FilterItem
 					:should-display="isProjectStats"
-					v-if="time == 'current' && versionGroup != 'unified'"
+					v-if="time == 'today' && versionGroup != 'unified'"
 					v-model="versionFrom"
 					:can-clear="true"
 					:options="from"
@@ -153,7 +158,7 @@
 				/>
 				<FilterItem
 					:should-display="isProjectStats"
-					v-if="time == 'current' && versionGroup != 'unified'"
+					v-if="time == 'today' && versionGroup != 'unified'"
 					v-model="versionTo"
 					:can-clear="true"
 					:options="to"
@@ -163,7 +168,7 @@
 
 				<FilterItem
 					:should-display="isProjectStats"
-					v-if="time != 'current' && versionGroup != 'unified'"
+					v-if="time != 'today' && versionGroup != 'unified'"
 					v-model="version"
 					:options="gameVersions"
 					title="Version"
@@ -173,7 +178,7 @@
 				<FilterItem
 					:should-display="true"
 					v-if="
-                        ((isProjectStats && time != 'current') ||
+                        ((isProjectStats && time != 'today') ||
                             !isProjectStats) &&
                         !isRevenueStats
                     "

@@ -5,6 +5,7 @@ import type { GlobalStatCategory } from "~~/server/utils/processing/global/types
 
 type QueryData = {
 	type: GlobalStatCategory;
+	days: number | undefined;
 	aggregate: string;
 };
 
@@ -49,12 +50,13 @@ export default defineCachedEventHandler(
 			}
 		}
 
-		const data = await exportGlobalStatsOverTime(dateKey, typeFn);
+		const data = await exportGlobalStatsOverTime(dateKey, typeFn, query.days);
 
+		const dataPoints = Math.min(64, query.days ?? 64);
 		if (query.aggregate === "false") {
-			return summarize(fracture(data), 64, false);
+			return summarize(fracture(data), dataPoints, false);
 		}
-		return summarize(data, 64, true);
+		return summarize(data, dataPoints, true);
 	},
 	{ maxAge: 60 * 60 * 4 /* 4 hour */, swr: false },
 );
