@@ -1,7 +1,7 @@
 import { useGameVersions } from "~/composables/useGameVersions";
 
 export async function useVersionRange(
-	versionGroup: Ref<string | undefined>,
+	versionGroup: Ref<string>,
 	versionTo: Ref<string | undefined>,
 	versionFrom: Ref<string | undefined>,
 ) {
@@ -13,7 +13,6 @@ export async function useVersionRange(
 		}
 
 		const index = versionNames.value.indexOf(versionFrom.value);
-
 		return versionNames.value.slice(index, versionNames.value.length);
 	});
 
@@ -23,7 +22,6 @@ export async function useVersionRange(
 		}
 
 		const index = versionNames.value.indexOf(versionTo.value);
-
 		return versionNames.value.slice(0, index + 1);
 	});
 

@@ -28,13 +28,18 @@
 	const exclusive = useFilterItem("exclusive", "yes");
 	const exclusiveBool = computed(() => exclusive.value === "yes");
 
-	const versionFrom = useFilterItem("version_from", undefined);
-	const versionTo = useFilterItem("version_to", undefined);
+	const versionFrom = useFilterNullableItem("version_from", undefined);
+	const versionTo = useFilterNullableItem("version_to", undefined);
 	const { to, from } = await useVersionRange(
 		versionGroup,
 		versionTo,
 		versionFrom,
 	);
+
+	watch([versionGroup], () => {
+		versionFrom.value = undefined;
+		versionTo.value = undefined;
+	});
 
 	const gameVersions = await useGameVersions(versionGroup);
 	const defaultVersion = computed(() => gameVersions.value[0] as string);
@@ -170,7 +175,7 @@
 					v-if="
                         ((isProjectStats && time != 'current') ||
                             !isProjectStats) &&
-                        projectType != 'revenue'
+                        !isRevenueStats
                     "
 					v-model="aggregate"
 					:options="['yes', 'no']"

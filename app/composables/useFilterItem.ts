@@ -1,4 +1,4 @@
-export function useFilterItem(
+export function useFilterNullableItem(
 	key: string,
 	defaultValue: string | undefined | Ref<string | undefined>,
 ) {
@@ -8,11 +8,11 @@ export function useFilterItem(
 	const defaultValueRef = toRef(defaultValue);
 
 	const item = ref(
-		(route.query[key] ? route.query[key] : defaultValueRef.value) as string,
+		(route.query[key] ? route.query[key] as string : defaultValueRef.value),
 	);
 
 	watch(defaultValueRef, () => {
-		item.value = defaultValueRef.value as string;
+		item.value = defaultValueRef.value;
 	});
 
 	watch(item, async () => {
@@ -25,4 +25,15 @@ export function useFilterItem(
 	});
 
 	return item;
+}
+
+export function useFilterItem(
+	key: string,
+	defaultValue: string | undefined | Ref<string | undefined>,
+) {
+	const item = useFilterNullableItem(key, defaultValue);
+	return computed({
+		get: () => item.value as string,
+		set: (value) => (item.value = value),
+	});
 }
