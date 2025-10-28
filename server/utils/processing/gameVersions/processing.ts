@@ -95,7 +95,7 @@ function groupGameVersions(versions: GameVersion[]): GameVersions {
 	const unified: GameVersionData = [{ name: "unified", contains: [] }];
 
 	for (const version of major) {
-		unified[0].contains.push(...version.contains);
+		unified[0]!.contains.push(...version.contains);
 	}
 
 	return {

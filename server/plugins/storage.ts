@@ -3,7 +3,7 @@ import upstashDriver from "unstorage/drivers/upstash";
 
 export default defineNitroPlugin(() => {
 	if (import.meta.dev) {
-		defineDevelopmentStorage();
+		defnineProductionStorage();
 	} else {
 		defnineProductionStorage();
 	}
