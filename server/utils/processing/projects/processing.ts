@@ -59,12 +59,13 @@ type GroupStats = {
 
 export async function updateStatistics() {
 	for (const type of projectTypeList) {
+		LOGGER.info(`analyzing - ${type} - [starting]`);
 		await updateStatistic(type);
+		LOGGER.info(`analyzing - ${type} - [finished]`);
 	}
 }
 
 async function updateStatistic(type: ProjectTypes) {
-	LOGGER.info(`analyzing - ${type}`);
 	const stats = await getStatistics(type);
 
 	if (stats instanceof Error) {

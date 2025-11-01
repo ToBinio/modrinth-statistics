@@ -1,3 +1,4 @@
+import { LOGGER } from "~~/server/tasks/analyze";
 import { getGameVersions } from "~~/server/utils/processing/gameVersions/fetching";
 import type {
 	GameVersion,
@@ -8,10 +9,14 @@ import type {
 import type { Version } from "~~/server/utils/processing/projects/types";
 
 export async function updateGameVersions() {
+	LOGGER.info("updating game versions [starting]");
+
 	const versions = await getGameVersions();
 	const gameVersions = groupGameVersions(versions);
 
 	await KV.GameVersions.set(gameVersions);
+
+	LOGGER.info("updating game versions [finished]");
 }
 
 // returns what versionGroup (all, minor, major) a specif projectVersion supports
