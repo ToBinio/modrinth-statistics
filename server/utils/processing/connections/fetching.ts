@@ -1,3 +1,5 @@
+import { ExtendedProjectData, ProjectData } from "./types";
+
 export async function getModpackIds(
 	offset: number,
 	limit: number,
@@ -5,11 +7,16 @@ export async function getModpackIds(
 	return getProjectIds(offset, "modpack", limit);
 }
 
-export async function getFirstVersionIds(
+export async function getProjectData(
 	projectIds: string[],
-): Promise<string[]> {
+): Promise<ExtendedProjectData[]> {
 	type Project = {
+		id: string;
 		versions: string[];
+		title: string;
+		description: string;
+		icon_url: string;
+		downloads: number;
 	};
 
 	const data = await $modrinthFetch<Project[]>("/projects", {
@@ -18,7 +25,14 @@ export async function getFirstVersionIds(
 		},
 	});
 
-	return data.map((value) => value.versions[0]);
+	return data.map((value) => ({
+		id: value.id,
+		name: value.title,
+		latest_version: value.versions[value.versions.length - 1],
+		description: value.description,
+		icon_url: value.icon_url,
+		downloads: value.downloads,
+	}));
 }
 
 export async function getVersionDependencies(

@@ -1,10 +1,11 @@
 import { LOGGER } from "~~/server/tasks/analyze";
 import { DB } from "../../db/sql";
 import {
-	getFirstVersionIds,
+	getProjectData,
 	getModpackIds,
 	getVersionDependencies,
 } from "./fetching";
+import { ExtendedProjectData, ProjectData } from "./types";
 
 export async function updateConnections() {
 	LOGGER.info("updating connections [starting]");
@@ -27,13 +28,18 @@ export async function updateConnections() {
 			}
 		}
 
-		const versionIds: string[] = [];
+		const modpacks: ExtendedProjectData[] = [];
 		for (const chunk of chunkArray(batchProjectIds, 200)) {
-			const versions = await getFirstVersionIds(chunk);
-			versionIds.push(...versions);
+			const versions = await getProjectData(chunk);
+			modpacks.push(...versions);
 		}
 
-		const versionDependencies = await getVersionDependencies(versionIds);
+		modpacks.forEach(async (version) => {
+			await DB.addModpack(version);
+		});
+
+		const modpackVersions = modpacks.map((modpack) => modpack.latest_version);
+		const versionDependencies = await getVersionDependencies(modpackVersions);
 		for (const pair of versionDependencies) {
 			const connections = pair.dependencies.map((dependency) => {
 				return {
@@ -42,7 +48,7 @@ export async function updateConnections() {
 				};
 			});
 
-			const result = await DB.addBulk(connections);
+			const result = await DB.addConnectionsBulk(connections);
 
 			if (result instanceof Error) {
 				LOGGER.warn(result, connections);
