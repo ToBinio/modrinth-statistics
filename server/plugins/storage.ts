@@ -1,3 +1,4 @@
+import consola from "consola";
 import fsDriver from "unstorage/drivers/fs";
 import upstashDriver from "unstorage/drivers/upstash";
 
@@ -36,6 +37,8 @@ function defnineProductionStorage() {
 			base: "metadata",
 		}),
 	);
+
+	consola.info("Storage initialized");
 }
 
 function defineDevelopmentStorage() {
@@ -44,19 +47,19 @@ function defineDevelopmentStorage() {
 	storage.mount(
 		"globalStatistics",
 		fsDriver({
-			base: "storage/globalStatistics",
+			base: ".data/globalStatistics",
 		}),
 	);
 	storage.mount(
 		"projectStatistics",
 		fsDriver({
-			base: "storage/projectStatistics",
+			base: ".data/projectStatistics",
 		}),
 	);
 	storage.mount(
 		"metadata",
 		fsDriver({
-			base: "storage/metadata",
+			base: ".data/metadata",
 		}),
 	);
 }
