@@ -2,8 +2,8 @@ import fsDriver from "unstorage/drivers/fs";
 import upstashDriver from "unstorage/drivers/upstash";
 
 export default defineNitroPlugin(() => {
-	if (import.meta.dev) {
-		defnineProductionStorage();
+	if (import.meta.dev && !useRuntimeConfig().useProdInDev) {
+		defineDevelopmentStorage();
 	} else {
 		defnineProductionStorage();
 	}

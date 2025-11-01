@@ -57,6 +57,7 @@ export default defineNuxtConfig({
 		urls: urls,
 	},
 	runtimeConfig: {
+		useProdInDev: false, // used to determine if we should use production storage in development mode
 		upstash: {
 			redis: {
 				restUrl: undefined,
