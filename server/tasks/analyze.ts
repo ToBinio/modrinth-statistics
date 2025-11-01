@@ -2,6 +2,8 @@ import consola from "consola";
 import { updateGameVersions } from "~~/server/utils/processing/gameVersions/processing";
 import { updateGlobalStats } from "~~/server/utils/processing/global/processing";
 import { updateStatistics } from "~~/server/utils/processing/projects/processing";
+import { DB } from "../utils/db/sql";
+import { updateConnections } from "../utils/processing/connections/processing";
 
 export const LOGGER = consola.withTag("Analyze");
 
@@ -20,9 +22,14 @@ export default defineTask({
 		const start = new Date();
 		LOGGER.info("starting analyze - at", start.toISOString());
 		try {
+			//TODO: do something less destructive...
+			await DB.clear();
+			await updateConnections();
+
 			await updateGameVersions();
 			await updateStatistics();
 			await updateGlobalStats();
+
 			await KV.LatestDate.set(new Date());
 		} catch (e) {
 			LOGGER.fail(e);

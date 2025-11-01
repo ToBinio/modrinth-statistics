@@ -76,6 +76,7 @@ export default defineNuxtConfig({
 		},
 		experimental: {
 			tasks: true,
+			database: true,
 		},
 		scheduledTasks: {
 			"0 * * * *": ["analyze"],
