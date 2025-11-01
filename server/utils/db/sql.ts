@@ -54,7 +54,7 @@ export const DB = {
 				);
 			}
 
-			return result.rows[0].count as number;
+			return result.rows[0]!.count as number;
 		} catch (error) {
 			return new Error(`Failed to add connections: ${error}`);
 		}

@@ -1,11 +1,11 @@
 import { LOGGER } from "~~/server/tasks/analyze";
 import { DB } from "../../db/sql";
 import {
-	getProjectData,
 	getModpackIds,
+	getProjectData,
 	getVersionDependencies,
 } from "./fetching";
-import { ExtendedProjectData, ProjectData } from "./types";
+import type { ExtendedProjectData } from "./types";
 
 export async function updateConnections() {
 	LOGGER.info("updating connections [starting]");

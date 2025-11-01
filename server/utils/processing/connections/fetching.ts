@@ -1,4 +1,4 @@
-import { ExtendedProjectData, ProjectData } from "./types";
+import type { ExtendedProjectData } from "./types";
 
 export async function getModpackIds(
 	offset: number,
@@ -25,14 +25,16 @@ export async function getProjectData(
 		},
 	});
 
-	return data.map((value) => ({
-		id: value.id,
-		name: value.title,
-		latest_version: value.versions[value.versions.length - 1],
-		description: value.description,
-		icon_url: value.icon_url,
-		downloads: value.downloads,
-	}));
+	return data
+		.filter((value) => value.versions.length > 0)
+		.map((value) => ({
+			id: value.id,
+			name: value.title,
+			latest_version: value.versions[value.versions.length - 1]!,
+			description: value.description,
+			icon_url: value.icon_url,
+			downloads: value.downloads,
+		}));
 }
 
 export async function getVersionDependencies(
