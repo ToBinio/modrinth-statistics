@@ -3,7 +3,7 @@ import type { GameVersionData } from "~~/server/utils/processing/gameVersions/ty
 export default defineEventHandler(async (event): Promise<GameVersionData> => {
 	const query = getQuery(event);
 
-	const gameVersions = await DB.GameVersions.get();
+	const gameVersions = await KV.GameVersions.get();
 
 	if (gameVersions instanceof Error) {
 		setResponseStatus(event, 500);

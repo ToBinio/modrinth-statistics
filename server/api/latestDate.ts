@@ -1,5 +1,5 @@
 export default defineEventHandler(async (event): Promise<string | null> => {
-	const gameVersions = await DB.LatestDate.get();
+	const gameVersions = await KV.LatestDate.get();
 
 	if (gameVersions instanceof Error) {
 		setResponseStatus(event, 500);

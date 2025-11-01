@@ -61,7 +61,7 @@ export async function exportStats(
 	versionTo: string | null,
 	versionFrom: string | null,
 ): Promise<StatExport> {
-	const stats = await DB.ProjectStats.getLatest(
+	const stats = await KV.ProjectStats.getLatest(
 		type,
 		versionCategory,
 		exclusive,
@@ -113,7 +113,7 @@ export async function exportStatsOverTime(
 			date = new_date;
 		}
 
-		const data = await DB.ProjectStats.getBulk(
+		const data = await KV.ProjectStats.getBulk(
 			dates,
 			type,
 			versionCategory,

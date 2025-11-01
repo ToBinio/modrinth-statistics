@@ -1,5 +1,5 @@
 import consola from "consola";
-import { exportGlobalStatsOverTime } from "~~/server/utils/export/globalStats";
+import { exportGlobalStatsOverTime } from "~~/server/utils/api/export/globalStats";
 import { fracture } from "~~/server/utils/processing/aggregate";
 import type { GlobalStatCategory } from "~~/server/utils/processing/global/types";
 
@@ -13,7 +13,7 @@ export default defineCachedEventHandler(
 	async (event): Promise<StatExport> => {
 		const query = getQuery<QueryData>(event);
 
-		const dateKey = await DB.LatestDate.get();
+		const dateKey = await KV.LatestDate.get();
 
 		if (dateKey instanceof Error) {
 			consola.error("no latestDate set");

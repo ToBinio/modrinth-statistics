@@ -1,4 +1,4 @@
-import { exportRevenueStatsOverTime } from "~~/server/utils/export/revenue";
+import { exportRevenueStatsOverTime } from "~~/server/utils/api/export/revenue";
 
 export default defineCachedEventHandler(
 	async (_event): Promise<StatExport> => {

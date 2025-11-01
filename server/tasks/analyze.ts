@@ -11,7 +11,7 @@ export default defineTask({
 		description: "Update all the statistics",
 	},
 	async run() {
-		const latestDate = await DB.LatestDate.getNotCached();
+		const latestDate = await KV.LatestDate.getNotCached();
 		if (latestDate === dateToKey(new Date())) {
 			LOGGER.debug("data already analyzed");
 			return { result: "Fail" };
@@ -23,7 +23,7 @@ export default defineTask({
 			await updateGameVersions();
 			await updateStatistics();
 			await updateGlobalStats();
-			await DB.LatestDate.set(new Date());
+			await KV.LatestDate.set(new Date());
 		} catch (e) {
 			LOGGER.fail(e);
 		}

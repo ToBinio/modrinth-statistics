@@ -5,7 +5,7 @@ import type {
 import type { GlobalStats } from "~~/server/utils/processing/global/types";
 import type { ProjectStats } from "~~/server/utils/processing/projects/types";
 
-export const DB = {
+export const KV = {
 	GameVersions: {
 		async set(gameVersions: GameVersions) {
 			const storage = useStorage("metadata");
@@ -51,7 +51,7 @@ export const DB = {
 			return getFromStorageCachedBulk("globalStatistics", keys);
 		},
 		async getLatest(): Promise<GlobalStats | Error> {
-			const dateKey = await DB.LatestDate.get();
+			const dateKey = await KV.LatestDate.get();
 			if (dateKey instanceof Error) return dateKey;
 
 			const key = `globalStats${dateKey}`;
@@ -111,7 +111,7 @@ export const DB = {
 			versionCategory: VersionCategories,
 			exclusive: boolean,
 		): Promise<ProjectStats | Error> {
-			const dateKey = await DB.LatestDate.get();
+			const dateKey = await KV.LatestDate.get();
 			if (dateKey instanceof Error) return dateKey;
 
 			const key = getProjectStorageKey(

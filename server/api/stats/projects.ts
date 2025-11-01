@@ -1,5 +1,5 @@
+import { exportStats } from "~~/server/utils/api/export/projectStats";
 import { statStringToExtraction } from "~~/server/utils/api/project";
-import { exportStats } from "~~/server/utils/export/projectStats";
 import type { VersionCategories } from "~~/server/utils/processing/gameVersions/types";
 import type { ProjectStatCategory } from "~~/server/utils/processing/projects/types";
 

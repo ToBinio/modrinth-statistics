@@ -6,5 +6,5 @@ export async function updateGlobalStats() {
 
 	const data = await $modrinthFetch<GlobalStats>("/statistics");
 
-	await DB.GlobalStats.set(data, new Date());
+	await KV.GlobalStats.set(data, new Date());
 }

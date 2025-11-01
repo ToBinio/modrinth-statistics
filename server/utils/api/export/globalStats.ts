@@ -32,7 +32,7 @@ export async function exportGlobalStatsOverTime(
 			date = new_date;
 		}
 
-		const data = await DB.GlobalStats.getBulk(dates);
+		const data = await KV.GlobalStats.getBulk(dates);
 
 		days_to_fetch_left -= data.length;
 

@@ -3,7 +3,7 @@ import type { GlobalStats } from "~~/server/utils/processing/global/types";
 
 export default defineCachedEventHandler(
 	async (event): Promise<GlobalStats> => {
-		const globalStats = await DB.GlobalStats.getLatest();
+		const globalStats = await KV.GlobalStats.getLatest();
 
 		if (globalStats instanceof Error) {
 			consola.error(globalStats.message);

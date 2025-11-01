@@ -11,7 +11,7 @@ export async function updateGameVersions() {
 	const versions = await getGameVersions();
 	const gameVersions = groupGameVersions(versions);
 
-	await DB.GameVersions.set(gameVersions);
+	await KV.GameVersions.set(gameVersions);
 }
 
 // returns what versionGroup (all, minor, major) a specif projectVersion supports

@@ -76,15 +76,15 @@ async function updateStatistic(type: ProjectTypes) {
 }
 
 async function saveStats(stats: AllStats, type: ProjectTypes) {
-	await DB.ProjectStats.set(stats.all.all, type, "all", false);
-	await DB.ProjectStats.set(stats.all.minor, type, "minor", false);
-	await DB.ProjectStats.set(stats.all.major, type, "major", false);
-	await DB.ProjectStats.set(stats.all.unified, type, "unified", false);
+	await KV.ProjectStats.set(stats.all.all, type, "all", false);
+	await KV.ProjectStats.set(stats.all.minor, type, "minor", false);
+	await KV.ProjectStats.set(stats.all.major, type, "major", false);
+	await KV.ProjectStats.set(stats.all.unified, type, "unified", false);
 
-	await DB.ProjectStats.set(stats.exclusive.all, type, "all", true);
-	await DB.ProjectStats.set(stats.exclusive.minor, type, "minor", true);
-	await DB.ProjectStats.set(stats.exclusive.major, type, "major", true);
-	await DB.ProjectStats.set(stats.exclusive.unified, type, "unified", true);
+	await KV.ProjectStats.set(stats.exclusive.all, type, "all", true);
+	await KV.ProjectStats.set(stats.exclusive.minor, type, "minor", true);
+	await KV.ProjectStats.set(stats.exclusive.major, type, "major", true);
+	await KV.ProjectStats.set(stats.exclusive.unified, type, "unified", true);
 }
 
 async function getStatistics(type: ProjectTypes): Promise<AllStats | Error> {
@@ -104,7 +104,7 @@ async function getStatistics(type: ProjectTypes): Promise<AllStats | Error> {
 		},
 	};
 
-	const gameVersions = await DB.GameVersions.get();
+	const gameVersions = await KV.GameVersions.get();
 
 	if (gameVersions instanceof Error) {
 		return gameVersions;
