@@ -1,13 +1,35 @@
-import type { Connection, ProjectData } from "../processing/connections/types";
+import { count, desc, eq } from "drizzle-orm";
+import { drizzle } from "drizzle-orm/libsql";
+import {
+	connections,
+	modpacks,
+	type NewConnection,
+	type NewModpack,
+} from "~~/server/database/schema";
+import type { ProjectData } from "../processing/connections/types";
+
+let _drizzle: ReturnType<typeof drizzle>;
+export function useDrizzle() {
+	const url = useRuntimeConfig().db.url;
+
+	if (!_drizzle) {
+		_drizzle = drizzle({
+			connection: {
+				url: url,
+			},
+		});
+	}
+
+	return _drizzle;
+}
 
 export const DB = {
 	async clear(): Promise<Error | undefined> {
-		const db = useDatabase();
+		const db = useDrizzle();
 
 		try {
-			await db.sql`
-				TRUNCATE TABLE connections;
-			`;
+			await db.delete(connections);
+			await db.delete(modpacks);
 		} catch (error) {
 			return new Error(`Failed to clear database: ${error}`);
 		}
@@ -18,70 +40,71 @@ export const DB = {
 		offset: number,
 		limit: number,
 	): Promise<ProjectData[] | Error> {
-		const db = useDatabase();
-
-		const result = await db.sql`
-			SELECT id, name, description, icon_url, downloads FROM modpacks JOIN connections ON modpacks.id = connections.project_id WHERE dependency_id = ${dependencyId} ORDER BY downloads DESC LIMIT ${limit} OFFSET ${offset} ;
-		`;
-
-		if (!result.rows) {
-			return new Error(
-				`Failed to fetch connections for project ${dependencyId}: ${result.error}`,
-			);
-		}
-
-		return result.rows.map((row) => {
-			return {
-				id: row.id as string,
-				name: row.name as string,
-				description: row.description as string,
-				icon_url: row.icon_url as string,
-				downloads: row.downloads as number,
-			};
-		});
-	},
-	async getCountForProject(dependencyId: string): Promise<number | Error> {
-		const db = useDatabase();
+		const db = useDrizzle();
 
 		try {
-			const result = await db.sql`
-			SELECT COUNT(*) as count FROM connections WHERE dependency_id = ${dependencyId};
-			`;
+			const result = await db
+				.select({
+					id: modpacks.id,
+					name: modpacks.name,
+					description: modpacks.description,
+					iconUrl: modpacks.iconUrl,
+					downloads: modpacks.downloads,
+				})
+				.from(modpacks)
+				.leftJoin(connections, eq(modpacks.id, connections.projectId))
+				.where(eq(connections.dependencyId, dependencyId))
+				.orderBy(desc(modpacks.downloads))
+				.limit(limit)
+				.offset(offset);
 
-			if (!result.rows) {
-				return new Error(
-					`Failed to fetch connections for project ${dependencyId}: ${result.error}`,
-				);
+			return result.map((row) => {
+				return {
+					id: row.id,
+					name: row.name,
+					description: row.description,
+					icon_url: row.iconUrl,
+					downloads: row.downloads,
+				};
+			});
+		} catch (error) {
+			return new Error(`Failed to fetch modpacks: ${error}`);
+		}
+	},
+	async getCountForProject(dependencyId: string): Promise<number | Error> {
+		const db = useDrizzle();
+
+		try {
+			const result = await db
+				.select({ count: count() })
+				.from(connections)
+				.where(eq(connections.dependencyId, dependencyId));
+
+			if (!result[0]) {
+				return new Error(`Failed to fetch count for project ${dependencyId}`);
 			}
 
-			return result.rows[0]!.count as number;
+			return result[0]!.count;
 		} catch (error) {
 			return new Error(`Failed to add connections: ${error}`);
 		}
 	},
 	async addConnectionsBulk(
-		connections: Connection[],
+		newConnections: NewConnection[],
 	): Promise<Error | undefined> {
-		const db = useDatabase();
+		const db = useDrizzle();
 
 		try {
-			//TODO: dont use becouse of sql injection risk
-			await db.sql`
-				INSERT INTO connections (project_id, dependency_id)
-				VALUES {${connections.map((connection) => `('${connection.project_id}', '${connection.dependency_id}')`).join(", ")}};
-			`;
+			await db.insert(connections).values(newConnections);
 		} catch (error) {
 			return new Error(`Failed to add connections: ${error}`);
 		}
 	},
-	async addModpack(modpack: ProjectData): Promise<Error | undefined> {
-		const db = useDatabase();
+	async addModpacksBulk(newModpacks: NewModpack[]): Promise<Error | undefined> {
+		const db = useDrizzle();
 
 		try {
-			await db.sql`
-				INSERT INTO modpacks (id, name, description, icon_url, downloads)
-				VALUES (${modpack.id}, ${modpack.name}, ${modpack.description}, ${modpack.icon_url}, ${modpack.downloads});
-			`;
+			await db.insert(modpacks).values(newModpacks);
 		} catch (error) {
 			return new Error(`Failed to add modpack: ${error}`);
 		}

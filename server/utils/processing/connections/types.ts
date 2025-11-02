@@ -2,7 +2,7 @@ export type ProjectData = {
 	id: string;
 	name: string;
 	description: string;
-	icon_url: string;
+	icon_url: string | null;
 	downloads: number;
 };
 

@@ -20,7 +20,7 @@
 			id: string;
 			name: string;
 			description: string;
-			icon_url: string;
+			icon_url: string | null;
 			downloads: number;
 		}[]
 	>([]);
@@ -55,7 +55,7 @@
 			class="flex bg-zinc-800 rounded"
 		>
 			<img
-				:src="modpack.icon_url"
+				:src="modpack.icon_url ?? 'img/modrinthLogo.svg'"
 				alt="Modpack Icon"
 				class="w-20 h-20 rounded m-2 object-contain"
 			>

@@ -64,6 +64,9 @@ export default defineNuxtConfig({
 				restToken: undefined,
 			},
 		},
+		db: {
+			url: undefined,
+		},
 		public: {
 			umamiID: undefined,
 		},
@@ -76,7 +79,6 @@ export default defineNuxtConfig({
 		},
 		experimental: {
 			tasks: true,
-			database: true,
 		},
 		scheduledTasks: {
 			"0 * * * *": ["analyze"],

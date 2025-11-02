@@ -34,17 +34,28 @@ export async function updateConnections() {
 			modpacks.push(...versions);
 		}
 
-		modpacks.forEach(async (version) => {
-			await DB.addModpack(version);
-		});
+		const result = await DB.addModpacksBulk(
+			modpacks.map((modpack) => {
+				return {
+					id: modpack.id,
+					name: modpack.name,
+					description: modpack.description,
+					iconUrl: modpack.icon_url,
+					downloads: modpack.downloads,
+				};
+			}),
+		);
+		if (result instanceof Error) {
+			LOGGER.warn(result);
+		}
 
 		const modpackVersions = modpacks.map((modpack) => modpack.latest_version);
 		const versionDependencies = await getVersionDependencies(modpackVersions);
 		for (const pair of versionDependencies) {
 			const connections = pair.dependencies.map((dependency) => {
 				return {
-					project_id: pair.project_id,
-					dependency_id: dependency,
+					projectId: pair.project_id,
+					dependencyId: dependency,
 				};
 			});
 
