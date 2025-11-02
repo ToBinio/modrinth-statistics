@@ -30,16 +30,21 @@
 		async () => {
 			const LIMIT = 10;
 
-			const response = await $fetch("/api/reverseSearch/all", {
-				params: {
-					id: props.id,
-					offset: data.value.length,
-					limit: LIMIT,
-				},
-			});
+			try {
+				const response = await $fetch("/api/reverseSearch/all", {
+					params: {
+						id: props.id,
+						offset: data.value.length,
+						limit: LIMIT,
+					},
+				});
 
-			data.value.push(...response);
-			canLoadMore = response.length >= LIMIT;
+				data.value.push(...response);
+				canLoadMore = response.length >= LIMIT;
+			} catch (error) {
+				console.error(error);
+				canLoadMore = false;
+			}
 		},
 		{
 			distance: 500,
