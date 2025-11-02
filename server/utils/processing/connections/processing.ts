@@ -10,7 +10,7 @@ import type { ExtendedProjectData } from "./types";
 export async function updateConnections() {
 	LOGGER.info("updating connections [starting]");
 
-	const BATCH_SIZE = import.meta.dev ? 1 : 10_000;
+	const BATCH_SIZE = import.meta.dev ? 1 : 1_000;
 
 	let projectIndex = 0;
 	while (true) {
@@ -29,28 +29,39 @@ export async function updateConnections() {
 		}
 
 		const modpacks: ExtendedProjectData[] = [];
-		for (const chunk of chunkArray(batchProjectIds, 200)) {
+		for (const chunk of chunkArray(batchProjectIds, 100)) {
 			const versions = await getProjectData(chunk);
 			modpacks.push(...versions);
 		}
 
-		const result = await DB.addModpacksBulk(
-			modpacks.map((modpack) => {
-				return {
-					id: modpack.id,
-					name: modpack.name,
-					description: modpack.description,
-					iconUrl: modpack.icon_url,
-					downloads: modpack.downloads,
-				};
-			}),
-		);
-		if (result instanceof Error) {
-			LOGGER.warn(result);
+		for (const chunk of chunkArray(modpacks, 100)) {
+			const result = await DB.addModpacksBulk(
+				chunk.map((modpack) => {
+					return {
+						id: modpack.id,
+						name: modpack.name,
+						description: modpack.description,
+						iconUrl: modpack.icon_url,
+						downloads: modpack.downloads,
+					};
+				}),
+			);
+			if (result instanceof Error) {
+				LOGGER.warn(result);
+			}
 		}
 
 		const modpackVersions = modpacks.map((modpack) => modpack.latest_version);
-		const versionDependencies = await getVersionDependencies(modpackVersions);
+
+		const versionDependencies: {
+			project_id: string;
+			dependencies: string[];
+		}[] = [];
+		for (const chunk of chunkArray(modpackVersions, 100)) {
+			const dependencies = await getVersionDependencies(chunk);
+			versionDependencies.push(...dependencies);
+		}
+
 		for (const pair of versionDependencies) {
 			const connections = pair.dependencies.map((dependency) => {
 				return {
@@ -58,6 +69,10 @@ export async function updateConnections() {
 					dependencyId: dependency,
 				};
 			});
+
+			if (connections.length === 0) {
+				continue;
+			}
 
 			const result = await DB.addConnectionsBulk(connections);
 

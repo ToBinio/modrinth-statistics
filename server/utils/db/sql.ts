@@ -23,18 +23,14 @@ export function useDrizzle() {
 	return _drizzle;
 }
 
+//TODO: dont cache in functions or force error handling outside
 export const DB = {
-	async clear(): Promise<Error | undefined> {
+	async clear() {
 		const db = useDrizzle();
 
-		try {
-			await db.delete(connections);
-			await db.delete(modpacks);
-		} catch (error) {
-			return new Error(`Failed to clear database: ${error}`);
-		}
+		await db.delete(connections);
+		await db.delete(modpacks);
 	},
-	//TODO: try catch within the function
 	async getAllForProject(
 		dependencyId: string,
 		offset: number,

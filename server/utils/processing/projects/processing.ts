@@ -128,7 +128,7 @@ async function getStatistics(type: ProjectTypes): Promise<AllStats | Error> {
 		}
 
 		const versionIds: string[] = [];
-		for (const chunk of chunkArray(batchProjectIds, 200)) {
+		for (const chunk of chunkArray(batchProjectIds, 100)) {
 			const versions = await getVersionIds(chunk);
 			versionIds.push(...versions);
 		}
