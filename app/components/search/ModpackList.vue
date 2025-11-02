@@ -53,11 +53,11 @@
 	);
 </script>
 <template>
-	<div ref="el" class="flex flex-col gap-4">
+	<div ref="el" class="flex flex-col gap-4 w-full">
 		<div
 			v-for="modpack in data"
 			:key="modpack.id"
-			class="flex bg-zinc-800 rounded"
+			class="flex bg-zinc-800 rounded w-full"
 		>
 			<img
 				:src="modpack.icon_url ?? 'img/modrinthLogo.svg'"
