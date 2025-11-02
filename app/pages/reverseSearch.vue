@@ -27,7 +27,7 @@
 <template>
 	<div class="flex flex-1 flex-col">
 		<div class="flex flex-col gap-5 items-center mt-4">
-			<span class="text-3xl">Find all Modpacks which include the Project</span>
+			<span class="text-3xl">Find all Modpacks which include a Project</span>
 			<form
 				class="border border-gray-300 rounded-md flex"
 				@submit.prevent="search"

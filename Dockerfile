@@ -16,6 +16,10 @@ FROM node:22-alpine
 WORKDIR /app
 
 COPY --from=build /app/.output /app/.output
+COPY --from=build /app/drizzle.config.ts /app/drizzle.config.ts
+COPY --from=build /app/server/database /app/server/database
 
 EXPOSE 3000
-CMD ["node", ".output/server/index.mjs"]
+
+RUN npm install drizzle-orm drizzle-kit @libsql/client
+CMD ["sh", "-c", "npx drizzle-kit migrate && node .output/server/index.mjs"]
