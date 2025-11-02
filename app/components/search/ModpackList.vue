@@ -65,7 +65,16 @@
 				class="w-20 h-20 rounded m-2 object-contain"
 			>
 			<div class="flex flex-col gap-1">
-				<h3 class="text-2xl">{{ modpack.name }}</h3>
+				<h3 class="text-2xl">
+					{{ modpack.name }}
+					<NuxtLink
+						:href="`https://modrinth.com/modpack/${modpack.id}`"
+						target="_blank"
+						class="bg-clip-text hover:bg-cyan-600"
+					>
+						<Icon name="akar-icons:link-out" size="16"/>
+					</NuxtLink>
+				</h3>
 				<span>{{ modpack.description}}</span>
 				<span> Downloads: {{ modpack.downloads}}</span>
 			</div>
