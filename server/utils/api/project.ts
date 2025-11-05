@@ -3,7 +3,7 @@ import type {
 	ProjectStatsValue,
 } from "~~/server/utils/processing/projects/types";
 
-export function statStringToExtraction(stat: ProjectStatCategory) {
+export function statStringToExtraction(stat: ProjectStatCategory | null) {
 	let typeFn: (value: ProjectStatsValue) => number;
 
 	switch (stat) {

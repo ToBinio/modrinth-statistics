@@ -1,29 +1,36 @@
+import { z } from "zod";
 import { exportStats } from "~~/server/utils/api/export/projectStats";
 import { statStringToExtraction } from "~~/server/utils/api/project";
-import type { VersionCategories } from "~~/server/utils/processing/gameVersions/types";
-import type { ProjectStatCategory } from "~~/server/utils/processing/projects/types";
 
-type QueryData = {
-	stat: ProjectStatCategory;
-	mode: string;
-	type: ProjectTypes;
-	exclusive: string;
-	versionFrom: string | null;
-	versionTo: string | null;
-};
+const querySchema = z.object({
+	stat: ZProjectStatCategory,
+	mode: ZVersionCategories,
+	type: ZProjectTypes,
+	exclusive: z.string(),
+	versionFrom: z.string().optional(),
+	versionTo: z.string().optional(),
+});
 
 export default defineCachedEventHandler(
 	async (event): Promise<StatExport> => {
-		const query = getQuery<QueryData>(event);
-		const typeFn = statStringToExtraction(query.stat);
+		const query = querySchema.safeParse(getQuery(event));
+		if (!query.success) {
+			throw createError({
+				statusCode: 400,
+				statusMessage: "Invalid query parameters",
+				message: query.error.message,
+			});
+		}
+
+		const typeFn = statStringToExtraction(query.data.stat);
 
 		return exportStats(
-			query.mode as VersionCategories,
-			query.type,
-			query.exclusive === "true",
+			query.data.mode,
+			query.data.type,
+			query.data.exclusive === "true",
 			typeFn,
-			query.versionTo,
-			query.versionFrom,
+			query.data.versionTo,
+			query.data.versionFrom,
 		);
 	},
 	{ maxAge: 60 * 60 * 4 /* 4 hour */, swr: false },

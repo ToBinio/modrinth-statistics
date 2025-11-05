@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 export type GameVersion = {
 	name: string;
 	fullVersion: boolean;
@@ -5,7 +7,8 @@ export type GameVersion = {
 
 export type GameVersionData = { name: string; contains: string[] }[];
 
-export type VersionCategories = "all" | "major" | "minor" | "unified";
+export const ZVersionCategories = z.enum(["all", "major", "minor", "unified"]);
+export type VersionCategories = z.infer<typeof ZVersionCategories>;
 
 export type GameVersions = Record<VersionCategories, GameVersionData>;
 export type SupportedVersions = Record<VersionCategories, string[]>;

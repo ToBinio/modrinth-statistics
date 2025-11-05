@@ -29,8 +29,8 @@ function mapStats(
 // extract only versions in the given version range
 function filterVersions(
 	mappedStats: StatExport,
-	versionTo: string | null,
-	versionFrom: string | null,
+	versionTo: string | undefined,
+	versionFrom: string | undefined,
 ) {
 	let to = mappedStats.labels.length;
 	if (versionTo) {
@@ -58,8 +58,8 @@ export async function exportStats(
 	type: ProjectTypes,
 	exclusive: boolean,
 	fn: (value: ProjectStatsValue) => number,
-	versionTo: string | null,
-	versionFrom: string | null,
+	versionTo: string | undefined,
+	versionFrom: string | undefined,
 ): Promise<StatExport> {
 	const stats = await KV.ProjectStats.getLatest(
 		type,

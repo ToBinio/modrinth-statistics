@@ -1,17 +1,24 @@
 import consola from "consola";
+import { z } from "zod";
 import { exportGlobalStatsOverTime } from "~~/server/utils/api/export/globalStats";
 import { fracture } from "~~/server/utils/processing/aggregate";
-import type { GlobalStatCategory } from "~~/server/utils/processing/global/types";
 
-type QueryData = {
-	type: GlobalStatCategory;
-	days: number | undefined;
-	aggregate: string;
-};
+const querySchema = z.object({
+	type: ZGlobalStatCategory,
+	days: z.string().optional(),
+	aggregate: z.string(),
+});
 
 export default defineCachedEventHandler(
 	async (event): Promise<StatExport> => {
-		const query = getQuery<QueryData>(event);
+		const query = querySchema.safeParse(getQuery(event));
+		if (!query.success) {
+			throw createError({
+				statusCode: 400,
+				statusMessage: "Invalid query parameters",
+				message: query.error.message,
+			});
+		}
 
 		const dateKey = await KV.LatestDate.get();
 
@@ -31,7 +38,7 @@ export default defineCachedEventHandler(
 			authors: number;
 		}) => number;
 
-		switch (query.type) {
+		switch (query.data.type) {
 			case "projects": {
 				typeFn = (value) => value.projects;
 				break;
@@ -50,10 +57,12 @@ export default defineCachedEventHandler(
 			}
 		}
 
-		const data = await exportGlobalStatsOverTime(dateKey, typeFn, query.days);
+		const days = query.data.days ? parseInt(query.data.days, 10) : undefined;
 
-		const dataPoints = Math.min(64, query.days ?? 64);
-		if (query.aggregate === "false") {
+		const data = await exportGlobalStatsOverTime(dateKey, typeFn, days);
+
+		const dataPoints = Math.min(64, days ?? 64);
+		if (query.data.aggregate === "false") {
 			return summarize(fracture(data), dataPoints, false);
 		}
 		return summarize(data, dataPoints, true);

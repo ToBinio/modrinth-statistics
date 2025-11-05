@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 export type Version = {
 	project_id: string;
 	loaders: string[];
@@ -19,4 +21,5 @@ export type ProjectStatsValue = {
 	count: number;
 };
 
-export type ProjectStatCategory = "versions" | "count" | "downloads";
+export const ZProjectStatCategory = z.enum(["versions", "count", "downloads"]);
+export type ProjectStatCategory = z.infer<typeof ZProjectStatCategory>;

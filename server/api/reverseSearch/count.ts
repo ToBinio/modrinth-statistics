@@ -1,8 +1,21 @@
+import { z } from "zod";
+
+const querySchema = z.object({
+	id: z.string(),
+});
+
 export default defineCachedEventHandler(
 	async (event): Promise<{ count: number }> => {
-		const query = getQuery(event);
+		const query = querySchema.safeParse(getQuery(event));
+		if (!query.success) {
+			throw createError({
+				statusCode: 400,
+				statusMessage: "Invalid query parameters",
+				message: query.error.message,
+			});
+		}
 
-		const count = await DB.getCountForProject(query.id as string);
+		const count = await DB.getCountForProject(query.data.id);
 
 		if (count instanceof Error) {
 			setResponseStatus(event, 500);

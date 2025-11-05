@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 export type GlobalStats = {
 	projects: number;
 	versions: number;
@@ -5,4 +7,10 @@ export type GlobalStats = {
 	authors: number;
 };
 
-export type GlobalStatCategory = "projects" | "versions" | "files" | "authors";
+export const ZGlobalStatCategory = z.enum([
+	"projects",
+	"versions",
+	"files",
+	"authors",
+]);
+export type GlobalStatCategory = z.infer<typeof ZGlobalStatCategory>;
