@@ -18,7 +18,7 @@
 				</div>
 			</div>
 			<ModrinthLink class="big"/>
-			<div class="flex gap-20">
+			<div class="flex flex-col gap-2 sm:flex-row sm:gap-10 md:gap-20">
 				<NuxtLink
 					href="/charts"
 					active-class="active-link !to-cyan-500"
