@@ -5,6 +5,11 @@
 		title: title,
 	});
 
+	useSeoMeta({
+		description: "See all Statistics about Modrinth",
+		ogDescription: "See all Statistics about Modrinth",
+	});
+
 	useTracking();
 
 	const projectType = useFilterItem("project_type", "mod");

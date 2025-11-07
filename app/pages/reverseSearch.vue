@@ -1,4 +1,13 @@
 <script setup lang="ts">
+	useHead({
+		title: "Modrinth Statistics - reverse search",
+	});
+
+	useSeoMeta({
+		description: "Find all Modpacks which include a Project",
+		ogDescription: "Find all Modpacks which include a Project",
+	});
+
 	import ModpackList from "~/components/search/ModpackList.vue";
 
 	const route = useRoute();
