@@ -19,29 +19,29 @@
 	},
 	"dependencies": {
 		"@libsql/client": "^0.15.15",
-		"@nuxt/kit": "^4.2.0",
-		"@nuxtjs/sitemap": "^7.4.7",
-		"@tailwindcss/vite": "^4.1.16",
-		"@upstash/redis": "^1.35.6",
+		"@nuxt/kit": "^4.2.1",
+		"@nuxtjs/sitemap": "^7.4.9",
+		"@tailwindcss/vite": "^4.1.17",
+		"@upstash/redis": "^1.35.7",
 		"chart.js": "^4.5.1",
 		"consola": "^3.4.2",
-		"drizzle-orm": "^0.44.7",
-		"nuxt": "^4.2.0",
-		"tailwindcss": "^4.1.16",
-		"unstorage": "^1.17.2",
-		"vue": "^3.5.22",
-		"vue-chartjs": "^5.3.2",
+		"drizzle-orm": "^0.45.0",
+		"nuxt": "^4.2.1",
+		"tailwindcss": "^4.1.17",
+		"unstorage": "^1.17.3",
+		"vue": "^3.5.25",
+		"vue-chartjs": "^5.3.3",
 		"vue-router": "^4.6.3",
-		"zod": "^4.1.12"
+		"zod": "^4.1.13"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.3.2",
+		"@biomejs/biome": "^2.3.8",
 		"@iconify-json/akar-icons": "^1.2.7",
 		"@iconify-json/eos-icons": "^1.2.4",
 		"@nuxt/icon": "^2.1.0",
 		"@nuxt/scripts": "^0.13.0",
-		"@vueuse/nuxt": "^14.0.0",
-		"drizzle-kit": "^0.31.6",
-		"vue-tsc": "^3.1.2"
+		"@vueuse/nuxt": "^14.1.0",
+		"drizzle-kit": "^0.31.8",
+		"vue-tsc": "^3.1.6"
 	}
 }
