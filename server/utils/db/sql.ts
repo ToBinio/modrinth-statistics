@@ -23,7 +23,7 @@ export function useDrizzle() {
 	return _drizzle;
 }
 
-//TODO: dont cache in functions or force error handling outside
+//TODO: dont catch in functions or force error handling outside
 export const DB = {
 	async clear() {
 		const db = useDrizzle();
