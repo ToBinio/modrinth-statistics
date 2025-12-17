@@ -1,4 +1,3 @@
-import { LOGGER } from "~~/server/tasks/analyze";
 import { getGameVersions } from "~~/server/utils/processing/gameVersions/fetching";
 import type {
 	GameVersion,
@@ -7,6 +6,7 @@ import type {
 	SupportedVersions,
 } from "~~/server/utils/processing/gameVersions/types";
 import type { Version } from "~~/server/utils/processing/projects/types";
+import { LOGGER } from "../logging";
 
 export async function updateGameVersions() {
 	LOGGER.info("updating game versions [starting]");

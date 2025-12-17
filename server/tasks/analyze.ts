@@ -1,11 +1,9 @@
-import consola from "consola";
 import { updateGameVersions } from "~~/server/utils/processing/gameVersions/processing";
 import { updateGlobalStats } from "~~/server/utils/processing/global/processing";
 import { updateStatistics } from "~~/server/utils/processing/projects/processing";
 import { DB } from "../utils/db/sql";
 import { updateConnections } from "../utils/processing/connections/processing";
-
-export const LOGGER = consola.withTag("Analyze");
+import { LOGGER } from "../utils/processing/logging";
 
 export default defineTask({
 	meta: {

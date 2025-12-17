@@ -1,5 +1,5 @@
-import { LOGGER } from "~~/server/tasks/analyze";
 import { DB } from "../../db/sql";
+import { LOGGER } from "../logging";
 import {
 	getModpackIds,
 	getProjectData,

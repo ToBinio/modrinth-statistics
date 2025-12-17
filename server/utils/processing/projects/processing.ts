@@ -1,5 +1,4 @@
 import { chunkArray } from "#shared/utils/array";
-import { LOGGER } from "~~/server/tasks/analyze";
 import { getSupportedGameVersions } from "~~/server/utils/processing/gameVersions/processing";
 import type {
 	GameVersionData,
@@ -14,6 +13,7 @@ import type {
 	ProjectStats,
 	Version,
 } from "~~/server/utils/processing/projects/types";
+import { LOGGER } from "../logging";
 
 type StatsDataType = Map<
 	string,

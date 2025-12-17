@@ -1,5 +1,5 @@
-import { LOGGER } from "~~/server/tasks/analyze";
 import type { GlobalStats } from "~~/server/utils/processing/global/types";
+import { LOGGER } from "../logging";
 
 export async function updateGlobalStats() {
 	LOGGER.info("updating globalStats [starting]");
