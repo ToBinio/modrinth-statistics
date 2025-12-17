@@ -40,8 +40,12 @@
 		"@iconify-json/eos-icons": "^1.2.4",
 		"@nuxt/icon": "^2.1.0",
 		"@nuxt/scripts": "^0.13.0",
+		"@nuxt/test-utils": "^3.21.0",
 		"@vueuse/nuxt": "^14.1.0",
 		"drizzle-kit": "^0.31.8",
+		"happy-dom": "^20.0.11",
+		"playwright-core": "^1.57.0",
+		"vitest": "^4.0.16",
 		"vue-tsc": "^3.1.6"
 	}
 }

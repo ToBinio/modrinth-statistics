@@ -88,6 +88,12 @@ export default defineNuxtConfig({
 		plugins: [tailwindcss()],
 	},
 	css: ["~/assets/css/main.css"],
-	modules: ["@nuxt/icon", "@vueuse/nuxt", "@nuxtjs/sitemap", "@nuxt/scripts"],
+	modules: [
+		"@nuxt/icon",
+		"@vueuse/nuxt",
+		"@nuxtjs/sitemap",
+		"@nuxt/scripts",
+		"@nuxt/test-utils/module",
+	],
 	compatibilityDate: "2025-07-16",
 });

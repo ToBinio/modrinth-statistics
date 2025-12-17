@@ -61,7 +61,7 @@ export function getSupportedGameVersions(
 	};
 }
 
-function groupGameVersions(versions: GameVersion[]): GameVersions {
+export function groupGameVersions(versions: GameVersion[]): GameVersions {
 	const all = versions.map((value) => {
 		return { name: value.name, contains: [value.name] };
 	});
