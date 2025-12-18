@@ -62,8 +62,8 @@ export function getSupportedGameVersions(
 }
 
 function getMinorVersionName(version: string): string {
-	const split = version.split("-")[0].split(".");
-	if (Number.isNaN(Number.parseInt(split[0], 10))) {
+	const split = (version.split("-")[0] ?? "").split(".");
+	if (Number.isNaN(Number.parseInt(split[0]!, 10))) {
 		return version;
 	}
 
@@ -74,16 +74,16 @@ function getMinorVersionName(version: string): string {
 	}
 }
 
-function getMajorVersionName(version: string) {
-	const split = version.split("-")[0].split(".");
-	if (Number.isNaN(Number.parseInt(split[0], 10))) {
+function getMajorVersionName(version: string): string {
+	const split = (version.split("-")[0] ?? "").split(".");
+	if (Number.isNaN(Number.parseInt(split[0]!, 10))) {
 		return version;
 	}
 
 	if (split[0] === "1") {
 		return split.slice(0, 2).join(".");
 	} else {
-		return split[0];
+		return split[0] ?? "";
 	}
 }
 
@@ -104,7 +104,9 @@ function groupData(
 		}
 
 		if (data[data.length - 2]?.name === gameVersionName) {
-			data[data.length - 2]?.contains.push(...data[data.length - 1].contains);
+			data[data.length - 2]?.contains.push(
+				...(data[data.length - 1]?.contains ?? []),
+			);
 			data.pop();
 		}
 	}
