@@ -61,46 +61,68 @@ export function getSupportedGameVersions(
 	};
 }
 
+function getMinorVersionName(version: string): string {
+	const split = version.split("-")[0].split(".");
+	if (Number.isNaN(Number.parseInt(split[0], 10))) {
+		return version;
+	}
+
+	if (split[0] === "1") {
+		return split.slice(0, 3).join(".");
+	} else {
+		return split.slice(0, 2).join(".");
+	}
+}
+
+function getMajorVersionName(version: string) {
+	const split = version.split("-")[0].split(".");
+	if (Number.isNaN(Number.parseInt(split[0], 10))) {
+		return version;
+	}
+
+	if (split[0] === "1") {
+		return split.slice(0, 2).join(".");
+	} else {
+		return split[0];
+	}
+}
+
+function groupData(
+	versions: GameVersion[],
+	fn: (version: string) => string,
+): GameVersionData {
+	const data: GameVersionData = [];
+
+	let currentContains: string[] = [];
+	for (const version of versions) {
+		const gameVersionName = fn(version.name);
+		currentContains.push(version.name);
+
+		if (version.fullVersion) {
+			data.push({ name: gameVersionName, contains: currentContains });
+			currentContains = [];
+		}
+
+		if (data[data.length - 2]?.name === gameVersionName) {
+			data[data.length - 2]?.contains.push(...data[data.length - 1].contains);
+			data.pop();
+		}
+	}
+
+	return data;
+}
+
 export function groupGameVersions(versions: GameVersion[]): GameVersions {
 	const all = versions.map((value) => {
 		return { name: value.name, contains: [value.name] };
 	});
 
-	const minor: GameVersionData = [];
-
-	let currentContains: string[] = [];
-	for (const version of versions) {
-		currentContains.push(version.name);
-
-		if (version.fullVersion) {
-			minor.push({ name: version.name, contains: currentContains });
-			currentContains = [];
-		}
-	}
-
-	const major: GameVersionData = [];
-
-	for (const version of minor) {
-		const gameVersionName = version.name.split(".").slice(0, 2).join(".");
-
-		if (
-			major.length === 0 ||
-			major[major.length - 1]?.name !== gameVersionName
-		) {
-			major.push({
-				name: gameVersionName,
-				contains: Array.from(version.contains),
-			});
-			continue;
-		}
-
-		major[major.length - 1]?.contains.push(...version.contains);
-	}
+	const minor = groupData(versions, getMinorVersionName);
+	const major = groupData(versions, getMajorVersionName);
 
 	const unified: GameVersionData = [{ name: "unified", contains: [] }];
-
-	for (const version of major) {
-		unified[0]!.contains.push(...version.contains);
+	for (const version of versions) {
+		unified[0]!.contains.push(version.name);
 	}
 
 	return {

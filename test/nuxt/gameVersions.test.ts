@@ -3,6 +3,9 @@ import { groupGameVersions } from "~~/server/utils/processing/gameVersions/proce
 
 const versions: GameVersion[] = [
 	// 1.21.5 snapshots
+	{ name: "b1.5.3", fullVersion: false },
+	{ name: "rd-213213", fullVersion: false },
+	{ name: "25w24a", fullVersion: false },
 	{ name: "1.21.5-snapshot-1", fullVersion: false },
 	{ name: "1.21.5-snapshot-2", fullVersion: false },
 	{ name: "1.21.5", fullVersion: true },
@@ -12,8 +15,12 @@ const versions: GameVersion[] = [
 	{ name: "1.21.6", fullVersion: true },
 
 	// 1.22
+	{ name: "26w04a", fullVersion: false },
 	{ name: "1.22-snapshot-1", fullVersion: false },
 	{ name: "1.22", fullVersion: true },
+
+	// 1.23
+	{ name: "1.23.5", fullVersion: true },
 
 	// 26.1
 	{ name: "26.1-snapshot-1", fullVersion: false },
@@ -24,6 +31,9 @@ const versions: GameVersion[] = [
 	// 26.2
 	{ name: "26.2-snapshot-1", fullVersion: false },
 	{ name: "26.2", fullVersion: true },
+
+	// 26.3 - only snapshot
+	{ name: "26.3-snapshot-1", fullVersion: false },
 ];
 
 describe("groupGameVersions", () => {
@@ -44,7 +54,14 @@ describe("groupGameVersions", () => {
 		expect(result.minor).toEqual([
 			{
 				name: "1.21.5",
-				contains: ["1.21.5-snapshot-1", "1.21.5-snapshot-2", "1.21.5"],
+				contains: [
+					"b1.5.3",
+					"rd-213213",
+					"25w24a",
+					"1.21.5-snapshot-1",
+					"1.21.5-snapshot-2",
+					"1.21.5",
+				],
 			},
 			{
 				name: "1.21.6",
@@ -52,7 +69,11 @@ describe("groupGameVersions", () => {
 			},
 			{
 				name: "1.22",
-				contains: ["1.22-snapshot-1", "1.22"],
+				contains: ["26w04a", "1.22-snapshot-1", "1.22"],
+			},
+			{
+				name: "1.23.5",
+				contains: ["1.23.5"],
 			},
 			{
 				name: "26.1",
@@ -72,6 +93,9 @@ describe("groupGameVersions", () => {
 			{
 				name: "1.21",
 				contains: [
+					"b1.5.3",
+					"rd-213213",
+					"25w24a",
 					"1.21.5-snapshot-1",
 					"1.21.5-snapshot-2",
 					"1.21.5",
@@ -81,7 +105,11 @@ describe("groupGameVersions", () => {
 			},
 			{
 				name: "1.22",
-				contains: ["1.22-snapshot-1", "1.22"],
+				contains: ["26w04a", "1.22-snapshot-1", "1.22"],
+			},
+			{
+				name: "1.23",
+				contains: ["1.23.5"],
 			},
 			{
 				name: "26",

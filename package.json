@@ -15,7 +15,8 @@
 		"lint:check": "biome check",
 		"lint:summary": "biome check --reporter summary",
 		"db:generate": "drizzle-kit generate",
-		"db:migrate": "drizzle-kit migrate"
+		"db:migrate": "drizzle-kit migrate",
+		"test": "vitest run"
 	},
 	"dependencies": {
 		"@libsql/client": "^0.15.15",
