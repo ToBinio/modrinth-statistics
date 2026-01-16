@@ -48,6 +48,7 @@ export async function getVersionDependencies(
 	const data = await $modrinthFetch<Version[]>("/versions", {
 		query: {
 			ids: `["${versionIds.join('","')}"]`,
+			include_changelog: false,
 		},
 	});
 

@@ -39,6 +39,7 @@ export async function getVersions(versionIds: string[]): Promise<Version[]> {
 	const data = await $modrinthFetch<Version[]>("/versions", {
 		query: {
 			ids: `["${versionIds.join('","')}"]`,
+			include_changelog: false,
 		},
 	});
 
