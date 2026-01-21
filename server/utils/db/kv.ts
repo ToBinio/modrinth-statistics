@@ -4,6 +4,9 @@ import type {
 } from "~~/server/utils/processing/gameVersions/types";
 import type { GlobalStats } from "~~/server/utils/processing/global/types";
 import type { ProjectStats } from "~~/server/utils/processing/projects/types";
+import { dateToKey } from "~~/shared/utils/date";
+import type { ProjectTypes } from "~~/shared/utils/project";
+import { firstLetterUpperCase } from "~~/shared/utils/text";
 
 export const KV = {
 	GameVersions: {

@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { exportStatsOverTime } from "~~/server/utils/api/export/projectStats";
-import { statStringToExtraction } from "~~/server/utils/api/project";
+import type { StatExport } from "~~/shared/types/types";
+import { ZProjectTypes } from "~~/shared/utils/project";
 
 const querySchema = z.object({
 	stat: ZProjectStatCategory,

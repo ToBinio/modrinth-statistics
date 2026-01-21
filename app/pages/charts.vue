@@ -1,4 +1,16 @@
 <script setup lang="ts">
+	import { useExplanations } from "~/composables/useExplanations";
+	import {
+		useFilterItem,
+		useFilterNullableItem,
+	} from "~/composables/useFilterItem";
+	import { useGameVersions } from "~/composables/useGameVersions";
+	import { useStatData } from "~/composables/useStatData";
+	import { useTracking } from "~/composables/useTracking";
+	import { useTypeCategory } from "~/composables/useTypeCategory";
+	import { useVersionRange } from "~/composables/useVersionRange";
+	import { firstLetterUpperCase } from "~~/shared/utils/text";
+
 	const title = ref("Modrinth Statistics");
 
 	useHead({
@@ -197,7 +209,7 @@
 
 		<div
 			class="relative flex ml-0 w-full transition-all md:ml-52"
-			:class="{ '!ml-0': !sideBarOpen }"
+			:class="{ 'ml-0!': !sideBarOpen }"
 		>
 			<div
 				:data-fetching="isFetching"

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 	import { Bar } from "vue-chartjs";
+	import type { StatExport } from "~~/shared/types/types";
 
 	const props = defineProps<{
 		data: StatExport | undefined;

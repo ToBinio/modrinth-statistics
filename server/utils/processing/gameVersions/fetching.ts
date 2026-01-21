@@ -1,4 +1,5 @@
 import type { GameVersion } from "~~/server/utils/processing/gameVersions/types";
+import { $modrinthFetch } from "~~/shared/utils/modrinthFetch";
 
 export async function getGameVersions(): Promise<GameVersion[]> {
 	const data =

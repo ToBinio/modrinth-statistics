@@ -1,6 +1,7 @@
 import { updateGameVersions } from "~~/server/utils/processing/gameVersions/processing";
 import { updateGlobalStats } from "~~/server/utils/processing/global/processing";
 import { updateStatistics } from "~~/server/utils/processing/projects/processing";
+import { dateToKey } from "~~/shared/utils/date";
 import { DB } from "../utils/db/sql";
 import { updateConnections } from "../utils/processing/connections/processing";
 import { LOGGER } from "../utils/processing/logging";

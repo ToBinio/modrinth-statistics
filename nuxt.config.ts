@@ -27,6 +27,9 @@ for (const type of project_types) {
 }
 
 export default defineNuxtConfig({
+	imports: {
+		scan: false,
+	},
 	devtools: { enabled: true },
 	future: {
 		compatibilityVersion: 4,

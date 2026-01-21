@@ -4,6 +4,9 @@ import type {
 	ProjectStats,
 	ProjectStatsValue,
 } from "~~/server/utils/processing/projects/types";
+import type { StatExport } from "~~/shared/types/types";
+import { dateToFormatted } from "~~/shared/utils/date";
+import type { ProjectTypes } from "~~/shared/utils/project";
 
 // maps database data to a format usable by the frontend
 function mapStats(

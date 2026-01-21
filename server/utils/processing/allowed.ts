@@ -1,3 +1,5 @@
+import type { ProjectTypes } from "~~/shared/utils/project";
+
 const allowedModLoaders = [
 	"fabric",
 	"forge",

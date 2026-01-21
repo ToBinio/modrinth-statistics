@@ -1,4 +1,6 @@
 <script setup lang="ts">
+	import { useTracking } from "~/composables/useTracking";
+
 	useHead({
 		title: "Modrinth Statistics",
 	});

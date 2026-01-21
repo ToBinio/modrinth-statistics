@@ -1,3 +1,5 @@
+import type { StatExport } from "~~/shared/types/types";
+
 export function useStatData(
 	isGlobalStats: Ref<boolean>,
 	isRevenueStats: Ref<boolean>,

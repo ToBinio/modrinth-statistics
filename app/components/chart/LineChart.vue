@@ -1,5 +1,6 @@
 <script setup lang="ts">
 	import { Line } from "vue-chartjs";
+	import type { StatExport } from "~~/shared/types/types";
 
 	const props = defineProps<{
 		data: StatExport | undefined;

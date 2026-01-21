@@ -2,6 +2,7 @@ import consola from "consola";
 import { z } from "zod";
 import { exportGlobalStatsOverTime } from "~~/server/utils/api/export/globalStats";
 import { fracture } from "~~/server/utils/processing/aggregate";
+import type { StatExport } from "~~/shared/types/types";
 
 const querySchema = z.object({
 	type: ZGlobalStatCategory,

@@ -1,4 +1,5 @@
 import type { GlobalStats } from "~~/server/utils/processing/global/types";
+import { $modrinthFetch } from "~~/shared/utils/modrinthFetch";
 import { LOGGER } from "../logging";
 
 export async function updateGlobalStats() {

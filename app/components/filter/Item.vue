@@ -53,7 +53,7 @@
 				</div>
 				<div
 					class="bg-zinc-900 z-10 relative flex flex-col max-h-48 overflow-scroll transition-all px-1 border-l-2 border-zinc-800"
-					:class="{'!max-h-0': !open}"
+					:class="{'max-h-0!': !open}"
 				>
 					<button
 						class="text-left hover:bg-zinc-800 rounded cursor-pointer px-1"

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+	import type { StatExport } from "~~/shared/types/types";
+
 	const props = defineProps<{
 		data: StatExport | undefined;
 		explanation: string | undefined;

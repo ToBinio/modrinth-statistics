@@ -1,4 +1,5 @@
 import { exportRevenueStatsOverTime } from "~~/server/utils/api/export/revenue";
+import type { StatExport } from "~~/shared/types/types";
 
 export default defineCachedEventHandler(
 	async (_event): Promise<StatExport> => {

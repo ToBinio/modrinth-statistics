@@ -1,4 +1,5 @@
 import type { Version } from "~~/server/utils/processing/projects/types";
+import { $modrinthFetch } from "~~/shared/utils/modrinthFetch";
 
 export async function getProjectIds(
 	offset: number,

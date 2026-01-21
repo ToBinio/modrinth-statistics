@@ -1,3 +1,4 @@
+import { $modrinthFetch } from "~~/shared/utils/modrinthFetch";
 import type { ExtendedProjectData } from "./types";
 
 export async function getModpackIds(

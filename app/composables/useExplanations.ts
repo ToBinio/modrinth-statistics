@@ -1,3 +1,5 @@
+import { firstLetterUpperCase } from "~~/shared/utils/text";
+
 export function useExplanations(
 	type: string,
 	stat: string,

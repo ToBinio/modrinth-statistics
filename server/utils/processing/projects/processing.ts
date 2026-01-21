@@ -13,6 +13,7 @@ import type {
 	ProjectStats,
 	Version,
 } from "~~/server/utils/processing/projects/types";
+import { type ProjectTypes, projectTypeList } from "~~/shared/utils/project";
 import { LOGGER } from "../logging";
 
 type StatsDataType = Map<
