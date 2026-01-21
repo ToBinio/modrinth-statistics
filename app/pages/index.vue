@@ -22,7 +22,7 @@
 						to="https://modrinth.com"
 						id="modrinth"
 						target="_blank"
-						class="text-8xl opacity-80 text-transparent! bg-clip-text from-cyan-400 to-cyan-600 bg-gradient-to-br"
+						class="text-8xl opacity-80 text-transparent! bg-clip-text from-cyan-400 to-cyan-600 bg-linear-to-br"
 					>
 						Modrinth
 					</NuxtLink>
@@ -31,7 +31,7 @@
 					to="https://modrinth.com"
 					id="modrinth"
 					target="_blank"
-					class="text-8xl text-transparent! bg-clip-text from-cyan-200 to-cyan-600 bg-gradient-to-br"
+					class="text-8xl text-transparent! bg-clip-text from-cyan-200 to-cyan-600 bg-linear-to-br"
 				>
 					Modrinth
 				</NuxtLink>
