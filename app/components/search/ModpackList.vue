@@ -7,14 +7,14 @@
 		() => props.id,
 		() => {
 			reset();
-			canLoadMore = true;
+			canLoadMore.value = true;
 			data.value = [];
 		},
 	);
 
 	const el = useTemplateRef<HTMLElement>("el");
 
-	let canLoadMore = true;
+	const canLoadMore = ref(true);
 	const data = ref<
 		{
 			id: string;
@@ -40,15 +40,15 @@
 				});
 
 				data.value.push(...response);
-				canLoadMore = response.length >= LIMIT;
+				canLoadMore.value = response.length >= LIMIT;
 			} catch (error) {
 				console.error(error);
-				canLoadMore = false;
+				canLoadMore.value = false;
 			}
 		},
 		{
 			distance: 500,
-			canLoadMore: () => canLoadMore,
+			canLoadMore: () => canLoadMore.value,
 		},
 	);
 </script>
