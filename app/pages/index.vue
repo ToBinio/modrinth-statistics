@@ -49,7 +49,7 @@
 				:data="data?.versions"
 				icon="akar-icons:attach"
 			/>
-			<HomeStatItem name="Files" :data="data?.files" icon="akar-icons:file"/>
+			<HomeStatItem name="Files" :data="data?.files" icon="akar-icons:file" />
 			<HomeStatItem
 				name="Authors"
 				:data="data?.authors"

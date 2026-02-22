@@ -37,7 +37,7 @@ importers:
         version: 1.15.4
       nuxt:
         specifier: ^4.2.2
-        version: 4.2.2(@biomejs/biome@2.3.10)(@libsql/client@0.15.15)(@netlify/blobs@9.1.2)(@parcel/watcher@2.5.1)(@types/node@25.0.3)(@upstash/redis@1.35.8)(@vue/compiler-sfc@3.5.28)(better-sqlite3@12.4.1)(cac@6.7.14)(db0@0.3.4(@libsql/client@0.15.15)(better-sqlite3@12.4.1)(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1)))(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1))(ioredis@5.8.2)(lightningcss@1.30.2)(magicast@0.5.1)(rollup@4.53.5)(terser@5.44.1)(typescript@5.9.2)(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.2))(vue-tsc@3.1.8(typescript@5.9.2))(yaml@2.8.2)
+        version: 4.2.2(@biomejs/biome@2.4.4)(@libsql/client@0.15.15)(@netlify/blobs@9.1.2)(@parcel/watcher@2.5.1)(@types/node@25.0.3)(@upstash/redis@1.35.8)(@vue/compiler-sfc@3.5.28)(better-sqlite3@12.4.1)(cac@6.7.14)(db0@0.3.4(@libsql/client@0.15.15)(better-sqlite3@12.4.1)(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1)))(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1))(ioredis@5.8.2)(lightningcss@1.30.2)(magicast@0.5.1)(rollup@4.53.5)(terser@5.44.1)(typescript@5.9.2)(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.2))(vue-tsc@3.1.8(typescript@5.9.2))(yaml@2.8.2)
       tailwindcss:
         specifier: ^4.1.18
         version: 4.1.18
@@ -58,8 +58,8 @@ importers:
         version: 4.2.1
     devDependencies:
       '@biomejs/biome':
-        specifier: ^2.3.10
-        version: 2.3.10
+        specifier: ^2.4.4
+        version: 2.4.4
       '@iconify-json/akar-icons':
         specifier: ^1.2.7
         version: 1.2.7
@@ -80,7 +80,7 @@ importers:
         version: 2.4.6
       '@vueuse/nuxt':
         specifier: ^14.1.0
-        version: 14.1.0(magicast@0.5.1)(nuxt@4.2.2(@biomejs/biome@2.3.10)(@libsql/client@0.15.15)(@netlify/blobs@9.1.2)(@parcel/watcher@2.5.1)(@types/node@25.0.3)(@upstash/redis@1.35.8)(@vue/compiler-sfc@3.5.28)(better-sqlite3@12.4.1)(cac@6.7.14)(db0@0.3.4(@libsql/client@0.15.15)(better-sqlite3@12.4.1)(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1)))(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1))(ioredis@5.8.2)(lightningcss@1.30.2)(magicast@0.5.1)(rollup@4.53.5)(terser@5.44.1)(typescript@5.9.2)(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.2))(vue-tsc@3.1.8(typescript@5.9.2))(yaml@2.8.2))(vue@3.5.25(typescript@5.9.2))
+        version: 14.1.0(magicast@0.5.1)(nuxt@4.2.2(@biomejs/biome@2.4.4)(@libsql/client@0.15.15)(@netlify/blobs@9.1.2)(@parcel/watcher@2.5.1)(@types/node@25.0.3)(@upstash/redis@1.35.8)(@vue/compiler-sfc@3.5.28)(better-sqlite3@12.4.1)(cac@6.7.14)(db0@0.3.4(@libsql/client@0.15.15)(better-sqlite3@12.4.1)(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1)))(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1))(ioredis@5.8.2)(lightningcss@1.30.2)(magicast@0.5.1)(rollup@4.53.5)(terser@5.44.1)(typescript@5.9.2)(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.2))(vue-tsc@3.1.8(typescript@5.9.2))(yaml@2.8.2))(vue@3.5.25(typescript@5.9.2))
       drizzle-kit:
         specifier: ^0.31.8
         version: 0.31.8
@@ -228,55 +228,55 @@ packages:
     resolution: {integrity: sha512-LwdZHpScM4Qz8Xw2iKSzS+cfglZzJGvofQICy7W7v4caru4EaAmyUuO6BGrbyQ2mYV11W0U8j5mBhd14dd3B0A==}
     engines: {node: '>=6.9.0'}
 
-  '@biomejs/biome@2.3.10':
-    resolution: {integrity: sha512-/uWSUd1MHX2fjqNLHNL6zLYWBbrJeG412/8H7ESuK8ewoRoMPUgHDebqKrPTx/5n6f17Xzqc9hdg3MEqA5hXnQ==}
+  '@biomejs/biome@2.4.4':
+    resolution: {integrity: sha512-tigwWS5KfJf0cABVd52NVaXyAVv4qpUXOWJ1rxFL8xF1RVoeS2q/LK+FHgYoKMclJCuRoCWAPy1IXaN9/mS61Q==}
     engines: {node: '>=14.21.3'}
     hasBin: true
 
-  '@biomejs/cli-darwin-arm64@2.3.10':
-    resolution: {integrity: sha512-M6xUjtCVnNGFfK7HMNKa593nb7fwNm43fq1Mt71kpLpb+4mE7odO8W/oWVDyBVO4ackhresy1ZYO7OJcVo/B7w==}
+  '@biomejs/cli-darwin-arm64@2.4.4':
+    resolution: {integrity: sha512-jZ+Xc6qvD6tTH5jM6eKX44dcbyNqJHssfl2nnwT6vma6B1sj7ZLTGIk6N5QwVBs5xGN52r3trk5fgd3sQ9We9A==}
     engines: {node: '>=14.21.3'}
     cpu: [arm64]
     os: [darwin]
 
-  '@biomejs/cli-darwin-x64@2.3.10':
-    resolution: {integrity: sha512-Vae7+V6t/Avr8tVbFNjnFSTKZogZHFYl7MMH62P/J1kZtr0tyRQ9Fe0onjqjS2Ek9lmNLmZc/VR5uSekh+p1fg==}
+  '@biomejs/cli-darwin-x64@2.4.4':
+    resolution: {integrity: sha512-Dh1a/+W+SUCXhEdL7TiX3ArPTFCQKJTI1mGncZNWfO+6suk+gYA4lNyJcBB+pwvF49uw0pEbUS49BgYOY4hzUg==}
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [darwin]
 
-  '@biomejs/cli-linux-arm64-musl@2.3.10':
-    resolution: {integrity: sha512-B9DszIHkuKtOH2IFeeVkQmSMVUjss9KtHaNXquYYWCjH8IstNgXgx5B0aSBQNr6mn4RcKKRQZXn9Zu1rM3O0/A==}
+  '@biomejs/cli-linux-arm64-musl@2.4.4':
+    resolution: {integrity: sha512-+sPAXq3bxmFwhVFJnSwkSF5Rw2ZAJMH3MF6C9IveAEOdSpgajPhoQhbbAK12SehN9j2QrHpk4J/cHsa/HqWaYQ==}
     engines: {node: '>=14.21.3'}
     cpu: [arm64]
     os: [linux]
 
-  '@biomejs/cli-linux-arm64@2.3.10':
-    resolution: {integrity: sha512-hhPw2V3/EpHKsileVOFynuWiKRgFEV48cLe0eA+G2wO4SzlwEhLEB9LhlSrVeu2mtSn205W283LkX7Fh48CaxA==}
+  '@biomejs/cli-linux-arm64@2.4.4':
+    resolution: {integrity: sha512-V/NFfbWhsUU6w+m5WYbBenlEAz8eYnSqRMDMAW3K+3v0tYVkNyZn8VU0XPxk/lOqNXLSCCrV7FmV/u3SjCBShg==}
     engines: {node: '>=14.21.3'}
     cpu: [arm64]
     os: [linux]
 
-  '@biomejs/cli-linux-x64-musl@2.3.10':
-    resolution: {integrity: sha512-QTfHZQh62SDFdYc2nfmZFuTm5yYb4eO1zwfB+90YxUumRCR171tS1GoTX5OD0wrv4UsziMPmrePMtkTnNyYG3g==}
+  '@biomejs/cli-linux-x64-musl@2.4.4':
+    resolution: {integrity: sha512-gGvFTGpOIQDb5CQ2VC0n9Z2UEqlP46c4aNgHmAMytYieTGEcfqhfCFnhs6xjt0S3igE6q5GLuIXtdQt3Izok+g==}
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [linux]
 
-  '@biomejs/cli-linux-x64@2.3.10':
-    resolution: {integrity: sha512-wwAkWD1MR95u+J4LkWP74/vGz+tRrIQvr8kfMMJY8KOQ8+HMVleREOcPYsQX82S7uueco60L58Wc6M1I9WA9Dw==}
+  '@biomejs/cli-linux-x64@2.4.4':
+    resolution: {integrity: sha512-R4+ZCDtG9kHArasyBO+UBD6jr/FcFCTH8QkNTOCu0pRJzCWyWC4EtZa2AmUZB5h3e0jD7bRV2KvrENcf8rndBg==}
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [linux]
 
-  '@biomejs/cli-win32-arm64@2.3.10':
-    resolution: {integrity: sha512-o7lYc9n+CfRbHvkjPhm8s9FgbKdYZu5HCcGVMItLjz93EhgJ8AM44W+QckDqLA9MKDNFrR8nPbO4b73VC5kGGQ==}
+  '@biomejs/cli-win32-arm64@2.4.4':
+    resolution: {integrity: sha512-trzCqM7x+Gn832zZHgr28JoYagQNX4CZkUZhMUac2YxvvyDRLJDrb5m9IA7CaZLlX6lTQmADVfLEKP1et1Ma4Q==}
     engines: {node: '>=14.21.3'}
     cpu: [arm64]
     os: [win32]
 
-  '@biomejs/cli-win32-x64@2.3.10':
-    resolution: {integrity: sha512-pHEFgq7dUEsKnqG9mx9bXihxGI49X+ar+UBrEIj3Wqj3UCZp1rNgV+OoyjFgcXsjCWpuEAF4VJdkZr3TrWdCbQ==}
+  '@biomejs/cli-win32-x64@2.4.4':
+    resolution: {integrity: sha512-gnOHKVPFAAPrpoPt2t+Q6FZ7RPry/FDV3GcpU53P3PtLNnQjBmKyN2Vh/JtqXet+H4pme8CC76rScwdjDcT1/A==}
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [win32]
@@ -4880,39 +4880,39 @@ snapshots:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.28.5
 
-  '@biomejs/biome@2.3.10':
+  '@biomejs/biome@2.4.4':
     optionalDependencies:
-      '@biomejs/cli-darwin-arm64': 2.3.10
-      '@biomejs/cli-darwin-x64': 2.3.10
-      '@biomejs/cli-linux-arm64': 2.3.10
-      '@biomejs/cli-linux-arm64-musl': 2.3.10
-      '@biomejs/cli-linux-x64': 2.3.10
-      '@biomejs/cli-linux-x64-musl': 2.3.10
-      '@biomejs/cli-win32-arm64': 2.3.10
-      '@biomejs/cli-win32-x64': 2.3.10
+      '@biomejs/cli-darwin-arm64': 2.4.4
+      '@biomejs/cli-darwin-x64': 2.4.4
+      '@biomejs/cli-linux-arm64': 2.4.4
+      '@biomejs/cli-linux-arm64-musl': 2.4.4
+      '@biomejs/cli-linux-x64': 2.4.4
+      '@biomejs/cli-linux-x64-musl': 2.4.4
+      '@biomejs/cli-win32-arm64': 2.4.4
+      '@biomejs/cli-win32-x64': 2.4.4
 
-  '@biomejs/cli-darwin-arm64@2.3.10':
+  '@biomejs/cli-darwin-arm64@2.4.4':
     optional: true
 
-  '@biomejs/cli-darwin-x64@2.3.10':
+  '@biomejs/cli-darwin-x64@2.4.4':
     optional: true
 
-  '@biomejs/cli-linux-arm64-musl@2.3.10':
+  '@biomejs/cli-linux-arm64-musl@2.4.4':
     optional: true
 
-  '@biomejs/cli-linux-arm64@2.3.10':
+  '@biomejs/cli-linux-arm64@2.4.4':
     optional: true
 
-  '@biomejs/cli-linux-x64-musl@2.3.10':
+  '@biomejs/cli-linux-x64-musl@2.4.4':
     optional: true
 
-  '@biomejs/cli-linux-x64@2.3.10':
+  '@biomejs/cli-linux-x64@2.4.4':
     optional: true
 
-  '@biomejs/cli-win32-arm64@2.3.10':
+  '@biomejs/cli-win32-arm64@2.4.4':
     optional: true
 
-  '@biomejs/cli-win32-x64@2.3.10':
+  '@biomejs/cli-win32-x64@2.4.4':
     optional: true
 
   '@bomb.sh/tab@0.0.10(cac@6.7.14)(citty@0.1.6)':
@@ -5611,7 +5611,7 @@ snapshots:
     transitivePeerDependencies:
       - magicast
 
-  '@nuxt/nitro-server@4.2.2(4a3e83db49fe1fefdffc65aad0199fbc)':
+  '@nuxt/nitro-server@4.2.2(2930b831685113b402a995f57af8170c)':
     dependencies:
       '@nuxt/devalue': 2.0.2
       '@nuxt/kit': 4.2.2(magicast@0.5.1)
@@ -5629,7 +5629,7 @@ snapshots:
       klona: 2.0.6
       mocked-exports: 0.1.1
       nitropack: 2.12.9(@libsql/client@0.15.15)(@netlify/blobs@9.1.2)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1)(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1))
-      nuxt: 4.2.2(@biomejs/biome@2.3.10)(@libsql/client@0.15.15)(@netlify/blobs@9.1.2)(@parcel/watcher@2.5.1)(@types/node@25.0.3)(@upstash/redis@1.35.8)(@vue/compiler-sfc@3.5.28)(better-sqlite3@12.4.1)(cac@6.7.14)(db0@0.3.4(@libsql/client@0.15.15)(better-sqlite3@12.4.1)(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1)))(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1))(ioredis@5.8.2)(lightningcss@1.30.2)(magicast@0.5.1)(rollup@4.53.5)(terser@5.44.1)(typescript@5.9.2)(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.2))(vue-tsc@3.1.8(typescript@5.9.2))(yaml@2.8.2)
+      nuxt: 4.2.2(@biomejs/biome@2.4.4)(@libsql/client@0.15.15)(@netlify/blobs@9.1.2)(@parcel/watcher@2.5.1)(@types/node@25.0.3)(@upstash/redis@1.35.8)(@vue/compiler-sfc@3.5.28)(better-sqlite3@12.4.1)(cac@6.7.14)(db0@0.3.4(@libsql/client@0.15.15)(better-sqlite3@12.4.1)(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1)))(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1))(ioredis@5.8.2)(lightningcss@1.30.2)(magicast@0.5.1)(rollup@4.53.5)(terser@5.44.1)(typescript@5.9.2)(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.2))(vue-tsc@3.1.8(typescript@5.9.2))(yaml@2.8.2)
       pathe: 2.0.3
       pkg-types: 2.3.0
       radix3: 1.1.2
@@ -5785,7 +5785,7 @@ snapshots:
       - typescript
       - vite
 
-  '@nuxt/vite-builder@4.2.2(@biomejs/biome@2.3.10)(@types/node@25.0.3)(lightningcss@1.30.2)(magicast@0.5.1)(nuxt@4.2.2(@biomejs/biome@2.3.10)(@libsql/client@0.15.15)(@netlify/blobs@9.1.2)(@parcel/watcher@2.5.1)(@types/node@25.0.3)(@upstash/redis@1.35.8)(@vue/compiler-sfc@3.5.28)(better-sqlite3@12.4.1)(cac@6.7.14)(db0@0.3.4(@libsql/client@0.15.15)(better-sqlite3@12.4.1)(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1)))(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1))(ioredis@5.8.2)(lightningcss@1.30.2)(magicast@0.5.1)(rollup@4.53.5)(terser@5.44.1)(typescript@5.9.2)(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.2))(vue-tsc@3.1.8(typescript@5.9.2))(yaml@2.8.2))(rollup@4.53.5)(terser@5.44.1)(typescript@5.9.2)(vue-tsc@3.1.8(typescript@5.9.2))(vue@3.5.25(typescript@5.9.2))(yaml@2.8.2)':
+  '@nuxt/vite-builder@4.2.2(@biomejs/biome@2.4.4)(@types/node@25.0.3)(lightningcss@1.30.2)(magicast@0.5.1)(nuxt@4.2.2(@biomejs/biome@2.4.4)(@libsql/client@0.15.15)(@netlify/blobs@9.1.2)(@parcel/watcher@2.5.1)(@types/node@25.0.3)(@upstash/redis@1.35.8)(@vue/compiler-sfc@3.5.28)(better-sqlite3@12.4.1)(cac@6.7.14)(db0@0.3.4(@libsql/client@0.15.15)(better-sqlite3@12.4.1)(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1)))(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1))(ioredis@5.8.2)(lightningcss@1.30.2)(magicast@0.5.1)(rollup@4.53.5)(terser@5.44.1)(typescript@5.9.2)(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.2))(vue-tsc@3.1.8(typescript@5.9.2))(yaml@2.8.2))(rollup@4.53.5)(terser@5.44.1)(typescript@5.9.2)(vue-tsc@3.1.8(typescript@5.9.2))(vue@3.5.25(typescript@5.9.2))(yaml@2.8.2)':
     dependencies:
       '@nuxt/kit': 4.2.2(magicast@0.5.1)
       '@rollup/plugin-replace': 6.0.3(rollup@4.53.5)
@@ -5805,7 +5805,7 @@ snapshots:
       magic-string: 0.30.21
       mlly: 1.8.0
       mocked-exports: 0.1.1
-      nuxt: 4.2.2(@biomejs/biome@2.3.10)(@libsql/client@0.15.15)(@netlify/blobs@9.1.2)(@parcel/watcher@2.5.1)(@types/node@25.0.3)(@upstash/redis@1.35.8)(@vue/compiler-sfc@3.5.28)(better-sqlite3@12.4.1)(cac@6.7.14)(db0@0.3.4(@libsql/client@0.15.15)(better-sqlite3@12.4.1)(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1)))(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1))(ioredis@5.8.2)(lightningcss@1.30.2)(magicast@0.5.1)(rollup@4.53.5)(terser@5.44.1)(typescript@5.9.2)(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.2))(vue-tsc@3.1.8(typescript@5.9.2))(yaml@2.8.2)
+      nuxt: 4.2.2(@biomejs/biome@2.4.4)(@libsql/client@0.15.15)(@netlify/blobs@9.1.2)(@parcel/watcher@2.5.1)(@types/node@25.0.3)(@upstash/redis@1.35.8)(@vue/compiler-sfc@3.5.28)(better-sqlite3@12.4.1)(cac@6.7.14)(db0@0.3.4(@libsql/client@0.15.15)(better-sqlite3@12.4.1)(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1)))(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1))(ioredis@5.8.2)(lightningcss@1.30.2)(magicast@0.5.1)(rollup@4.53.5)(terser@5.44.1)(typescript@5.9.2)(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.2))(vue-tsc@3.1.8(typescript@5.9.2))(yaml@2.8.2)
       pathe: 2.0.3
       pkg-types: 2.3.0
       postcss: 8.5.6
@@ -5816,7 +5816,7 @@ snapshots:
       unenv: 2.0.0-rc.24
       vite: 7.3.0(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.2)
       vite-node: 5.2.0(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.2)
-      vite-plugin-checker: 0.12.0(@biomejs/biome@2.3.10)(typescript@5.9.2)(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.2))(vue-tsc@3.1.8(typescript@5.9.2))
+      vite-plugin-checker: 0.12.0(@biomejs/biome@2.4.4)(typescript@5.9.2)(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.2))(vue-tsc@3.1.8(typescript@5.9.2))
       vue: 3.5.25(typescript@5.9.2)
       vue-bundle-renderer: 2.2.0
     transitivePeerDependencies:
@@ -6637,13 +6637,13 @@ snapshots:
 
   '@vueuse/metadata@14.1.0': {}
 
-  '@vueuse/nuxt@14.1.0(magicast@0.5.1)(nuxt@4.2.2(@biomejs/biome@2.3.10)(@libsql/client@0.15.15)(@netlify/blobs@9.1.2)(@parcel/watcher@2.5.1)(@types/node@25.0.3)(@upstash/redis@1.35.8)(@vue/compiler-sfc@3.5.28)(better-sqlite3@12.4.1)(cac@6.7.14)(db0@0.3.4(@libsql/client@0.15.15)(better-sqlite3@12.4.1)(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1)))(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1))(ioredis@5.8.2)(lightningcss@1.30.2)(magicast@0.5.1)(rollup@4.53.5)(terser@5.44.1)(typescript@5.9.2)(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.2))(vue-tsc@3.1.8(typescript@5.9.2))(yaml@2.8.2))(vue@3.5.25(typescript@5.9.2))':
+  '@vueuse/nuxt@14.1.0(magicast@0.5.1)(nuxt@4.2.2(@biomejs/biome@2.4.4)(@libsql/client@0.15.15)(@netlify/blobs@9.1.2)(@parcel/watcher@2.5.1)(@types/node@25.0.3)(@upstash/redis@1.35.8)(@vue/compiler-sfc@3.5.28)(better-sqlite3@12.4.1)(cac@6.7.14)(db0@0.3.4(@libsql/client@0.15.15)(better-sqlite3@12.4.1)(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1)))(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1))(ioredis@5.8.2)(lightningcss@1.30.2)(magicast@0.5.1)(rollup@4.53.5)(terser@5.44.1)(typescript@5.9.2)(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.2))(vue-tsc@3.1.8(typescript@5.9.2))(yaml@2.8.2))(vue@3.5.25(typescript@5.9.2))':
     dependencies:
       '@nuxt/kit': 4.2.2(magicast@0.5.1)
       '@vueuse/core': 14.1.0(vue@3.5.25(typescript@5.9.2))
       '@vueuse/metadata': 14.1.0
       local-pkg: 1.1.2
-      nuxt: 4.2.2(@biomejs/biome@2.3.10)(@libsql/client@0.15.15)(@netlify/blobs@9.1.2)(@parcel/watcher@2.5.1)(@types/node@25.0.3)(@upstash/redis@1.35.8)(@vue/compiler-sfc@3.5.28)(better-sqlite3@12.4.1)(cac@6.7.14)(db0@0.3.4(@libsql/client@0.15.15)(better-sqlite3@12.4.1)(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1)))(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1))(ioredis@5.8.2)(lightningcss@1.30.2)(magicast@0.5.1)(rollup@4.53.5)(terser@5.44.1)(typescript@5.9.2)(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.2))(vue-tsc@3.1.8(typescript@5.9.2))(yaml@2.8.2)
+      nuxt: 4.2.2(@biomejs/biome@2.4.4)(@libsql/client@0.15.15)(@netlify/blobs@9.1.2)(@parcel/watcher@2.5.1)(@types/node@25.0.3)(@upstash/redis@1.35.8)(@vue/compiler-sfc@3.5.28)(better-sqlite3@12.4.1)(cac@6.7.14)(db0@0.3.4(@libsql/client@0.15.15)(better-sqlite3@12.4.1)(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1)))(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1))(ioredis@5.8.2)(lightningcss@1.30.2)(magicast@0.5.1)(rollup@4.53.5)(terser@5.44.1)(typescript@5.9.2)(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.2))(vue-tsc@3.1.8(typescript@5.9.2))(yaml@2.8.2)
       vue: 3.5.25(typescript@5.9.2)
     transitivePeerDependencies:
       - magicast
@@ -8161,16 +8161,16 @@ snapshots:
       - magicast
       - vue
 
-  nuxt@4.2.2(@biomejs/biome@2.3.10)(@libsql/client@0.15.15)(@netlify/blobs@9.1.2)(@parcel/watcher@2.5.1)(@types/node@25.0.3)(@upstash/redis@1.35.8)(@vue/compiler-sfc@3.5.28)(better-sqlite3@12.4.1)(cac@6.7.14)(db0@0.3.4(@libsql/client@0.15.15)(better-sqlite3@12.4.1)(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1)))(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1))(ioredis@5.8.2)(lightningcss@1.30.2)(magicast@0.5.1)(rollup@4.53.5)(terser@5.44.1)(typescript@5.9.2)(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.2))(vue-tsc@3.1.8(typescript@5.9.2))(yaml@2.8.2):
+  nuxt@4.2.2(@biomejs/biome@2.4.4)(@libsql/client@0.15.15)(@netlify/blobs@9.1.2)(@parcel/watcher@2.5.1)(@types/node@25.0.3)(@upstash/redis@1.35.8)(@vue/compiler-sfc@3.5.28)(better-sqlite3@12.4.1)(cac@6.7.14)(db0@0.3.4(@libsql/client@0.15.15)(better-sqlite3@12.4.1)(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1)))(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1))(ioredis@5.8.2)(lightningcss@1.30.2)(magicast@0.5.1)(rollup@4.53.5)(terser@5.44.1)(typescript@5.9.2)(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.2))(vue-tsc@3.1.8(typescript@5.9.2))(yaml@2.8.2):
     dependencies:
       '@dxup/nuxt': 0.2.2(magicast@0.5.1)
       '@nuxt/cli': 3.31.3(cac@6.7.14)(magicast@0.5.1)
       '@nuxt/devtools': 3.1.1(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.2))(vue@3.5.25(typescript@5.9.2))
       '@nuxt/kit': 4.2.2(magicast@0.5.1)
-      '@nuxt/nitro-server': 4.2.2(4a3e83db49fe1fefdffc65aad0199fbc)
+      '@nuxt/nitro-server': 4.2.2(2930b831685113b402a995f57af8170c)
       '@nuxt/schema': 4.2.2
       '@nuxt/telemetry': 2.6.6(magicast@0.5.1)
-      '@nuxt/vite-builder': 4.2.2(@biomejs/biome@2.3.10)(@types/node@25.0.3)(lightningcss@1.30.2)(magicast@0.5.1)(nuxt@4.2.2(@biomejs/biome@2.3.10)(@libsql/client@0.15.15)(@netlify/blobs@9.1.2)(@parcel/watcher@2.5.1)(@types/node@25.0.3)(@upstash/redis@1.35.8)(@vue/compiler-sfc@3.5.28)(better-sqlite3@12.4.1)(cac@6.7.14)(db0@0.3.4(@libsql/client@0.15.15)(better-sqlite3@12.4.1)(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1)))(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1))(ioredis@5.8.2)(lightningcss@1.30.2)(magicast@0.5.1)(rollup@4.53.5)(terser@5.44.1)(typescript@5.9.2)(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.2))(vue-tsc@3.1.8(typescript@5.9.2))(yaml@2.8.2))(rollup@4.53.5)(terser@5.44.1)(typescript@5.9.2)(vue-tsc@3.1.8(typescript@5.9.2))(vue@3.5.25(typescript@5.9.2))(yaml@2.8.2)
+      '@nuxt/vite-builder': 4.2.2(@biomejs/biome@2.4.4)(@types/node@25.0.3)(lightningcss@1.30.2)(magicast@0.5.1)(nuxt@4.2.2(@biomejs/biome@2.4.4)(@libsql/client@0.15.15)(@netlify/blobs@9.1.2)(@parcel/watcher@2.5.1)(@types/node@25.0.3)(@upstash/redis@1.35.8)(@vue/compiler-sfc@3.5.28)(better-sqlite3@12.4.1)(cac@6.7.14)(db0@0.3.4(@libsql/client@0.15.15)(better-sqlite3@12.4.1)(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1)))(drizzle-orm@0.45.1(@libsql/client@0.15.15)(@upstash/redis@1.35.8)(better-sqlite3@12.4.1))(ioredis@5.8.2)(lightningcss@1.30.2)(magicast@0.5.1)(rollup@4.53.5)(terser@5.44.1)(typescript@5.9.2)(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.2))(vue-tsc@3.1.8(typescript@5.9.2))(yaml@2.8.2))(rollup@4.53.5)(terser@5.44.1)(typescript@5.9.2)(vue-tsc@3.1.8(typescript@5.9.2))(vue@3.5.25(typescript@5.9.2))(yaml@2.8.2)
       '@unhead/vue': 2.0.19(vue@3.5.25(typescript@5.9.2))
       '@vue/shared': 3.5.25
       c12: 3.3.3(magicast@0.5.1)
@@ -9333,7 +9333,7 @@ snapshots:
       - tsx
       - yaml
 
-  vite-plugin-checker@0.12.0(@biomejs/biome@2.3.10)(typescript@5.9.2)(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.2))(vue-tsc@3.1.8(typescript@5.9.2)):
+  vite-plugin-checker@0.12.0(@biomejs/biome@2.4.4)(typescript@5.9.2)(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.2))(vue-tsc@3.1.8(typescript@5.9.2)):
     dependencies:
       '@babel/code-frame': 7.27.1
       chokidar: 4.0.3
@@ -9345,7 +9345,7 @@ snapshots:
       vite: 7.3.0(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.2)
       vscode-uri: 3.1.0
     optionalDependencies:
-      '@biomejs/biome': 2.3.10
+      '@biomejs/biome': 2.4.4
       typescript: 5.9.2
       vue-tsc: 3.1.8(typescript@5.9.2)
 

@@ -166,7 +166,7 @@
 
 				<FilterItem
 					:should-display="isProjectStats"
-					v-if="time == 'today' && versionGroup != 'unified'"
+					v-if="time === 'today' && versionGroup !== 'unified'"
 					v-model="versionFrom"
 					:can-clear="true"
 					:options="from"
@@ -175,7 +175,7 @@
 				/>
 				<FilterItem
 					:should-display="isProjectStats"
-					v-if="time == 'today' && versionGroup != 'unified'"
+					v-if="time === 'today' && versionGroup !== 'unified'"
 					v-model="versionTo"
 					:can-clear="true"
 					:options="to"
@@ -185,7 +185,7 @@
 
 				<FilterItem
 					:should-display="isProjectStats"
-					v-if="time != 'today' && versionGroup != 'unified'"
+					v-if="time !== 'today' && versionGroup !== 'unified'"
 					v-model="version"
 					:options="gameVersions"
 					title="Version"
@@ -195,7 +195,7 @@
 				<FilterItem
 					:should-display="true"
 					v-if="
-                        ((isProjectStats && time != 'today') ||
+                        ((isProjectStats && time !== 'today') ||
                             !isProjectStats) &&
                         !isRevenueStats
                     "
@@ -215,11 +215,11 @@
 				:data-fetching="isFetching"
 				class="w-full flex data-[fetching=true]:grayscale data-[fetching=true]:blur-[2px]"
 			>
-				<ChartBarChart v-if="lazyIsGroupData" :data="data"/>
-				<ChartLineChart v-else :data="data"/>
-				<ChartTable class="hidden" :data="data" :explanation="explanation"/>
+				<ChartBarChart v-if="lazyIsGroupData" :data="data" />
+				<ChartLineChart v-else :data="data" />
+				<ChartTable class="hidden" :data="data" :explanation="explanation" />
 			</div>
-			<Explanation v-if="explanation" :explanation="explanation"/>
+			<Explanation v-if="explanation" :explanation="explanation" />
 
 			<Icon
 				v-if="isFetching"

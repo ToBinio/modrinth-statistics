@@ -9,7 +9,7 @@
 		canClear?: boolean;
 	}>();
 
-	const open = ref(false);
+	const isOpen = ref(false);
 
 	function onSelect(option: string) {
 		if (canClear && model.value === option) {
@@ -24,7 +24,8 @@
 	<Transition>
 		<div v-if="shouldDisplay" id="main" class="flex flex-col transition-all">
 			<button
-				@click="open = !open"
+				type="button"
+				@click="() => isOpen = !isOpen"
 				class="cursor-pointer transition flex justify-between items-center"
 			>
 				<abbr
@@ -36,13 +37,14 @@
 				</abbr>
 				<icon
 					name="akar-icons:chevron-up"
-					:class="{'rotate-180': !open}"
+					:class="{'rotate-180': !isOpen}"
 					size="15"
 				/>
 			</button>
 			<div class="min-h-4 relative">
 				<div>
 					<button
+						type="button"
 						class="absolute z-0 font-bold content-between justify-between enabled:cursor-pointer"
 						:class="{'hover:text-neutral-400': canClear}"
 						@click="model = undefined"
@@ -53,11 +55,12 @@
 				</div>
 				<div
 					class="bg-zinc-900 z-10 relative flex flex-col max-h-48 overflow-scroll transition-all px-1 border-l-2 border-zinc-800"
-					:class="{'max-h-0!': !open}"
+					:class="{'max-h-0!': !isOpen}"
 				>
 					<button
+						type="button"
 						class="text-left hover:bg-zinc-800 rounded cursor-pointer px-1"
-						:class="{'font-bold': option == model}"
+						:class="{'font-bold': option === model}"
 						v-for="option in options"
 						@click="onSelect(option)"
 					>

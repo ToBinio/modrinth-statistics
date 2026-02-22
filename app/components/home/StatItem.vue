@@ -42,14 +42,18 @@
 				<Icon
 					:name="icon"
 					size="120"
-					class="from-cyan-400 to-cyan-600 bg-gradient-to-tl"
+					class="from-cyan-400 to-cyan-600 bg-linear-to-tl"
 				/>
 			</div>
-			<NuxtLink class="z-10" :to="'/charts?project_type=' + name.toLowerCase()">
+			<NuxtLink
+				class="z-10"
+				:to="`/charts?project_type=${name.toLowerCase()}`
+"
+			>
 				<Icon
 					:name="icon"
 					size="150"
-					class="hover:scale-105 transition ease-in-out from-cyan-200 to-cyan-600 bg-gradient-to-br"
+					class="hover:scale-105 transition ease-in-out from-cyan-200 to-cyan-600 bg-linear-to-br"
 				/>
 			</NuxtLink>
 		</div>

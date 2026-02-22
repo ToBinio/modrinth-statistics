@@ -5,7 +5,7 @@
 	<div id="page">
 		<div id="nav" class="border-b-2 border-b-zinc-800">
 			<div class="compact">
-				<ModrinthLink/>
+				<ModrinthLink />
 				<div id="icons">
 					<NuxtLink
 						id="github"
@@ -13,11 +13,11 @@
 						target="_blank"
 						aria-label="Github of this Project"
 					>
-						<Icon name="akar-icons:github-fill" size="40"/>
+						<Icon name="akar-icons:github-fill" size="40" />
 					</NuxtLink>
 				</div>
 			</div>
-			<ModrinthLink class="big"/>
+			<ModrinthLink class="big" />
 			<div class="flex flex-col gap-2 sm:flex-row sm:gap-10 md:gap-20">
 				<NuxtLink
 					href="/charts"
@@ -51,13 +51,11 @@
 					target="_blank"
 					aria-label="Github of this Project"
 				>
-					<Icon name="akar-icons:github-fill" size="40"/>
+					<Icon name="akar-icons:github-fill" size="40" />
 				</NuxtLink>
 			</div>
 		</div>
-		<div id="main">
-			<slot/>
-		</div>
+		<div id="main"><slot /></div>
 	</div>
 </template>
 

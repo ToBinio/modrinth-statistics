@@ -59,7 +59,7 @@
 		<div class="flex flex-col flex-1 mx-4 gap-4">
 			<div class="text-2xl">Modpacks: {{ count?.count }}</div>
 			<div class="relative flex-1">
-				<ModpackList :id="currentId" class="h-full overflow-y-auto absolute"/>
+				<ModpackList :id="currentId" class="h-full overflow-y-auto absolute" />
 			</div>
 		</div>
 	</div>

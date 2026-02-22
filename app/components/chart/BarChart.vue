@@ -60,9 +60,7 @@
 </script>
 
 <template>
-	<div id="container">
-		<Bar :data="chartData" :options="chartOptions"/>
-	</div>
+	<div id="container"><Bar :data="chartData" :options="chartOptions" /></div>
 </template>
 <style scoped>
 	#container {

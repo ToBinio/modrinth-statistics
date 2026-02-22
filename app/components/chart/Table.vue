@@ -22,9 +22,9 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr v-for="(label, index) in data?.labels" :key="label">
+			<tr v-for="(label, index) in (data?.labels ?? [])" :key="label">
 				<th scope="row">{{ label }}</th>
-				<td v-for="group in data?.data" :key="group.label">
+				<td v-for="group in (data?.data ?? [])" :key="group.label">
 					{{ group?.data[index] }}
 				</td>
 			</tr>

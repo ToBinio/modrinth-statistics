@@ -72,11 +72,11 @@
 						target="_blank"
 						class="bg-clip-text hover:bg-cyan-600"
 					>
-						<Icon name="akar-icons:link-out" size="16"/>
+						<Icon name="akar-icons:link-out" size="16" />
 					</NuxtLink>
 				</h3>
-				<span>{{ modpack.description}}</span>
-				<span> Downloads: {{ modpack.downloads}}</span>
+				<span>{{ modpack.description }}</span>
+				<span> Downloads: {{ modpack.downloads }}</span>
 			</div>
 		</div>
 	</div>

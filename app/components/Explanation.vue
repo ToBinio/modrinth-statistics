@@ -4,7 +4,7 @@
 
 <template>
 	<div id="tooltip">
-		<Icon name="akar-icons:question" size="25"/>
+		<Icon name="akar-icons:question" size="25" />
 		<div id="explanation" v-html="explanation"></div>
 	</div>
 </template>

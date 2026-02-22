@@ -60,7 +60,7 @@
 
 <template>
 	<div id="container">
-		<Line :data="chartData" :options="chartOptions"/>
+		<Line :data="chartData" :options="chartOptions" />
 	</div>
 </template>
 <style scoped>
