@@ -1,4 +1,5 @@
 import consola from "consola";
+import { KV } from "~~/server/utils/db/kv";
 import type { VersionCategories } from "~~/server/utils/processing/gameVersions/types";
 import type {
 	ProjectStats,
@@ -122,6 +123,10 @@ export async function exportStatsOverTime(
 			versionCategory,
 			exclusive,
 		);
+		if (data.length !== dates.length) {
+			consola.error(`Data length mismatch: ${data.length} != ${dates.length}`);
+			break;
+		}
 
 		days_to_fetch_left -= data.length;
 
