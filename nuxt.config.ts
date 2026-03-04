@@ -1,5 +1,3 @@
-import tailwindcss from "@tailwindcss/vite";
-
 const simple_types = ["projects", "versions", "authors", "files", "revenue"];
 const project_types = [
 	"mod",
@@ -87,9 +85,6 @@ export default defineNuxtConfig({
 			"0 * * * *": ["analyze"],
 		},
 	},
-	vite: {
-		plugins: [tailwindcss()],
-	},
 	css: ["~/assets/css/main.css"],
 	modules: [
 		"@nuxt/icon",
@@ -97,6 +92,7 @@ export default defineNuxtConfig({
 		"@nuxtjs/sitemap",
 		"@nuxt/scripts",
 		"@nuxt/test-utils/module",
+		"@nuxtjs/tailwindcss",
 	],
 	compatibilityDate: "2025-07-16",
 });
