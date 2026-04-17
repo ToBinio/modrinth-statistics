@@ -1,3 +1,8 @@
+
+# **This Project has moved to [Tangled](https://tangled.org/tobinio.dev/modrinth-statistics)**
+
+---
+
 # Modrinth statistics
 
 a Page to view some global statistics about [Modrinth](https://modrinth.com/)
